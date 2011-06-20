@@ -1,0 +1,592 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>BookSettings</class>
+ <widget class="QDialog" name="BookSettings">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>428</width>
+    <height>281</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <item>
+    <widget class="QTabWidget" name="tabWidget">
+     <property name="currentIndex">
+      <number>0</number>
+     </property>
+     <widget class="QWidget" name="fonts_tab">
+      <attribute name="title">
+       <string>Fonts</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_2">
+       <item>
+        <widget class="QGroupBox" name="groupBox">
+         <property name="title">
+          <string/>
+         </property>
+         <layout class="QGridLayout" name="gridLayout">
+          <item row="0" column="0">
+           <widget class="QLabel" name="label">
+            <property name="text">
+             <string>Text</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="2">
+           <widget class="QLineEdit" name="editParagraphFont">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="4">
+           <widget class="QPushButton" name="butParagraphFont">
+            <property name="text">
+             <string>Font</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLabel" name="label_2">
+            <property name="text">
+             <string>Title</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="2">
+           <widget class="QLineEdit" name="editTitleFont">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="4">
+           <widget class="QPushButton" name="butTitleFont">
+            <property name="text">
+             <string>Font</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="label_3">
+            <property name="text">
+             <string>Subtitle</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="2">
+           <widget class="QLineEdit" name="editSubtitleFont">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="4">
+           <widget class="QPushButton" name="butSubtitleFont">
+            <property name="text">
+             <string>Font</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="label_4">
+            <property name="text">
+             <string>Poem</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="2">
+           <widget class="QLineEdit" name="editPoemFont">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="4">
+           <widget class="QPushButton" name="butPoemFont">
+            <property name="text">
+             <string>Font</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="2">
+           <widget class="QLineEdit" name="editCiteFont">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0">
+           <widget class="QLabel" name="label_5">
+            <property name="text">
+             <string>Cite</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="0">
+           <widget class="QLabel" name="label_6">
+            <property name="text">
+             <string>Footnote</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="4">
+           <widget class="QPushButton" name="butCiteFont">
+            <property name="text">
+             <string>Font</string>
+            </property>
+           </widget>
+          </item>
+          <item row="6" column="4">
+           <widget class="QPushButton" name="butFootnoteFont">
+            <property name="text">
+             <string>Font</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="3">
+           <widget class="QComboBox" name="comboParagraphAlign">
+            <item>
+             <property name="text">
+              <string>Justify</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Left</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Center</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Right</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="2" column="3">
+           <widget class="QComboBox" name="comboSubtitleAlign">
+            <item>
+             <property name="text">
+              <string>Justify</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Left</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Center</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Right</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="3" column="3">
+           <widget class="QComboBox" name="comboPoemAlign">
+            <item>
+             <property name="text">
+              <string>Justify</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Left</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Center</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Right</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="4" column="3">
+           <widget class="QComboBox" name="comboCiteAlign">
+            <item>
+             <property name="text">
+              <string>Justify</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Left</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Center</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Right</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="6" column="3">
+           <widget class="QComboBox" name="comboFootnoteAlign">
+            <item>
+             <property name="text">
+              <string>Justify</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Left</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Center</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Right</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="6" column="2">
+           <widget class="QLineEdit" name="editFootnoteFont">
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="3">
+           <widget class="QComboBox" name="comboTitleAlign">
+            <item>
+             <property name="text">
+              <string>Justify</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Left</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Center</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Right</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="7" column="2">
+           <widget class="QLineEdit" name="editIndicatorFont"/>
+          </item>
+          <item row="7" column="3">
+           <widget class="QComboBox" name="comboIndicatorAlign">
+            <item>
+             <property name="text">
+              <string>Justify</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Left</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Center</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Right</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="7" column="0">
+           <widget class="QLabel" name="label_7">
+            <property name="text">
+             <string>Indicator</string>
+            </property>
+           </widget>
+          </item>
+          <item row="7" column="4">
+           <widget class="QPushButton" name="butIndicatorFont">
+            <property name="text">
+             <string>Font</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="0">
+           <widget class="QLabel" name="label_20">
+            <property name="text">
+             <string>Epigraph</string>
+            </property>
+           </widget>
+          </item>
+          <item row="8" column="2">
+           <widget class="QLineEdit" name="editEpigraphFont"/>
+          </item>
+          <item row="8" column="3">
+           <widget class="QComboBox" name="comboEpigraphAlign">
+            <item>
+             <property name="text">
+              <string>Justify</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Left</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Center</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Right</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item row="8" column="4">
+           <widget class="QPushButton" name="butEpigraphFont">
+            <property name="text">
+             <string>Font</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab_2">
+      <attribute name="title">
+       <string>Margins</string>
+      </attribute>
+      <layout class="QFormLayout" name="formLayout">
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_8">
+         <property name="text">
+          <string>Left margin</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QSpinBox" name="sbLeftMargin"/>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_9">
+         <property name="text">
+          <string>Right margin</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QSpinBox" name="sbRightMargin"/>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_10">
+         <property name="text">
+          <string>Top margin</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QSpinBox" name="sbTopMargin"/>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="label_11">
+         <property name="text">
+          <string>Bottom margin</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QSpinBox" name="sbBottomMargin"/>
+       </item>
+       <item row="5" column="0">
+        <widget class="QLabel" name="label_12">
+         <property name="text">
+          <string>Cite margin</string>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QSpinBox" name="sbCiteMargin"/>
+       </item>
+       <item row="6" column="0">
+        <widget class="QLabel" name="label_13">
+         <property name="text">
+          <string>Poem margin</string>
+         </property>
+        </widget>
+       </item>
+       <item row="6" column="1">
+        <widget class="QSpinBox" name="sbPoemMargin"/>
+       </item>
+       <item row="7" column="0">
+        <widget class="QLabel" name="label_14">
+         <property name="text">
+          <string>Epigraph margin</string>
+         </property>
+        </widget>
+       </item>
+       <item row="7" column="1">
+        <widget class="QSpinBox" name="sbEpigraphMargin"/>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QWidget" name="tab">
+      <attribute name="title">
+       <string>Reader</string>
+      </attribute>
+      <layout class="QFormLayout" name="formLayout_2">
+       <item row="0" column="0">
+        <widget class="QLabel" name="label_15">
+         <property name="text">
+          <string>Titles in uppercase</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="0">
+        <widget class="QLabel" name="label_16">
+         <property name="text">
+          <string>Hyphenation in on</string>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="0">
+        <widget class="QLabel" name="label_17">
+         <property name="text">
+          <string>Columns number</string>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="0">
+        <widget class="QLabel" name="label_18">
+         <property name="text">
+          <string>Indent value</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="0">
+        <widget class="QLabel" name="label_19">
+         <property name="text">
+          <string>Rotate value</string>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QCheckBox" name="cbTitleInUppercase">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QCheckBox" name="cbHyphsIsOn">
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="2" column="1">
+        <widget class="QSpinBox" name="sbColumnsNum">
+         <property name="minimum">
+          <number>1</number>
+         </property>
+         <property name="maximum">
+          <number>3</number>
+         </property>
+        </widget>
+       </item>
+       <item row="3" column="1">
+        <widget class="QSpinBox" name="sbIndentValue"/>
+       </item>
+       <item row="4" column="1">
+        <widget class="QSpinBox" name="sbRotateValue">
+         <property name="maximum">
+          <number>2</number>
+         </property>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </widget>
+   </item>
+   <item>
+    <widget class="QDialogButtonBox" name="buttonBox">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="standardButtons">
+      <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>accepted()</signal>
+   <receiver>BookSettings</receiver>
+   <slot>accept()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>252</x>
+     <y>291</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>157</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>buttonBox</sender>
+   <signal>rejected()</signal>
+   <receiver>BookSettings</receiver>
+   <slot>reject()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>320</x>
+     <y>291</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>286</x>
+     <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+</ui>

@@ -1,0 +1,261 @@
+#include "readerutils.h"
+#include <iostream>
+#include <QtCore/QString>
+#include <QtCore/QStringList>
+#include <QtCore/QHash>
+#include <QtCore/QFile>
+#include <QtCore/QDir>
+#include <QtCore/QTextStream>
+#include <QtCore/QVector>
+//
+ReaderUtils::ReaderUtils(  ) 
+{
+    this->paragraphFont.setPointSize(12);
+    this->paragraphFont.setFamily("Arial");
+    this->paragraphLineSpacing = 1.3;
+
+    this->titleFont.setPointSize(12);
+    this->titleFont.setFamily("Arial");
+//    this->titleFont.setBold(true);
+
+    this->subtitleFont.setPointSize(12);
+    this->subtitleFont.setFamily("Arial");
+
+    this->citeFont.setPointSize(12);
+    this->citeFont.setFamily("Arial");
+    this->citeFont.setItalic(true);
+
+    this->poemFont.setPointSize(12);
+    this->poemFont.setFamily("Arial");
+    this->poemFont.setItalic(true);
+
+    this->footnoteFont.setPointSize(10);
+    this->footnoteFont.setFamily("Arial");
+    this->footnoteFont.setItalic(true);
+    this->footnoteLineSpacing = this->paragraphLineSpacing - 0.2;
+
+    this->indicatorFont.setPointSize(12);
+    this->indicatorFont.setFamily("Arial");
+    this->indicatorFont.setItalic(false);
+
+    this->epigraphFont.setPointSize(12);
+    this->epigraphFont.setFamily("Arial");
+    this->epigraphFont.setItalic(true);
+
+    this->paragraphLineSpacing  = 1.3;
+    this->isTitleInUpperCase    = true;
+    this->hyphsIsOn             = true;
+    this->indentValue           = 4;
+    this->leftMargin            = 20;
+    this->rightMargin           = 20;
+    this->topMargin             = 20;
+    this->bottomMargin          = 20;
+    this->citeMargin            = 20;
+    this->poemMargin            = 20;
+    this->epigraphMargin        = 0;
+    this->titleBottomMargin     = 2;
+    this->titleTopMargin        = 2;
+
+    this->columnsNum            = 2;
+    this->columnsGap            = 20;
+
+    this->indentValue           = 4;
+    this->rotateValue           = 0;
+
+    this->moveBigImages         = true;
+
+    this->bgcolor               = "#ffffff";
+    this->paracolor             = "#333333";
+
+    QString configPath = QDir::homePath()+"/.config/MyReader/MyReader.conf";
+    if(!QFile::exists(configPath))
+        this->writeSettings();
+
+    this->readSettings();
+//    this->settings.set
+}
+
+int ReaderUtils::getWordWidth(QString key, QString f)
+{
+        if( f != "p" ) return -1;
+	int v = this->wordsWidths[key];
+	if( v )
+	{
+		//std::cout << qPrintable( QString::number(this->wordsWidths.size())) << std::endl;
+		return v;
+	}
+	return -1;
+}
+
+void ReaderUtils::setWordWidth(QString key, int v, QString f)
+{
+    if( f != "p" ) return;
+    this->wordsWidths[key] = v;
+}
+
+void ReaderUtils::writeSettings()
+{
+    QSettings settings("MyReader", "MyReader");
+
+    settings.setValue( "fonts/paragraphFontFamily", this->paragraphFont.family() );
+    settings.setValue( "fonts/paragraphPointSize", this->paragraphFont.pointSize() );
+    settings.setValue( "fonts/paragraphItalic", this->paragraphFont.italic() );
+    settings.setValue( "fonts/paragraphBold", this->paragraphFont.bold() );
+    settings.setValue( "fonts/paragraphUnderline", this->paragraphFont.underline() );
+    settings.setValue( "fonts/paragraphLineSpacing", this->paragraphLineSpacing );
+
+    settings.setValue( "fonts/titleFontFamily", this->titleFont.family() );
+    settings.setValue( "fonts/titlePointSize", this->titleFont.pointSize() );
+    settings.setValue( "fonts/titleItalic", this->titleFont.italic() );
+    settings.setValue( "fonts/titleBold", this->titleFont.bold() );
+    settings.setValue( "fonts/titleUnderline", this->titleFont.underline() );
+
+    settings.setValue( "fonts/subtitleFontFamily", this->subtitleFont.family() );
+    settings.setValue( "fonts/subtitlePointSize", this->subtitleFont.pointSize() );
+    settings.setValue( "fonts/subtitleItalic", this->subtitleFont.italic() );
+    settings.setValue( "fonts/subtitleBold", this->subtitleFont.bold() );
+    settings.setValue( "fonts/subtitleUnderline", this->subtitleFont.underline() );
+
+    settings.setValue( "fonts/citeFontFamily", this->citeFont.family() );
+    settings.setValue( "fonts/citePointSize", this->citeFont.pointSize() );
+    settings.setValue( "fonts/citeItalic", this->citeFont.italic() );
+    settings.setValue( "fonts/citeBold", this->citeFont.bold() );
+    settings.setValue( "fonts/citeUnderline", this->citeFont.underline() );
+
+    settings.setValue( "fonts/footnoteFontFamily", this->footnoteFont.family() );
+    settings.setValue( "fonts/footnotePointSize", this->footnoteFont.pointSize() );
+    settings.setValue( "fonts/footnoteItalic", this->footnoteFont.italic() );
+    settings.setValue( "fonts/footnoteBold", this->footnoteFont.bold() );
+    settings.setValue( "fonts/footnoteUnderline", this->footnoteFont.underline() );
+
+    settings.setValue( "fonts/poemFontFamily", this->poemFont.family() );
+    settings.setValue( "fonts/poemPointSize", this->poemFont.pointSize() );
+    settings.setValue( "fonts/poemItalic", this->poemFont.italic() );
+    settings.setValue( "fonts/poemBold", this->poemFont.bold() );
+    settings.setValue( "fonts/poemUnderline", this->poemFont.underline() );
+
+    settings.setValue( "fonts/indicatorFontFamily", this->indicatorFont.family() );
+    settings.setValue( "fonts/indicatorPointSize", this->indicatorFont.pointSize() );
+    settings.setValue( "fonts/indicatorItalic", this->indicatorFont.italic() );
+    settings.setValue( "fonts/indicatorBold", this->indicatorFont.bold() );
+    settings.setValue( "fonts/indicatorUnderline", this->indicatorFont.underline() );
+
+    settings.setValue( "fonts/epigraphFontFamily", this->epigraphFont.family() );
+    settings.setValue( "fonts/epigraphPointSize", this->epigraphFont.pointSize() );
+    settings.setValue( "fonts/epigraphItalic", this->epigraphFont.italic() );
+    settings.setValue( "fonts/epigraphBold", this->epigraphFont.bold() );
+    settings.setValue( "fonts/epigraphUnderline", this->epigraphFont.underline() );
+
+    settings.setValue( "read/titleIsUppercase", this->isTitleInUpperCase );
+    settings.setValue( "read/hyphsIsOn", this->hyphsIsOn );
+    settings.setValue( "read/columnsNum" ,this->columnsNum );
+    settings.setValue( "read/rotateValue", this->rotateValue );
+    settings.setValue( "read/indentValue", this->indentValue );
+    settings.setValue( "read/moveBigImages", this->moveBigImages );
+
+    settings.setValue( "margins/leftMargin", this->leftMargin );
+    settings.setValue( "margins/rightMargin", this->rightMargin );
+    settings.setValue( "margins/topMargin", this->topMargin );
+    settings.setValue( "margins/bottomMargin", this->bottomMargin );
+    settings.setValue( "margins/citeMargin", this->citeMargin );
+    settings.setValue( "margins/poemMargin", this->poemMargin );
+    settings.setValue( "margins/epigraphMargin", this->epigraphMargin );
+    settings.setValue( "margins/titleTopMargin", this->titleTopMargin );
+    settings.setValue( "margins/titleBottomMargin", this->titleBottomMargin );
+
+    settings.setValue( "read/bgcolor", this->bgcolor );
+    settings.setValue( "read/paracolor", this->paracolor );
+}
+
+void ReaderUtils::readSettings()
+{
+    QSettings settings("MyReader", "MyReader");
+
+    this->paragraphFont.setFamily( settings.value( "fonts/paragraphFontFamily" ).toString() );
+    this->paragraphFont.setPointSize( settings.value( "fonts/paragraphPointSize" ).toInt() );
+    this->paragraphFont.setItalic( settings.value( "fonts/paragraphItalic" ).toBool() );
+    this->paragraphFont.setBold( settings.value( "fonts/paragraphBold" ).toBool() );
+    this->paragraphFont.setUnderline( settings.value( "fonts/paragraphUnderline" ).toBool() );
+    this->paragraphLineSpacing = settings.value( "fonts/paragraphLineSpacing" ).toFloat();
+
+    this->titleFont.setFamily( settings.value( "fonts/titleFontFamily").toString() );
+    this->titleFont.setPointSize( settings.value( "fonts/titlePointSize" ).toInt() );
+    this->titleFont.setItalic( settings.value( "fonts/titleItalic" ).toBool() );
+    this->titleFont.setBold( settings.value( "fonts/titleBold" ).toBool() );
+    this->titleFont.setUnderline( settings.value( "fonts/titleUnderline").toBool() );
+
+    this->subtitleFont.setFamily( settings.value( "fonts/subtitleFontFamily" ).toString() );
+    this->subtitleFont.setPointSize( settings.value( "fonts/subtitlePointSize" ).toInt() );
+    this->subtitleFont.setItalic( settings.value( "fonts/subtitleItalic" ).toBool() );
+    this->subtitleFont.setBold( settings.value( "fonts/subtitleBold" ).toBool() );
+    this->subtitleFont.setUnderline( settings.value( "fonts/subtitleUnderline" ).toBool() );
+
+    this->citeFont.setFamily( settings.value( "fonts/citeFontFamily" ).toString() );
+    this->citeFont.setPointSize( settings.value( "fonts/citePointSize" ).toInt() );
+    this->citeFont.setItalic( settings.value( "fonts/citeItalic" ).toBool() );
+    this->citeFont.setBold( settings.value( "fonts/citeBold" ).toBool() );
+    this->citeFont.setUnderline( settings.value( "fonts/citeUnderline" ).toBool() );
+
+    this->footnoteFont.setFamily( settings.value( "fonts/footnoteFontFamily" ).toString() );
+    this->footnoteFont.setPointSize( settings.value( "fonts/footnotePointSize" ).toInt() );
+    this->footnoteFont.setItalic( settings.value( "fonts/footnoteItalic" ).toBool() );
+    this->footnoteFont.setBold( settings.value( "fonts/footnoteBold" ).toBool() );
+    this->footnoteFont.setUnderline( settings.value( "fonts/footnoteUnderline" ).toBool() );
+
+    this->poemFont.setFamily( settings.value( "fonts/poemFontFamily" ).toString() );
+    this->poemFont.setPointSize( settings.value( "fonts/poemPointSize" ).toInt() );
+    this->poemFont.setItalic( settings.value( "fonts/poemItalic" ).toBool() );
+    this->poemFont.setBold( settings.value( "fonts/poemBold" ).toBool() );
+    this->poemFont.setUnderline( settings.value( "fonts/poemUnderline" ).toBool() );
+
+    this->indicatorFont.setFamily( settings.value( "fonts/indicatorFontFamily" ).toString() );
+    this->indicatorFont.setPointSize( settings.value( "fonts/indicatorPointSize" ).toInt() );
+    this->indicatorFont.setItalic( settings.value( "fonts/indicatorItalic" ).toBool() );
+    this->indicatorFont.setBold( settings.value( "fonts/indicatorBold" ).toBool() );
+    this->indicatorFont.setUnderline( settings.value( "fonts/indicatorUnderline" ).toBool() );
+
+    this->epigraphFont.setFamily( settings.value( "fonts/epigraphFontFamily" ).toString() );
+    this->epigraphFont.setPointSize( settings.value( "fonts/epigraphPointSize" ).toInt() );
+    this->epigraphFont.setItalic( settings.value( "fonts/epigraphItalic" ).toBool() );
+    this->epigraphFont.setBold( settings.value( "fonts/epigraphBold" ).toBool() );
+    this->epigraphFont.setUnderline( settings.value( "fonts/epigraphUnderline" ).toBool() );
+
+    this->isTitleInUpperCase = settings.value( "read/titleIsUppercase").toBool();
+    this->hyphsIsOn = settings.value( "read/hyphsIsOn" ).toBool();
+    this->columnsNum = settings.value( "read/columnsNum" ).toInt();
+    this->rotateValue = settings.value( "read/rotateValue" ).toInt();
+    this->indentValue = settings.value( "read/indentValue").toInt();
+
+    this->leftMargin = settings.value( "margins/leftMargin" ).toInt();
+    this->rightMargin = settings.value( "margins/rightMargin" ).toInt();
+    this->topMargin = settings.value( "margins/topMargin" ).toInt();
+    this->bottomMargin = settings.value( "margins/bottomMargin" ).toInt();
+    this->citeMargin = settings.value( "margins/citeMargin" ).toInt();
+    this->poemMargin = settings.value( "margins/poemMargin" ).toInt();
+    this->epigraphMargin = settings.value( "margins/epigraphMargin" ).toInt();
+    this->titleTopMargin = settings.value( "margins/titleTopMargin" ).toInt();
+    this->titleBottomMargin = settings.value( "margins/titleBottomMargin" ).toInt();
+
+    this->bgcolor = settings.value( "read/bgcolor" ).toString();
+    this->paracolor = settings.value( "read/paracolor" ).toString();
+    this->moveBigImages = settings.value( "read/moveBigImages" ).toBool();
+}
+
+float ReaderUtils::getLeftMargin(int i)
+{
+    if(i == 1)
+        return this->rightMargin;
+    else
+        return this->leftMargin;
+}
+
+
+float ReaderUtils::getRightMargin(int i)
+{
+    if(i == 1)
+        return this->leftMargin;
+    else
+        return this->rightMargin;
+}
+
+//
