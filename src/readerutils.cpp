@@ -67,6 +67,11 @@ ReaderUtils::ReaderUtils(  )
     this->bgcolor               = "#ffffff";
     this->paracolor             = "#333333";
 
+    this->leftPageIndent        = 8;
+    this->rightPageIndent       = 8;
+    this->topPageIndent         = 8;
+    this->bottomPageIndent      = 8;
+
     QString configPath = QDir::homePath()+"/.config/MyReader/MyReader.conf";
     if(!QFile::exists(configPath))
         this->writeSettings();
@@ -257,5 +262,42 @@ float ReaderUtils::getRightMargin(int i)
     else
         return this->rightMargin;
 }
+
+float ReaderUtils::getLeftPageIndent(int i)
+{
+    if( i == 0 )
+        return this->leftPageIndent;
+    else
+        return this->leftPageIndent/2;
+}
+
+float ReaderUtils::getRightPageIndent(int i)
+{
+    if( i == this->columnsNum-1 )
+        return this->rightPageIndent;
+    else
+        return this->rightPageIndent/2;
+}
+
+float ReaderUtils::getTopPageIndent()
+{
+    return this->topPageIndent;
+}
+
+float ReaderUtils::getBottomPageIndent()
+{
+    return this->bottomPageIndent;
+}
+
+//float ReaderUtils::getPageIndent(int i=-1)
+//{
+//    //i == - 1 ---- top or bottom page indent
+//    if( i == -1 )
+//        return this->pageIndent;
+//    else
+//        return this->pageIndent;
+
+////    if( i == 0 )
+//}
 
 //

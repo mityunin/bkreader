@@ -157,9 +157,13 @@ void book::breakLines()
         for(int j=0; j<p.length(); j++)
             words += p[j].split(" ");
 
+        int startLineWord = 0;
+        int endLineWord = 0;
+
         //iterate throu paragraph words list while its not empty
         while( words.length() > 0 )
         {
+            startLineWord = endLineWord;
             //if paragraph is "empty-line" and next or previous line is "image"
             //then break and go to next paragraph
             if( this->fictionbook.bookFormats[i][0] == "empty-line" && this->utils.moveBigImages )
@@ -176,6 +180,7 @@ void book::breakLines()
             PageLine line;
             //create line from words, exclude used words from words list
             words = line.create(words, indent, this->fictionbook.bookFormats[i][0], width, this->utils, hyph);
+            endLineWord += line.words.size();
             if( i < this->fictionbook.bookFormats.count()-1 )
             {
                 //for titles make big line height
@@ -190,19 +195,31 @@ void book::breakLines()
             {
                 //???
                 line.f = this->fictionbook.bookFormats[i][0];
+                QStringList paragraphFormats = this->fictionbook.bookFormats[i];
                 //if line have footnotes
                 //then add footnotes ID to line
-                if( this->fictionbook.bookFormats[i].count()>=2 && this->fictionbook.bookFormats[i][1].contains("footnote") && words.size() == 0)
+                foreach( QString tmpFootnoteId, paragraphFormats )
                 {
-                    QString footnoteId = this->fictionbook.bookFormats[i][1];
-                    line.footnotesId.append(footnoteId.replace("footnote:",""));
+//                    QString footnoteId = this->fictionbook.bookFormats[i][1];
+//                    foreach( QString tmpFootnoteId, this->fictionbook.bookFormats[i] )
+//                    {
+                    if( tmpFootnoteId.contains("footnote:") )
+                    {
+                        QString footnoteId = tmpFootnoteId.replace("footnote:","");
+                        if( this->fictionbook.footnotesRange[footnoteId][0]>=startLineWord && this->fictionbook.footnotesRange[footnoteId][1]<=endLineWord )
+                        {
+                            line.footnotesId.append(footnoteId);
+                        }
+                    }
                 }
             }
+
 
             //add line to lines list
             this->lines.append(line);
             indent = "";
         }
+
         i++;
     }
 
@@ -284,6 +301,7 @@ void book::makePages()
 
         if(line.haveFootnotes())
         {
+//            QStringList fooid = line.footnotesId;
             restFootnotesLines.append(this->getFootnotesLines(line.footnotesId));
         }
         restFootnotesHeight = this->getPageLinesHeight(restFootnotesLines);

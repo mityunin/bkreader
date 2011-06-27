@@ -169,6 +169,8 @@ void fb2::loadParagraph(const QDomElement &element)
 	QDomNode child = element.firstChild();
 	QStringList paragraph;
 	QStringList formats;
+        int startFootnote = 0;
+        int endFootnote = 0;
 	while( !child.isNull() )
 	{
 		if( child.isText() )
@@ -178,6 +180,7 @@ void fb2::loadParagraph(const QDomElement &element)
                         {
                             paragraph.append( QStringList(text.data().trimmed()) );
                             formats.append( QStringList("p") );
+                            startFootnote += text.data().trimmed().split(" ").size();
 			}
 		}
 		else if( child.isElement() )
@@ -198,6 +201,10 @@ void fb2::loadParagraph(const QDomElement &element)
 //                                            paragraph.append(txt);
                                                 paragraph.append( QStringList(childText.data().trimmed()) );
                                                 formats.append( QStringList("footnote:"+footnoteId) );
+                                                endFootnote = startFootnote + childText.data().trimmed().split(" ").size();
+                                                this->footnotesRange[footnoteId].append(startFootnote);
+                                                this->footnotesRange[footnoteId].append(endFootnote);
+                                                int test = 0;
 //                                                this->currentWord += childText.data().trimmed().split(" ").count();
 					}
 				}
@@ -216,6 +223,7 @@ void fb2::loadParagraph(const QDomElement &element)
 //                                            paragraph.append(txt);
                                                 paragraph.append( QStringList(childText.data().trimmed()) );
 						formats.append( QStringList("p") );
+                                                startFootnote += childText.data().trimmed().split(" ").size();
 //                                                this->currentWord += childText.data().trimmed().split(" ").count();
 					}
 				}
@@ -227,6 +235,7 @@ void fb2::loadParagraph(const QDomElement &element)
 
 	this->bookParagraphs.append(paragraph);
 	this->bookFormats.append( formats );
+//        this->footnotes
 	paragraph.clear();
 }
 

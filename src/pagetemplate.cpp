@@ -70,7 +70,7 @@ void PageTemplate::paintEvent(QPaintEvent *event)
 //        painter.drawRect(10, 10, this->b->pageWidth-10, this->b->pageHeight-10);
 
         QPixmap bg(this->b->getPageWidth(), this->b->getPageHeight());
-        bg.fill(QColor(QColor("#888888")).rgb());
+        bg.fill(QColor(QColor("#C6C6C6")).rgb());
 
 //        bg.load(QApplication::applicationDirPath()+"/tiles/tile9.png");
 
@@ -79,11 +79,15 @@ void PageTemplate::paintEvent(QPaintEvent *event)
         pageBg.fill(QColor(QColor(this->b->utils.bgcolor)).rgb());
 
         QPixmap pageBgShadow(this->b->getColumnWidth()-6, this->b->getColumnHeight()-6);
-        pageBgShadow.fill(QColor(QColor("#222222")).rgb());
+        pageBgShadow.fill(QColor(QColor("#C6C6C6")).rgb());
 
         QBrush pageBgBrush;
-        pageBgBrush.setColor(QColor("#000000"));
+        pageBgBrush.setColor(QColor("#808080"));
         painter.setBrush(pageBgBrush);
+
+        pen.setCosmetic(true);
+        pen.setWidthF(0.4);
+        painter.setPen(pen);
 
         int pageBgIndent = 6;
 
@@ -92,23 +96,22 @@ void PageTemplate::paintEvent(QPaintEvent *event)
 //            painter.drawTiledPixmap(this->b->utils.getLeftMargin(i)*i+this->b->getColumnWidth()*i+this->b->utils.getRightMargin(i)*(i+1), 0, this->b->utils.getLeftMargin(i)*(i+1)+this->b->getColumnWidth()*(i+1)+this->b->utils.getRightMargin(i)*(i+1),this->b->utils.topMargin+this->b->getColumnHeight()+this->b->utils.bottomMargin, bg);
             painter.drawTiledPixmap(this->b->getColumnLeftCoord(i), 0, this->b->getColumnRightCoord(i),this->b->utils.topMargin+this->b->getColumnHeight()+this->b->utils.bottomMargin, bg);
 
-//            int pageBgXFrom = pageBgIndent+this->b->utils.getLeftMargin(i)*i + this->b->utils.getRightMargin(i)*i + this->b->getColumnWidth()*i;
             int pageBgXFrom = this->b->getColumnLeftCoord(i) + pageBgIndent;
             int pageBgXTo = this->b->utils.getLeftMargin(i) + this->b->utils.getRightMargin(i) + this->b->getColumnWidth() - pageBgIndent*2;
 
-            painter.drawPixmap(pageBgXFrom+2, pageBgIndent+2, pageBgXTo, this->b->getColumnHeight()+this->b->utils.topMargin+this->b->utils.bottomMargin-pageBgIndent*2,pageBgShadow);
+//            painter.drawPixmap(pageBgXFrom+2, pageBgIndent+2, pageBgXTo, this->b->getColumnHeight()+this->b->utils.topMargin+this->b->utils.bottomMargin-pageBgIndent*2,pageBgShadow);
             painter.drawPixmap(pageBgXFrom, pageBgIndent, pageBgXTo, this->b->getColumnHeight()+this->b->utils.topMargin+this->b->utils.bottomMargin-pageBgIndent*2,pageBg);
-
 
             //draw book page rectangle
             painter.drawRect(pageBgXFrom, pageBgIndent, pageBgXTo, this->b->getColumnHeight()+this->b->utils.topMargin+this->b->utils.bottomMargin-pageBgIndent*2);
+//            painter.drawRect(pageBgXFrom, this->b->utils.getTopPageIndent(), pageBgXTo, this->b->getColumnHeight()+this->b->utils.topMargin+this->b->utils.bottomMargin-this->b->utils.getBottomPageIndent()*2);
 
             int indicatorXFrom = this->b->utils.getLeftMargin(i)*(i+1) + this->b->getColumnWidth()*i + this->b->utils.getRightMargin(i)*i;
             int indicatorXTo = this->b->utils.getLeftMargin(i)*(i+1) + this->b->getColumnWidth()*(i+1) + this->b->utils.getRightMargin(i)*i;
 //            painter.drawLine(this->b->utils.getLeftMargin(i),this->b->utils.topMargin,this->b->getPageWidth() - this->b->utils.getRightMargin(i),this->b->utils.topMargin);
 //            painter.drawLine(this->b->utils.getLeftMargin(i),this->b->utils.topMargin+this->b->getColumnHeight(),this->b->getPageWidth() - this->b->utils.getRightMargin(i),this->b->utils.topMargin+this->b->getColumnHeight());
             painter.drawLine(indicatorXFrom, this->b->utils.topMargin, indicatorXTo, this->b->utils.topMargin);
-            painter.drawLine(indicatorXFrom, this->b->utils.topMargin+this->b->getColumnHeight(), indicatorXTo, this->b->utils.topMargin+this->b->getColumnHeight());
+//            painter.drawLine(indicatorXFrom, this->b->utils.topMargin+this->b->getColumnHeight(), indicatorXTo, this->b->utils.topMargin+this->b->getColumnHeight());
         }
 
 

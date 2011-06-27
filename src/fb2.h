@@ -37,6 +37,7 @@ public:
 	QList<QStringList> bookFormats;
         QHash<QString, QByteArray> binarys;
         QHash<QString, QHash<QString, QStringList> > footnotes;
+        QHash<QString, QList<int> > footnotesRange;
         QString coverPageId;
         QString authorFirstName;
         QString authorMiddleName;

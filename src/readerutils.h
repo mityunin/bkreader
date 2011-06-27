@@ -23,6 +23,11 @@ public:
         void readSettings();
         float getLeftMargin(int i);
         float getRightMargin(int i);
+        float getLeftPageIndent(int i);
+        float getRightPageIndent(int i);
+        float getTopPageIndent();
+        float getBottomPageIndent();
+//        float getPageIndent(int i=-1);
 
 	QHash<QString, int> wordsWidths;
 	QFont paragraphFont;
@@ -55,6 +60,11 @@ public:
         int     epigraphMargin;
         int     titleTopMargin;
         int     titleBottomMargin;
+        int     leftPageIndent;
+        int     rightPageIndent;
+        int     topPageIndent;
+        int     bottomPageIndent;
+        int     pageIndent;
 
         int     columnsGap;
         int     columnsNum;
