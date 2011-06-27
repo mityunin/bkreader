@@ -69,8 +69,8 @@ void PageTemplate::paintEvent(QPaintEvent *event)
 //        painter.setBrush(rectBrush);
 //        painter.drawRect(10, 10, this->b->pageWidth-10, this->b->pageHeight-10);
 
-        QPixmap bg(this->b->getPageWidth(), this->b->getPageHeight());
-        bg.fill(QColor(QColor("#C6C6C6")).rgb());
+//        QPixmap bg(this->b->getPageWidth(), this->b->getPageHeight());
+//        bg.fill(QColor(QColor("#C6C6C6")).rgb());
 
 //        bg.load(QApplication::applicationDirPath()+"/tiles/tile9.png");
 
@@ -103,7 +103,8 @@ void PageTemplate::paintEvent(QPaintEvent *event)
         {
 //            painter.drawTiledPixmap(this->b->utils.getLeftMargin(i)*i+this->b->getColumnWidth()*i+this->b->utils.getRightMargin(i)*(i+1), 0, this->b->utils.getLeftMargin(i)*(i+1)+this->b->getColumnWidth()*(i+1)+this->b->utils.getRightMargin(i)*(i+1),this->b->utils.topMargin+this->b->getColumnHeight()+this->b->utils.bottomMargin, bg);
 //            bgPixmapPainter.fillRect(this->b->getColumnLeftCoord(i), 0, this->b->getColumnRightCoord(i),this->b->utils.topMargin+this->b->getColumnHeight()+this->b->utils.bottomMargin, gradBg);
-            painter.drawPixmap(this->b->getColumnLeftCoord(i), 0, this->b->getColumnRightCoord(i),this->b->utils.topMargin+this->b->getColumnHeight()+this->b->utils.bottomMargin, bg);
+//            painter.drawPixmap(this->b->getColumnLeftCoord(i), 0, this->b->getColumnRightCoord(i),this->b->utils.topMargin+this->b->getColumnHeight()+this->b->utils.bottomMargin, bg);
+            painter.fillRect(this->b->getColumnLeftCoord(i), 0, this->b->getColumnRightCoord(i),this->b->utils.topMargin+this->b->getColumnHeight()+this->b->utils.bottomMargin, QBrush(QColor(QColor("#C6C6C6")).rgb()));
 
 //            bgPixmapPainter.fillRect(this->b->getColumnLeftCoord(i), 0, this->b->getColumnRightCoord(i),this->b->utils.topMargin+this->b->getColumnHeight()+this->b->utils.bottomMargin, gradBg);
 //                        painter.drawPixmap(this->b->getColumnLeftCoord(i), 0, this->b->getColumnRightCoord(i),this->b->utils.topMargin+this->b->getColumnHeight()+this->b->utils.bottomMargin, pageBg);
