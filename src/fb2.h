@@ -42,6 +42,7 @@ public:
         QString authorFirstName;
         QString authorMiddleName;
         QString authorLastName;
+        QString bookTitle;
 //        QHash<long, QStringList> contents;
         QStringList contents;
 

@@ -406,6 +406,36 @@ void fb2::loadTitleInfo(const QDomElement &element)
         {
             this->loadCoverPage(child);
         }
+        else if( child.tagName() == QLatin1String( "author" ) )
+        {
+            QDomElement childElement = child.firstChildElement();
+            while( !childElement.isNull() )
+            {
+                if( childElement.tagName() == QLatin1String("first-name") )
+                {
+                    QDomNode textNode = childElement.firstChild();
+                    this->authorFirstName = textNode.toText().data().trimmed();
+                }
+                else if( childElement.tagName() == QLatin1String("middle-name") )
+                {
+                    QDomNode textNode = childElement.firstChild();
+                    this->authorMiddleName = textNode.toText().data().trimmed();
+                }
+                else if( childElement.tagName() == QLatin1String("last-name") )
+                {
+                    QDomNode textNode = childElement.firstChild();
+                    this->authorLastName = textNode.toText().data().trimmed();
+                }
+                childElement = childElement.nextSiblingElement();
+            }
+
+        }
+        else if( child.tagName() == QLatin1String( "book-title" ) )
+        {
+            QDomNode childNode = child.firstChild();
+            this->bookTitle.append( childNode.toText().data().trimmed() );
+            int test = 0;
+        }
         child = child.nextSiblingElement();
     }
 }

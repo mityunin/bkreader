@@ -85,12 +85,11 @@ void PageTemplate::paintEvent(QPaintEvent *event)
         gradBg.setColorAt(1, QColor(QColor("#eeeeee")).rgb());
         QPainter bgPixmapPainter(&pageBg);
 
-
-        QPixmap pageBgShadow(this->b->getColumnWidth()-6, this->b->getColumnHeight()-6);
-        pageBgShadow.fill(QColor(QColor("#C6C6C6")).rgb());
+//        QPixmap pageBgShadow(this->b->getColumnWidth()-6, this->b->getColumnHeight()-6);
+//        pageBgShadow.fill(QColor(QColor("#C6C6C6")).rgb());
 
         QBrush pageBgBrush;
-        pageBgBrush.setColor(QColor("#808080"));
+        pageBgBrush.setColor(QColor("#aaaaaa").rgb());
         painter.setBrush(pageBgBrush);
 
         pen.setCosmetic(true);
@@ -101,35 +100,24 @@ void PageTemplate::paintEvent(QPaintEvent *event)
 
         for(int i=0;i<this->b->utils.columnsNum;i++)
         {
-//            painter.drawTiledPixmap(this->b->utils.getLeftMargin(i)*i+this->b->getColumnWidth()*i+this->b->utils.getRightMargin(i)*(i+1), 0, this->b->utils.getLeftMargin(i)*(i+1)+this->b->getColumnWidth()*(i+1)+this->b->utils.getRightMargin(i)*(i+1),this->b->utils.topMargin+this->b->getColumnHeight()+this->b->utils.bottomMargin, bg);
-//            bgPixmapPainter.fillRect(this->b->getColumnLeftCoord(i), 0, this->b->getColumnRightCoord(i),this->b->utils.topMargin+this->b->getColumnHeight()+this->b->utils.bottomMargin, gradBg);
-//            painter.drawPixmap(this->b->getColumnLeftCoord(i), 0, this->b->getColumnRightCoord(i),this->b->utils.topMargin+this->b->getColumnHeight()+this->b->utils.bottomMargin, bg);
+            //fill book background
             painter.fillRect(this->b->getColumnLeftCoord(i), 0, this->b->getColumnRightCoord(i),this->b->utils.topMargin+this->b->getColumnHeight()+this->b->utils.bottomMargin, QBrush(QColor(QColor("#C6C6C6")).rgb()));
 
-//            bgPixmapPainter.fillRect(this->b->getColumnLeftCoord(i), 0, this->b->getColumnRightCoord(i),this->b->utils.topMargin+this->b->getColumnHeight()+this->b->utils.bottomMargin, gradBg);
-//                        painter.drawPixmap(this->b->getColumnLeftCoord(i), 0, this->b->getColumnRightCoord(i),this->b->utils.topMargin+this->b->getColumnHeight()+this->b->utils.bottomMargin, pageBg);
-//            painter.drawTiledPixmap(this->b->getColumnLeftCoord(i), 0, this->b->getColumnRightCoord(i),this->b->utils.topMargin+this->b->getColumnHeight()+this->b->utils.bottomMargin, bg);
-
+            //fill page background
             int pageBgXFrom = this->b->getColumnLeftCoord(i) + pageBgIndent;
             int pageBgXTo = this->b->utils.getLeftMargin(i) + this->b->utils.getRightMargin(i) + this->b->getColumnWidth() - pageBgIndent*2;
-
-//            painter.drawPixmap(pageBgXFrom+2, pageBgIndent+2, pageBgXTo, this->b->getColumnHeight()+this->b->utils.topMargin+this->b->utils.bottomMargin-pageBgIndent*2,pageBgShadow);
-//            painter.drawPixmap(pageBgXFrom, pageBgIndent, pageBgXTo, this->b->getColumnHeight()+this->b->utils.topMargin+this->b->utils.bottomMargin-pageBgIndent*2,pageBg);
 
             bgPixmapPainter.fillRect(0, 0, this->b->getColumnWidth(), this->b->getColumnHeight(),gradBg);
             painter.drawPixmap(pageBgXFrom, pageBgIndent, pageBgXTo, this->b->getColumnHeight()+this->b->utils.topMargin+this->b->utils.bottomMargin-pageBgIndent*2,pageBg);
 
 
-            //draw book page rectangle
+            //draw page border rectangle
             painter.drawRect(pageBgXFrom, pageBgIndent, pageBgXTo, this->b->getColumnHeight()+this->b->utils.topMargin+this->b->utils.bottomMargin-pageBgIndent*2);
-//            painter.drawRect(pageBgXFrom, this->b->utils.getTopPageIndent(), pageBgXTo, this->b->getColumnHeight()+this->b->utils.topMargin+this->b->utils.bottomMargin-this->b->utils.getBottomPageIndent()*2);
 
+            //draw indicator line
             int indicatorXFrom = this->b->utils.getLeftMargin(i)*(i+1) + this->b->getColumnWidth()*i + this->b->utils.getRightMargin(i)*i;
             int indicatorXTo = this->b->utils.getLeftMargin(i)*(i+1) + this->b->getColumnWidth()*(i+1) + this->b->utils.getRightMargin(i)*i;
-//            painter.drawLine(this->b->utils.getLeftMargin(i),this->b->utils.topMargin,this->b->getPageWidth() - this->b->utils.getRightMargin(i),this->b->utils.topMargin);
-//            painter.drawLine(this->b->utils.getLeftMargin(i),this->b->utils.topMargin+this->b->getColumnHeight(),this->b->getPageWidth() - this->b->utils.getRightMargin(i),this->b->utils.topMargin+this->b->getColumnHeight());
             painter.drawLine(indicatorXFrom, this->b->utils.topMargin, indicatorXTo, this->b->utils.topMargin);
-//            painter.drawLine(indicatorXFrom, this->b->utils.topMargin+this->b->getColumnHeight(), indicatorXTo, this->b->utils.topMargin+this->b->getColumnHeight());
         }
 
 
@@ -215,7 +203,19 @@ void PageTemplate::paintEvent(QPaintEvent *event)
                 }
 	}
 
-        painter.drawText( this->b->utils.getLeftMargin(0), 0, this->b->getColumnWidth(), this->b->utils.topMargin, Qt::AlignVCenter, this->currentTitle );
+//        painter.drawText( this->b->utils.getLeftMargin(0), 0, this->b->getColumnWidth(), this->b->utils.topMargin, Qt::AlignVCenter, this->currentTitle );
+        QString bookInfo;
+        if( !this->b->fictionbook.authorFirstName.isEmpty() )
+            bookInfo = this->b->fictionbook.authorFirstName;
+
+        if( !this->b->fictionbook.authorLastName.isEmpty() )
+            bookInfo += QString(" ")+this->b->fictionbook.authorLastName;
+
+        if( !this->b->fictionbook.bookTitle.isEmpty() )
+            bookInfo += QString(" ")+this->b->fictionbook.bookTitle;
+
+
+        painter.drawText( this->b->utils.getLeftMargin(0), 0, this->b->getColumnWidth(), this->b->utils.topMargin, Qt::AlignVCenter, bookInfo.trimmed() );
 
         painter.drawText(this->b->utils.getLeftMargin(0), this->b->utils.topMargin+this->b->getColumnHeight(), this->b->getColumnWidth(), this->b->utils.bottomMargin, Qt::AlignVCenter, QString::number(this->b->currentPage)+" / "+QString::number(this->b->pages.length()));
 
