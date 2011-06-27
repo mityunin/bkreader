@@ -76,7 +76,15 @@ void PageTemplate::paintEvent(QPaintEvent *event)
 
         //draw book page picture
         QPixmap pageBg(this->b->getColumnWidth()-6, this->b->getColumnHeight()-6);
-        pageBg.fill(QColor(QColor(this->b->utils.bgcolor)).rgb());
+//        pageBg.fill(QColor(QColor(this->b->utils.bgcolor)).rgb());
+
+
+        QLinearGradient gradBg(this->b->getColumnWidth()*0.5, 0, this->b->getColumnWidth()*0.5, this->b->getColumnHeight());
+        gradBg.setColorAt(0, QColor(QColor("#ffffff")).rgb());
+        gradBg.setColorAt(0.7, QColor(QColor("#efefef")).rgb());
+        gradBg.setColorAt(1, QColor(QColor("#eeeeee")).rgb());
+        QPainter bgPixmapPainter(&pageBg);
+
 
         QPixmap pageBgShadow(this->b->getColumnWidth()-6, this->b->getColumnHeight()-6);
         pageBgShadow.fill(QColor(QColor("#C6C6C6")).rgb());
@@ -94,13 +102,22 @@ void PageTemplate::paintEvent(QPaintEvent *event)
         for(int i=0;i<this->b->utils.columnsNum;i++)
         {
 //            painter.drawTiledPixmap(this->b->utils.getLeftMargin(i)*i+this->b->getColumnWidth()*i+this->b->utils.getRightMargin(i)*(i+1), 0, this->b->utils.getLeftMargin(i)*(i+1)+this->b->getColumnWidth()*(i+1)+this->b->utils.getRightMargin(i)*(i+1),this->b->utils.topMargin+this->b->getColumnHeight()+this->b->utils.bottomMargin, bg);
-            painter.drawTiledPixmap(this->b->getColumnLeftCoord(i), 0, this->b->getColumnRightCoord(i),this->b->utils.topMargin+this->b->getColumnHeight()+this->b->utils.bottomMargin, bg);
+//            bgPixmapPainter.fillRect(this->b->getColumnLeftCoord(i), 0, this->b->getColumnRightCoord(i),this->b->utils.topMargin+this->b->getColumnHeight()+this->b->utils.bottomMargin, gradBg);
+            painter.drawPixmap(this->b->getColumnLeftCoord(i), 0, this->b->getColumnRightCoord(i),this->b->utils.topMargin+this->b->getColumnHeight()+this->b->utils.bottomMargin, bg);
+
+//            bgPixmapPainter.fillRect(this->b->getColumnLeftCoord(i), 0, this->b->getColumnRightCoord(i),this->b->utils.topMargin+this->b->getColumnHeight()+this->b->utils.bottomMargin, gradBg);
+//                        painter.drawPixmap(this->b->getColumnLeftCoord(i), 0, this->b->getColumnRightCoord(i),this->b->utils.topMargin+this->b->getColumnHeight()+this->b->utils.bottomMargin, pageBg);
+//            painter.drawTiledPixmap(this->b->getColumnLeftCoord(i), 0, this->b->getColumnRightCoord(i),this->b->utils.topMargin+this->b->getColumnHeight()+this->b->utils.bottomMargin, bg);
 
             int pageBgXFrom = this->b->getColumnLeftCoord(i) + pageBgIndent;
             int pageBgXTo = this->b->utils.getLeftMargin(i) + this->b->utils.getRightMargin(i) + this->b->getColumnWidth() - pageBgIndent*2;
 
 //            painter.drawPixmap(pageBgXFrom+2, pageBgIndent+2, pageBgXTo, this->b->getColumnHeight()+this->b->utils.topMargin+this->b->utils.bottomMargin-pageBgIndent*2,pageBgShadow);
+//            painter.drawPixmap(pageBgXFrom, pageBgIndent, pageBgXTo, this->b->getColumnHeight()+this->b->utils.topMargin+this->b->utils.bottomMargin-pageBgIndent*2,pageBg);
+
+            bgPixmapPainter.fillRect(0, 0, this->b->getColumnWidth(), this->b->getColumnHeight(),gradBg);
             painter.drawPixmap(pageBgXFrom, pageBgIndent, pageBgXTo, this->b->getColumnHeight()+this->b->utils.topMargin+this->b->utils.bottomMargin-pageBgIndent*2,pageBg);
+
 
             //draw book page rectangle
             painter.drawRect(pageBgXFrom, pageBgIndent, pageBgXTo, this->b->getColumnHeight()+this->b->utils.topMargin+this->b->utils.bottomMargin-pageBgIndent*2);
