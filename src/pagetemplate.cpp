@@ -205,14 +205,16 @@ void PageTemplate::paintEvent(QPaintEvent *event)
 
 //        painter.drawText( this->b->utils.getLeftMargin(0), 0, this->b->getColumnWidth(), this->b->utils.topMargin, Qt::AlignVCenter, this->currentTitle );
         QString bookInfo;
-        if( !this->b->fictionbook.authorFirstName.isEmpty() )
-            bookInfo = this->b->fictionbook.authorFirstName;
+        bookInfo.clear();
 
-        if( !this->b->fictionbook.authorLastName.isEmpty() )
-            bookInfo += QString(" ")+this->b->fictionbook.authorLastName;
+        if( !this->b->authorFirstName.isEmpty() )
+            bookInfo = this->b->authorFirstName;
 
-        if( !this->b->fictionbook.bookTitle.isEmpty() )
-            bookInfo += QString(" ")+this->b->fictionbook.bookTitle;
+        if( !this->b->authorLastName.isEmpty() )
+            bookInfo += QString(" ")+this->b->authorLastName+".";
+
+        if( !this->b->bookTitle.isEmpty() )
+            bookInfo += QString(" ")+this->b->bookTitle;
 
 
         painter.drawText( this->b->utils.getLeftMargin(0), 0, this->b->getColumnWidth(), this->b->utils.topMargin, Qt::AlignVCenter, bookInfo.trimmed() );

@@ -24,6 +24,7 @@ void fb2::loadFB2(QString filename)
         this->authorFirstName.clear();
         this->authorLastName.clear();
         this->authorMiddleName.clear();
+        this->bookTitle.clear();
         this->contents.clear();
 //        this->currentWord = 0;
 	

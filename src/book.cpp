@@ -76,6 +76,19 @@ void book::loadBook(QString filename)
         this->fictionbook.loadFB2(filename);
         this->bookParagraphs = this->fictionbook.bookParagraphs;
     }
+
+    if( !this->fictionbook.authorFirstName.isEmpty() )
+        this->authorFirstName = this->fictionbook.authorFirstName;
+
+    if( !this->fictionbook.authorMiddleName.isEmpty() )
+        this->authorMiddleName = this->fictionbook.authorMiddleName;
+
+    if( !this->fictionbook.authorLastName.isEmpty() )
+        this->authorLastName = this->fictionbook.authorLastName;
+
+    if( !this->fictionbook.bookTitle.isEmpty() )
+        this->bookTitle = this->fictionbook.bookTitle;
+
     this->processBook();
     if( filename.startsWith(QDir::tempPath()) )
         QFile::remove(filename);

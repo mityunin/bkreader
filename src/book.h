@@ -77,6 +77,10 @@ public:
 	QList<QList<PageLine> > pages;
         QString bookFileName;
         ReaderUtils utils;
+        QString authorFirstName;
+        QString authorMiddleName;
+        QString authorLastName;
+        QString bookTitle;
 	//QStringList paras
 };
 #endif
