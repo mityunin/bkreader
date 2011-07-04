@@ -81,6 +81,7 @@ public:
         QString authorMiddleName;
         QString authorLastName;
         QString bookTitle;
+        QString bookLang;
 	//QStringList paras
 };
 #endif

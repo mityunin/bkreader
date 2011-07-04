@@ -89,6 +89,11 @@ void book::loadBook(QString filename)
     if( !this->fictionbook.bookTitle.isEmpty() )
         this->bookTitle = this->fictionbook.bookTitle;
 
+    if( !this->fictionbook.bookLang.isEmpty() )
+        this->bookLang = this->fictionbook.bookLang;
+    else
+        this->bookLang = "ru";
+
     this->processBook();
     if( filename.startsWith(QDir::tempPath()) )
         QFile::remove(filename);
@@ -110,7 +115,8 @@ void book::breakLines()
 
     //create hyphenator object
     hyphenator hyph;
-    hyph.loadHyphPatterns(QString("ru"));
+//    hyph.loadHyphPatterns(QString("ru"));
+    hyph.loadHyphPatterns(this->bookLang);
 
     //i - iterator for bookFormats list
     int i=0;

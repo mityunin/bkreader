@@ -18,7 +18,12 @@ void hyphenator::loadHyphPatterns(QString lang)
     if(this->pats.size()>0) return;
 
 //    this->pats.clear();
-    QString filename = QDir::currentPath() + QString("/patterns/hyph-ru.pat.txt");
+    QString hyphPath = lang;
+    hyphPath.remove(".");
+    hyphPath.remove("\\");
+
+//    QString filename = QDir::currentPath() + QString("/patterns/hyph-ru.pat.txt");
+    QString filename = QDir::currentPath() + QString("/patterns/hyph-")+hyphPath+QString(".pat.txt");
 //    qDebug() << filename;
     QStringList pats;
     QFile f(filename);

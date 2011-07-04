@@ -26,6 +26,7 @@ void fb2::loadFB2(QString filename)
         this->authorMiddleName.clear();
         this->bookTitle.clear();
         this->contents.clear();
+        this->bookLang.clear();
 //        this->currentWord = 0;
 	
 	QDomDocument doc("fb2");
@@ -435,6 +436,12 @@ void fb2::loadTitleInfo(const QDomElement &element)
         {
             QDomNode childNode = child.firstChild();
             this->bookTitle.append( childNode.toText().data().trimmed() );
+//            int test = 0;
+        }
+        else if( child.tagName() == QLatin1String( "lang" ) )
+        {
+            QDomNode childNode = child.firstChild();
+            this->bookLang.append( childNode.toText().data().trimmed() );
             int test = 0;
         }
         child = child.nextSiblingElement();
