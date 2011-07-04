@@ -72,7 +72,7 @@ ReaderUtils::ReaderUtils(  )
     this->topPageIndent         = 8;
     this->bottomPageIndent      = 8;
 
-    QString configPath = QDir::homePath()+"/.config/MyReader/MyReader.conf";
+    QString configPath = QDir::homePath()+"/.config/bkreader/bkreader.conf";
     if(!QFile::exists(configPath))
         this->writeSettings();
 
@@ -100,7 +100,7 @@ void ReaderUtils::setWordWidth(QString key, int v, QString f)
 
 void ReaderUtils::writeSettings()
 {
-    QSettings settings("MyReader", "MyReader");
+    QSettings settings("bkreader", "bkreader");
 
     settings.setValue( "fonts/paragraphFontFamily", this->paragraphFont.family() );
     settings.setValue( "fonts/paragraphPointSize", this->paragraphFont.pointSize() );
@@ -174,7 +174,7 @@ void ReaderUtils::writeSettings()
 
 void ReaderUtils::readSettings()
 {
-    QSettings settings("MyReader", "MyReader");
+    QSettings settings("bkreader", "bkreader");
 
     this->paragraphFont.setFamily( settings.value( "fonts/paragraphFontFamily" ).toString() );
     this->paragraphFont.setPointSize( settings.value( "fonts/paragraphPointSize" ).toInt() );

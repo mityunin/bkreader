@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>428</width>
-    <height>281</height>
+    <height>331</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -48,6 +48,9 @@
            <widget class="QPushButton" name="butParagraphFont">
             <property name="text">
              <string>Font</string>
+            </property>
+            <property name="flat">
+             <bool>false</bool>
             </property>
            </widget>
           </item>
@@ -563,8 +566,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>252</x>
-     <y>291</y>
+     <x>256</x>
+     <y>326</y>
     </hint>
     <hint type="destinationlabel">
      <x>157</x>
@@ -579,8 +582,8 @@
    <slot>reject()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>320</x>
-     <y>291</y>
+     <x>324</x>
+     <y>326</y>
     </hint>
     <hint type="destinationlabel">
      <x>286</x>

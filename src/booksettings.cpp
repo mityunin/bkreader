@@ -1,6 +1,7 @@
 #include "booksettings.h"
 #include "ui_booksettings.h"
 #include <QSettings>
+#include <QFontDialog>
 
 BookSettings::BookSettings(QWidget *parent) :
     QDialog(parent),
@@ -11,16 +12,32 @@ BookSettings::BookSettings(QWidget *parent) :
 
 void BookSettings::loadSettings()
 {
-    QSettings settings("MyReader", "MyReader");
+    this->ui->editParagraphFont->setText( this->utils->paragraphFont.family() );
+    this->ui->editTitleFont->setText( this->utils->titleFont.family() );
+    this->ui->editSubtitleFont->setText( this->utils->subtitleFont.family() );
+    this->ui->editCiteFont->setText( this->utils->citeFont.family() );
+    this->ui->editPoemFont->setText( this->utils->poemFont.family() );
+    this->ui->editFootnoteFont->setText( this->utils->footnoteFont.family() );
+    this->ui->editIndicatorFont->setText( this->utils->indicatorFont.family() );
+    this->ui->editEpigraphFont->setText( this->utils->epigraphFont.family() );
 
-    this->ui->editParagraphFont->setText( settings.value( "fonts/paragraphFontFamily" ).toString() + " " + settings.value( "fonts/paragraphPointSize" ).toString() );
-    this->ui->editTitleFont->setText( settings.value( "fonts/titleFontFamily" ).toString() + " " + settings.value( "fonts/titlePointSize" ).toString() );
-    this->ui->editSubtitleFont->setText( settings.value( "fonts/subtitleFontFamily" ).toString() + " " + settings.value( "fonts/subtitlePointSize" ).toString() );
-    this->ui->editCiteFont->setText( settings.value( "fonts/citeFontFamily" ).toString() + " " + settings.value( "fonts/citePointSize" ).toString() );
-    this->ui->editPoemFont->setText( settings.value( "fonts/poemFontFamily" ).toString() + " " + settings.value( "fonts/poemPointSize" ).toString() );
-    this->ui->editFootnoteFont->setText( settings.value( "fonts/footnoteFontFamily" ).toString() + " " + settings.value( "fonts/footnotePointSize" ).toString() );
-    this->ui->editIndicatorFont->setText( settings.value( "fonts/indicatorFontFamily" ).toString() + " " + settings.value( "fonts/indicatorPointSize" ).toString() );
-    this->ui->editEpigraphFont->setText( settings.value( "fonts/epigraphFontFamily" ).toString() + " " + settings.value( "fonts/epigraphPointSize" ).toString() );
+    this->ui->sbLeftMargin->setValue( this->utils->leftMargin );
+    this->ui->sbRightMargin->setValue( this->utils->rightMargin );
+    this->ui->sbBottomMargin->setValue( this->utils->bottomMargin );
+    this->ui->sbTopMargin->setValue( this->utils->topMargin );
+    this->ui->sbCiteMargin->setValue( this->utils->citeMargin );
+    this->ui->sbEpigraphMargin->setValue( this->utils->epigraphMargin );
+    this->ui->sbPoemMargin->setValue( this->utils->poemMargin );
+//    QSettings settings("MyReader", "MyReader");
+
+//    this->ui->editParagraphFont->setText( settings.value( "fonts/paragraphFontFamily" ).toString() + " " + settings.value( "fonts/paragraphPointSize" ).toString() );
+//    this->ui->editTitleFont->setText( settings.value( "fonts/titleFontFamily" ).toString() + " " + settings.value( "fonts/titlePointSize" ).toString() );
+//    this->ui->editSubtitleFont->setText( settings.value( "fonts/subtitleFontFamily" ).toString() + " " + settings.value( "fonts/subtitlePointSize" ).toString() );
+//    this->ui->editCiteFont->setText( settings.value( "fonts/citeFontFamily" ).toString() + " " + settings.value( "fonts/citePointSize" ).toString() );
+//    this->ui->editPoemFont->setText( settings.value( "fonts/poemFontFamily" ).toString() + " " + settings.value( "fonts/poemPointSize" ).toString() );
+//    this->ui->editFootnoteFont->setText( settings.value( "fonts/footnoteFontFamily" ).toString() + " " + settings.value( "fonts/footnotePointSize" ).toString() );
+//    this->ui->editIndicatorFont->setText( settings.value( "fonts/indicatorFontFamily" ).toString() + " " + settings.value( "fonts/indicatorPointSize" ).toString() );
+//    this->ui->editEpigraphFont->setText( settings.value( "fonts/epigraphFontFamily" ).toString() + " " + settings.value( "fonts/epigraphPointSize" ).toString() );
 
 //    this->paragraphFont.setFamily( settings.value( "fonts/paragraphFontFamily" ).toString() );
 //    this->paragraphFont.setPointSize( settings.value( "fonts/paragraphPointSize" ).toInt() );
@@ -89,4 +106,157 @@ void BookSettings::loadSettings()
 BookSettings::~BookSettings()
 {
     delete ui;
+}
+
+void BookSettings::on_butParagraphFont_clicked()
+{
+    bool ok;
+    QFont font;
+    font = QFontDialog::getFont(&ok, this->utils->paragraphFont, this);
+    if(ok)
+    {
+        this->utils->paragraphFont = font;
+        this->utils->writeSettings();
+        this->loadSettings();
+    }
+}
+
+void BookSettings::on_butTitleFont_clicked()
+{
+    bool ok;
+    QFont font;
+    font = QFontDialog::getFont(&ok, this->utils->titleFont, this);
+    if(ok)
+    {
+        this->utils->titleFont = font;
+        this->utils->writeSettings();
+        this->loadSettings();
+    }
+}
+
+void BookSettings::on_butSubtitleFont_clicked()
+{
+    bool ok;
+    QFont font;
+    font = QFontDialog::getFont(&ok, this->utils->subtitleFont, this);
+    if(ok)
+    {
+        this->utils->subtitleFont = font;
+        this->utils->writeSettings();
+        this->loadSettings();
+    }
+}
+
+void BookSettings::on_butPoemFont_clicked()
+{
+    bool ok;
+    QFont font;
+    font = QFontDialog::getFont(&ok, this->utils->poemFont, this);
+    if(ok)
+    {
+        this->utils->poemFont = font;
+        this->utils->writeSettings();
+        this->loadSettings();
+    }
+}
+
+void BookSettings::on_butCiteFont_clicked()
+{
+    bool ok;
+    QFont font;
+    font = QFontDialog::getFont(&ok, this->utils->citeFont, this);
+    if(ok)
+    {
+        this->utils->citeFont = font;
+        this->utils->writeSettings();
+        this->loadSettings();
+    }
+}
+
+void BookSettings::on_butFootnoteFont_clicked()
+{
+    bool ok;
+    QFont font;
+    font = QFontDialog::getFont(&ok, this->utils->footnoteFont, this);
+    if(ok)
+    {
+        this->utils->footnoteFont = font;
+        this->utils->writeSettings();
+        this->loadSettings();
+    }
+}
+
+void BookSettings::on_butIndicatorFont_clicked()
+{
+    bool ok;
+    QFont font;
+    font = QFontDialog::getFont(&ok, this->utils->indicatorFont, this);
+    if(ok)
+    {
+        this->utils->indicatorFont = font;
+        this->utils->writeSettings();
+        this->loadSettings();
+    }
+}
+
+void BookSettings::on_butEpigraphFont_clicked()
+{
+    bool ok;
+    QFont font;
+    font = QFontDialog::getFont(&ok, this->utils->epigraphFont, this);
+    if(ok)
+    {
+        this->utils->epigraphFont = font;
+        this->utils->writeSettings();
+        this->loadSettings();
+    }
+}
+
+void BookSettings::on_sbLeftMargin_editingFinished()
+{
+    this->utils->leftMargin = this->ui->sbLeftMargin->value();
+    this->utils->writeSettings();
+    this->loadSettings();
+}
+
+void BookSettings::on_sbRightMargin_editingFinished()
+{
+    this->utils->leftMargin = this->ui->sbLeftMargin->value();
+    this->utils->writeSettings();
+    this->loadSettings();
+}
+
+void BookSettings::on_sbTopMargin_editingFinished()
+{
+    this->utils->topMargin = this->ui->sbTopMargin->value();
+    this->utils->writeSettings();
+    this->loadSettings();
+}
+
+void BookSettings::on_sbBottomMargin_editingFinished()
+{
+    this->utils->bottomMargin = this->ui->sbBottomMargin->value();
+    this->utils->writeSettings();
+    this->loadSettings();
+}
+
+void BookSettings::on_sbCiteMargin_editingFinished()
+{
+    this->utils->citeMargin = this->ui->sbCiteMargin->value();
+    this->utils->writeSettings();
+    this->loadSettings();
+}
+
+void BookSettings::on_sbPoemMargin_editingFinished()
+{
+    this->utils->poemMargin = this->ui->sbPoemMargin->value();
+    this->utils->writeSettings();
+    this->loadSettings();
+}
+
+void BookSettings::on_sbEpigraphMargin_editingFinished()
+{
+    this->utils->epigraphMargin = this->ui->sbEpigraphMargin->value();
+    this->utils->writeSettings();
+    this->loadSettings();
 }
