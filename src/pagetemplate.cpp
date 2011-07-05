@@ -57,22 +57,8 @@ void PageTemplate::paintEvent(QPaintEvent *event)
             painter.rotate( 90 );
             break;
         }
-//    int isAntialiased = 0;
-//        if( isAntialiased )
+
         painter.setRenderHints(QPainter::Antialiasing | QPainter::TextAntialiasing | QPainter::HighQualityAntialiasing | QPainter::SmoothPixmapTransform, true);
-
-//        painter.drawLine(this->b->utils.getLeftMargin(i), this->b->getColumnHeight(), this->b->utils.getLeftMargin(i)+this->b->getColumnWidth(), this->b->getColumnHeight());
-//       painter.drawLine(0, this->b->utils.topMargin, this->b->getColumnWidth(), this->b->utils.topMargin);
-
-//        QBrush rectBrush;
-//        rectBrush.setColor(Qt::green);
-//        painter.setBrush(rectBrush);
-//        painter.drawRect(10, 10, this->b->pageWidth-10, this->b->pageHeight-10);
-
-//        QPixmap bg(this->b->getPageWidth(), this->b->getPageHeight());
-//        bg.fill(QColor(QColor("#C6C6C6")).rgb());
-
-//        bg.load(QApplication::applicationDirPath()+"/tiles/tile9.png");
 
         //draw book page picture
         QPixmap pageBg(this->b->getColumnWidth()-6, this->b->getColumnHeight()-6);
@@ -80,9 +66,11 @@ void PageTemplate::paintEvent(QPaintEvent *event)
 
 
         QLinearGradient gradBg(this->b->getColumnWidth()*0.5, 0, this->b->getColumnWidth()*0.5, this->b->getColumnHeight());
-        gradBg.setColorAt(0, QColor(QColor("#ffffff")).rgb());
-        gradBg.setColorAt(0.7, QColor(QColor("#efefef")).rgb());
-        gradBg.setColorAt(1, QColor(QColor("#eeeeee")).rgb());
+//        gradBg.setColorAt(0, QColor(QColor("#ffffff")).rgb());
+        gradBg.setColorAt(0, QColor(QColor( this->b->utils.bgColorFrom )).rgb());
+//        gradBg.setColorAt(0.7, QColor(QColor("#efefef")).rgb());
+//        gradBg.setColorAt(1, QColor(QColor("#eeeeee")).rgb());
+        gradBg.setColorAt(1, QColor(QColor( this->b->utils.bgColorTo )).rgb());
         QPainter bgPixmapPainter(&pageBg);
 
 //        QPixmap pageBgShadow(this->b->getColumnWidth()-6, this->b->getColumnHeight()-6);

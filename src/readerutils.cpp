@@ -42,7 +42,6 @@ ReaderUtils::ReaderUtils(  )
     this->epigraphFont.setFamily("Arial");
     this->epigraphFont.setItalic(true);
 
-    this->paragraphLineSpacing  = 1.3;
     this->isTitleInUpperCase    = true;
     this->hyphsIsOn             = true;
     this->indentValue           = 4;
@@ -66,6 +65,8 @@ ReaderUtils::ReaderUtils(  )
 
     this->bgcolor               = "#ffffff";
     this->paracolor             = "#333333";
+    this->bgColorFrom           = "#ffffff";
+    this->bgColorTo             = "#eeeeee";
 
     this->leftPageIndent        = 8;
     this->rightPageIndent       = 8;
@@ -170,6 +171,8 @@ void ReaderUtils::writeSettings()
 
     settings.setValue( "read/bgcolor", this->bgcolor );
     settings.setValue( "read/paracolor", this->paracolor );
+    settings.setValue( "read/bgColorFrom", this->bgColorFrom );
+    settings.setValue( "read/bgColorTo", this->bgColorTo );
 }
 
 void ReaderUtils::readSettings()
@@ -243,6 +246,9 @@ void ReaderUtils::readSettings()
 
     this->bgcolor = settings.value( "read/bgcolor" ).toString();
     this->paracolor = settings.value( "read/paracolor" ).toString();
+    this->bgColorFrom = settings.value( "read/bgColorFrom" ).toString();
+    this->bgColorTo = settings.value( "read/bgColorTo" ).toString();
+
     this->moveBigImages = settings.value( "read/moveBigImages" ).toBool();
 }
 

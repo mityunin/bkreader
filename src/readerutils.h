@@ -72,6 +72,8 @@ public:
         int     rotateValue; //0 - normal, 1 - -90, 2 - 90
         bool    moveBigImages;
         QString bgcolor;
+        QString bgColorFrom;
+        QString bgColorTo;
         QString paracolor;
 //        QSettings settings;
 };

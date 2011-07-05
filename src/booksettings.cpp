@@ -2,6 +2,7 @@
 #include "ui_booksettings.h"
 #include <QSettings>
 #include <QFontDialog>
+#include <QColorDialog>
 
 BookSettings::BookSettings(QWidget *parent) :
     QDialog(parent),
@@ -28,6 +29,20 @@ void BookSettings::loadSettings()
     this->ui->sbCiteMargin->setValue( this->utils->citeMargin );
     this->ui->sbEpigraphMargin->setValue( this->utils->epigraphMargin );
     this->ui->sbPoemMargin->setValue( this->utils->poemMargin );
+
+    this->ui->editParagraphColor->setText( this->utils->paracolor );
+    this->ui->editBgColorFrom->setText( this->utils->bgColorFrom );
+    this->ui->editBgColorTo->setText( this->utils->bgColorTo );
+
+    this->ui->cbTitleInUppercase->setChecked( this->utils->isTitleInUpperCase );
+    this->ui->cbHyphsIsOn->setChecked( this->utils->hyphsIsOn );
+    this->ui->cbMoveBigImages->setChecked( this->utils->moveBigImages );
+
+    this->ui->sbIndentValue->setValue( this->utils->indentValue );
+    this->ui->sbColumnsNum->setValue( this->utils->columnsNum );
+    this->ui->sbRotateValue->setValue( this->utils->rotateValue );
+
+    this->ui->sbParagraphLineSpacing->setValue( this->utils->paragraphLineSpacing );
 //    QSettings settings("MyReader", "MyReader");
 
 //    this->ui->editParagraphFont->setText( settings.value( "fonts/paragraphFontFamily" ).toString() + " " + settings.value( "fonts/paragraphPointSize" ).toString() );
@@ -257,6 +272,82 @@ void BookSettings::on_sbPoemMargin_editingFinished()
 void BookSettings::on_sbEpigraphMargin_editingFinished()
 {
     this->utils->epigraphMargin = this->ui->sbEpigraphMargin->value();
+    this->utils->writeSettings();
+    this->loadSettings();
+}
+
+void BookSettings::on_butParagraphColor_clicked()
+{
+    QColor color;
+    color = QColorDialog::getColor(QColor( QColor(this->utils->paracolor).rgb() ));
+    this->utils->paracolor = color.name();
+    this->utils->writeSettings();
+    this->loadSettings();
+}
+
+void BookSettings::on_butBgColorFrom_clicked()
+{
+    QColor color;
+    color = QColorDialog::getColor(QColor( QColor(this->utils->bgColorFrom).rgb() ));
+    this->utils->bgColorFrom = color.name();
+    this->utils->writeSettings();
+    this->loadSettings();
+}
+
+void BookSettings::on_butBgColorTo_clicked()
+{
+    QColor color;
+    color = QColorDialog::getColor(QColor( QColor(this->utils->bgColorTo).rgb() ));
+    this->utils->bgColorTo = color.name();
+    this->utils->writeSettings();
+    this->loadSettings();
+}
+
+void BookSettings::on_cbTitleInUppercase_toggled(bool checked)
+{
+    this->utils->isTitleInUpperCase = checked;
+    this->utils->writeSettings();
+    this->loadSettings();
+}
+
+void BookSettings::on_cbHyphsIsOn_toggled(bool checked)
+{
+    this->utils->hyphsIsOn = checked;
+    this->utils->writeSettings();
+    this->loadSettings();
+}
+
+void BookSettings::on_cbMoveBigImages_toggled(bool checked)
+{
+    this->utils->moveBigImages = checked;
+    this->utils->writeSettings();
+    this->loadSettings();
+}
+
+void BookSettings::on_sbColumnsNum_editingFinished()
+{
+    this->utils->columnsNum = this->ui->sbColumnsNum->value();
+    this->utils->writeSettings();
+    this->loadSettings();
+}
+
+void BookSettings::on_sbIndentValue_editingFinished()
+{
+    this->utils->indentValue = this->ui->sbIndentValue->value();
+    this->utils->writeSettings();
+    this->loadSettings();
+}
+
+void BookSettings::on_sbRotateValue_editingFinished()
+{
+    this->utils->rotateValue = this->ui->sbRotateValue->value();
+    this->utils->writeSettings();
+    this->loadSettings();
+}
+
+void BookSettings::on_sbParagraphLineSpacing_editingFinished()
+{
+    this->utils->paragraphLineSpacing = this->ui->sbParagraphLineSpacing->value();
     this->utils->writeSettings();
     this->loadSettings();
 }

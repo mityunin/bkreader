@@ -98,7 +98,12 @@ QStringList PageLine::create( QStringList words, QString indent, QString f, floa
 		}
                 else
                 {
-                    QStringList hyphedWord = hyph.hyphenateWord(word);
+                    QStringList hyphedWord;
+                    if( utils.hyphsIsOn )
+                        hyphedWord = hyph.hyphenateWord(word);
+                    else
+                        hyphedWord = QStringList(word);
+
                     if(!hyphedWord.isEmpty())
                     {
                         for(int i=hyphedWord.size()-1;i>=0;i--)

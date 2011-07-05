@@ -39,6 +39,16 @@ private slots:
     void on_sbCiteMargin_editingFinished();
     void on_sbPoemMargin_editingFinished();
     void on_sbEpigraphMargin_editingFinished();
+    void on_butParagraphColor_clicked();
+    void on_butBgColorFrom_clicked();
+    void on_butBgColorTo_clicked();
+    void on_cbTitleInUppercase_toggled(bool checked);
+    void on_cbHyphsIsOn_toggled(bool checked);
+    void on_cbMoveBigImages_toggled(bool checked);
+    void on_sbColumnsNum_editingFinished();
+    void on_sbIndentValue_editingFinished();
+    void on_sbRotateValue_editingFinished();
+    void on_sbParagraphLineSpacing_editingFinished();
 };
 
 #endif // BOOKSETTINGS_H

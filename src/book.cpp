@@ -112,6 +112,7 @@ void book::breakLines()
     timer.start();
     this->lines.clear();
     this->footnotes.clear();
+    this->utils.wordsWidths.clear();
 
     //create hyphenator object
     hyphenator hyph;
