@@ -17,6 +17,7 @@ Library::Library(QWidget *parent) :
     ui(new Ui::Library)
 {
     ui->setupUi(this);
+    this->currentBookFilename.clear();
     this->readLibrary();
     this->showLibrary();
 }
@@ -26,8 +27,14 @@ Library::~Library()
     delete ui;
 }
 
-void Library::on_pushButton_3_clicked()
+void Library::on_butRefreshLibrary_clicked()
 {
+    this->bookAuthors.clear();
+    this->bookExtensions.clear();
+    this->bookFilenames.clear();
+    this->bookLangs.clear();
+    this->bookNames.clear();
+
     QStringList fileFilters;
     fileFilters.append(QString("*.fb2"));
     fileFilters.append(QString("*.txt"));
@@ -224,6 +231,7 @@ void Library::writeLibrary()
         settings.setValue( QString("bookAuthors/"+key), this->bookAuthors[key] );
         settings.setValue( QString("bookExtensions/"+key), this->bookExtensions[key] );
         settings.setValue( QString("bookLangs/"+key), this->bookLangs[key] );
+        settings.setValue( QString("bookFilenames/"+key), this->bookFilenames[key] );
     }
 }
 
@@ -249,7 +257,7 @@ void Library::readLibrary()
         this->bookExtensions[key] = settings.value( QString("bookExtensions/")+key ).toString();
         this->bookLangs[key] = settings.value( QString("bookLangs/")+key ).toString();
         this->bookNames[key] = settings.value( QString("bookNames/")+key ).toString();
-//        this->bookFilenames[key] = settings.value( QString("bookAuthors/")+key ).toString();
+        this->bookFilenames[key] = settings.value( QString("bookFilenames/")+key ).toString();
     }
 }
 
@@ -281,9 +289,27 @@ void Library::on_treeBookLibrary_itemClicked(QTreeWidgetItem *item, int column)
     QString bookAuthor = this->bookAuthors[key];
     QString bookExtension = this->bookExtensions[key];
     QString bookLang = this->bookLangs[key];
+    QString bookFilename = this->bookFilenames[key];
 
     this->ui->labBookAuthor->setText(bookAuthor);
     this->ui->labBookName->setText(bookName);
     this->ui->labBookExtension->setText(bookExtension);
     this->ui->labBookLang->setText(bookLang);
+    this->ui->labFilename->setText(bookFilename);
+
+    if( !bookFilename.isEmpty() )
+        this->currentBookFilename = bookFilename;
+    else
+        this->currentBookFilename.clear();
+}
+
+void Library::on_butLoadBook_clicked()
+{
+    this->close();
+}
+
+void Library::on_butClose_clicked()
+{
+    this->currentBookFilename.clear();
+    this->close();
 }

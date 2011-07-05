@@ -23,11 +23,16 @@ public:
     QHash<QString, QString> bookAuthors;
     QHash<QString, QString> bookFilenames;
     QHash<QString, QString> bookLangs;
+    QString currentBookFilename;
 
 private slots:
-    void on_pushButton_3_clicked();
+    void on_butRefreshLibrary_clicked();
 
     void on_treeBookLibrary_itemClicked(QTreeWidgetItem *item, int column);
+
+    void on_butLoadBook_clicked();
+
+    void on_butClose_clicked();
 
 private:
     Ui::Library *ui;

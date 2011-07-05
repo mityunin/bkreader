@@ -462,7 +462,14 @@ void PageTemplate::openLibrarySlot()
 //        libraryWin->utils = &this->b->utils;
 //        libraryWin->loadSettings();
 
-        libraryWin->show();
+        libraryWin->exec();
+        QString filename = libraryWin->currentBookFilename;
+        if( !filename.isEmpty() )
+        {
+            this->b->bookFileName = filename;
+            this->b->loadBook(filename);
+            this->b->saveBookPosition();
+        }
 }
 
 //
