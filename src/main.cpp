@@ -16,12 +16,15 @@ int main(int argc, char ** argv)
         QMenu fileMenu("File");
 
         QAction *openBookAction = new QAction(("Open book"), win);
+        QAction *openLibraryAction = new QAction(("Library"), win);
         fileMenu.addAction(openBookAction);
+        fileMenu.addAction(openLibraryAction);
 //        fileMenu.addAction("Open book", )
         fileMenu.addSeparator();
         fileMenu.addAction("Quit");
 
         win->connect(openBookAction, SIGNAL(triggered()), &tmplt, SLOT(openBookSlot()));
+        win->connect(openLibraryAction, SIGNAL(triggered()), &tmplt, SLOT(openLibrarySlot()));
 
         QMenu prefMenu("Settings");
         prefMenu.addAction("Fonts +");

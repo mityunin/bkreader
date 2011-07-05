@@ -6,7 +6,8 @@ OBJECTS_DIR = build
 MOC_DIR = build
 UI_DIR = build
 FORMS = ui/mainwindow.ui \
-    src/booksettings.ui
+    src/booksettings.ui \
+    src/library.ui
 HEADERS = src/mainwindowimpl.h \
  src/book.h \
  src/pageline.h \
@@ -21,7 +22,8 @@ HEADERS = src/mainwindowimpl.h \
     src/osdab-zip/zip_p.h \
     src/osdab-zip/zip.h \
     src/osdab-zip/unzip_p.h \
-    src/osdab-zip/unzip.h
+    src/osdab-zip/unzip.h \
+    src/library.h
 SOURCES = src/mainwindowimpl.cpp \
  src/main.cpp \
  src/book.cpp \
@@ -34,7 +36,8 @@ SOURCES = src/mainwindowimpl.cpp \
     src/hyphenator.cpp \
     src/osdab-zip/zipglobal.cpp \
     src/osdab-zip/zip.cpp \
-    src/osdab-zip/unzip.cpp
+    src/osdab-zip/unzip.cpp \
+    src/library.cpp
 
 
 

@@ -455,4 +455,14 @@ void PageTemplate::openSettingsWindow()
         settingsWin->show();
 }
 
+void PageTemplate::openLibrarySlot()
+{
+        Library *libraryWin = new Library();
+
+//        libraryWin->utils = &this->b->utils;
+//        libraryWin->loadSettings();
+
+        libraryWin->show();
+}
+
 //

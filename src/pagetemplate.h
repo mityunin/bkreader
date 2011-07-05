@@ -12,6 +12,7 @@
 #include "pageline.h"
 #include "book.h"
 #include "booksettings.h"
+#include "library.h"
 
 //
 class PageTemplate: public QWidget
@@ -48,6 +49,7 @@ public slots:
         void showTime();
         void openBookSlot();
         void openSettingsWindow();
+        void openLibrarySlot();
 //        void setAntialias();
 };
 #endif
