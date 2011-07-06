@@ -5,6 +5,7 @@
 #include <QHash>
 #include <QList>
 #include <QTreeWidget>
+#include <QPixmap>
 
 namespace Ui {
     class Library;
@@ -23,6 +24,7 @@ public:
     QHash<QString, QString> bookAuthors;
     QHash<QString, QString> bookFilenames;
     QHash<QString, QString> bookLangs;
+    QHash<QString, QString> bookCoverpages;
     QString currentBookFilename;
 
 private slots:
@@ -40,6 +42,7 @@ private:
     void writeLibrary();
     void readLibrary();
     void showLibrary();
+    QByteArray loadFB2Coverpage(QString id, QString filename);
 //    QStringList loadFB2Description(QString filename);
 };
 

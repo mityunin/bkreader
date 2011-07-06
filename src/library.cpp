@@ -54,6 +54,7 @@ void Library::on_butRefreshLibrary_clicked()
             this->bookLangs[dir_iterator.fileInfo().absoluteFilePath()] = fb2info[2];
             this->bookExtensions[dir_iterator.fileInfo().absoluteFilePath()] = QString("fb2");
             this->bookFilenames[dir_iterator.fileInfo().absoluteFilePath()] = dir_iterator.fileInfo().absoluteFilePath();
+            this->bookCoverpages[dir_iterator.fileInfo().absoluteFilePath()] = fb2info[3];
         }
         else if( dir_iterator.fileInfo().suffix() == QLatin1String("txt") )
         {
@@ -62,6 +63,7 @@ void Library::on_butRefreshLibrary_clicked()
             this->bookLangs[dir_iterator.fileInfo().absoluteFilePath()] = QString("");
             this->bookExtensions[dir_iterator.fileInfo().absoluteFilePath()] = QString("txt");
             this->bookFilenames[dir_iterator.fileInfo().absoluteFilePath()] = dir_iterator.fileInfo().absoluteFilePath();
+            this->bookCoverpages[dir_iterator.fileInfo().absoluteFilePath()] = QString("");
         }
         else if( dir_iterator.fileInfo().suffix() == QLatin1String("zip") )
         {
@@ -89,6 +91,7 @@ void Library::on_butRefreshLibrary_clicked()
                         this->bookLangs[dir_iterator.fileInfo().absoluteFilePath()] = fb2info[2];
                         this->bookExtensions[dir_iterator.fileInfo().absoluteFilePath()] = QString("zip/fb2");
                         this->bookFilenames[dir_iterator.fileInfo().absoluteFilePath()] = dir_iterator.fileInfo().absoluteFilePath();
+                        this->bookCoverpages[dir_iterator.fileInfo().absoluteFilePath()] = fb2info[3];
                     }
                 }
                 else
@@ -106,10 +109,11 @@ void Library::on_butRefreshLibrary_clicked()
 
 QStringList Library::loadFB2FileInfo(QString filename)
 {
-    QStringList fb2info; //0 - bookName, 1 - bookAuthor, 2 - lang
+    QStringList fb2info; //0 - bookName, 1 - bookAuthor, 2 - lang, 3 - coverpage
     fb2info.append("Unknown");
     fb2info.append("Unknown");
     fb2info.append("ru");
+    fb2info.append("");
 
     QString authorFirstName;
     QString authorMiddleName;
@@ -161,6 +165,9 @@ QStringList Library::loadFB2FileInfo(QString filename)
                             if( childTitle.tagName() == QLatin1String( "coverpage" ) )
                             {
 //                                this->loadCoverPage(child);
+                                QDomElement childCoverpage = childTitle.firstChildElement();
+                                QString id = childCoverpage.attribute( "l:href" );
+                                fb2info[3] = id.right( id.count() - 1 );
                             }
                             else if( childTitle.tagName() == QLatin1String( "author" ) )
                             {
@@ -232,6 +239,7 @@ void Library::writeLibrary()
         settings.setValue( QString("bookExtensions/"+key), this->bookExtensions[key] );
         settings.setValue( QString("bookLangs/"+key), this->bookLangs[key] );
         settings.setValue( QString("bookFilenames/"+key), this->bookFilenames[key] );
+        settings.setValue( QString("bookCoverpages/"+key), this->bookCoverpages[key] );
     }
 }
 
@@ -258,6 +266,7 @@ void Library::readLibrary()
         this->bookLangs[key] = settings.value( QString("bookLangs/")+key ).toString();
         this->bookNames[key] = settings.value( QString("bookNames/")+key ).toString();
         this->bookFilenames[key] = settings.value( QString("bookFilenames/")+key ).toString();
+        this->bookCoverpages[key] = settings.value( QString("bookCoverpages/")+key ).toString();
     }
 }
 
@@ -290,6 +299,7 @@ void Library::on_treeBookLibrary_itemClicked(QTreeWidgetItem *item, int column)
     QString bookExtension = this->bookExtensions[key];
     QString bookLang = this->bookLangs[key];
     QString bookFilename = this->bookFilenames[key];
+    QString bookCoverpage = this->bookCoverpages[key];
 
     this->ui->labBookAuthor->setText(bookAuthor);
     this->ui->labBookName->setText(bookName);
@@ -301,6 +311,47 @@ void Library::on_treeBookLibrary_itemClicked(QTreeWidgetItem *item, int column)
         this->currentBookFilename = bookFilename;
     else
         this->currentBookFilename.clear();
+
+    if( !bookCoverpage.isEmpty() )
+    {
+        QByteArray coverpage = this->loadFB2Coverpage(bookCoverpage, bookFilename);
+        if( !coverpage.isEmpty() )
+        {
+            QPixmap pixmap;
+            pixmap.loadFromData(coverpage);
+            int h = this->ui->gvBookCoverpage->height();
+            int w = this->ui->gvBookCoverpage->width();
+
+            int hp = pixmap.height();
+            int wp = pixmap.width();
+            int aspectp = float(wp)/hp;
+
+            if( aspectp <= 1 )
+            {
+                pixmap = pixmap.scaledToHeight(h);
+                if( pixmap.width() > w )
+                    pixmap = pixmap.scaledToWidth(w);
+            }
+            else
+            {
+                pixmap = pixmap.scaledToWidth(w);
+                if( pixmap.height() > h )
+                    pixmap = pixmap.scaledToHeight(h);
+            }
+
+            QGraphicsScene *scene = new QGraphicsScene();
+            this->ui->gvBookCoverpage->setScene(scene);
+            scene->addPixmap(pixmap);
+        }
+        else
+        {
+            this->ui->gvBookCoverpage->scene()->clear();
+        }
+    }
+    else
+    {
+        this->ui->gvBookCoverpage->scene()->clear();
+    }
 }
 
 void Library::on_butLoadBook_clicked()
@@ -312,4 +363,75 @@ void Library::on_butClose_clicked()
 {
     this->currentBookFilename.clear();
     this->close();
+}
+
+QByteArray Library::loadFB2Coverpage(QString id, QString filename)
+{
+
+    if( filename.right(3) == QLatin1String("zip") )
+    {
+        UnZip unzip;
+        UnZip::ErrorCode ec = unzip.openArchive(filename);
+
+        if( ec != UnZip::Ok )
+            return QByteArray();
+
+        QStringList filesInArchive = unzip.fileList();
+
+        if( filesInArchive.count() > 0 )
+        {
+            if( filesInArchive.at(0).contains(QString(".fb2")) )
+            {
+                filename = filesInArchive.at(0);
+                ec = unzip.extractFile(filename, QDir::tempPath());
+                if( ec == UnZip::Ok )
+                {
+                    filename = QDir::tempPath()+QString("/")+filename;
+                    unzip.closeArchive();
+                }
+            }
+            else
+            {
+                return QByteArray();
+            }
+        }
+    }
+
+
+    QDomDocument doc("fb2");
+    //QFile f("/home/sa/bookc/test.fb2");
+    QFile f(filename);
+    if(!f.open(QIODevice::ReadOnly))
+        return QByteArray();
+    if(!doc.setContent(&f))
+    {
+            f.close();
+            return QByteArray();
+    }
+    f.close();
+
+    const QDomElement docElement = doc.documentElement();
+
+    QDomElement element = docElement.firstChildElement();
+    while( !element.isNull() )
+    {
+        if( element.tagName() == QLatin1String( "binary" ) )
+        {
+            QDomElement childCoverpage = element.firstChildElement();
+            QString binaryId = element.attribute( "id" );
+//            QString binaryId = childCoverpage.attribute( "id" );
+            if( binaryId == id )
+            {
+                const QDomText text = element.firstChild().toText();
+                QByteArray data = text.data().toLatin1();
+                data = QByteArray::fromBase64( data );
+
+                return data;
+            }
+        }
+        element = element.nextSiblingElement();
+    }
+
+    return QByteArray();
+
 }
