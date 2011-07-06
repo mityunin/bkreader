@@ -45,4 +45,9 @@ unix:!macx:!symbian: LIBS += -lz
 
 OTHER_FILES += \
     bin/patterns/hyph-ru.pat.txt \
-    bin/patterns/hyph-en.pat.txt
+    bin/patterns/hyph-en.pat.txt \
+    COPYING.GPLv2 \
+    bin/CMakeCache.txt \
+    src/osdab-zip/README \
+    src/osdab-zip/osdabzip.shared.pro \
+    src/osdab-zip/LICENSE.GPL
