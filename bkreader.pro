@@ -42,3 +42,7 @@ SOURCES = src/mainwindowimpl.cpp \
 
 
 unix:!macx:!symbian: LIBS += -lz
+
+OTHER_FILES += \
+    bin/patterns/hyph-ru.pat.txt \
+    bin/patterns/hyph-en.pat.txt
