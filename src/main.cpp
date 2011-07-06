@@ -44,11 +44,11 @@ int main(int argc, char ** argv)
         win->connect(openLibraryAction, SIGNAL(triggered()), &tmplt, SLOT(openLibrarySlot()));
 
         QMenu prefMenu("Settings");
-        prefMenu.addAction("Fonts +");
-        prefMenu.addAction("Fonts -");
-        prefMenu.addAction("Linespacing +");
-        prefMenu.addAction("Linespacing -");
-        prefMenu.addSeparator();
+//        prefMenu.addAction("Fonts +");
+//        prefMenu.addAction("Fonts -");
+//        prefMenu.addAction("Linespacing +");
+//        prefMenu.addAction("Linespacing -");
+//        prefMenu.addSeparator();
 //        prefMenu.addAction("Settings");
         QAction *openSettingsAction = new QAction(("Settings"), win);
         prefMenu.addAction(openSettingsAction);

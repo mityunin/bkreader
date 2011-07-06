@@ -34,8 +34,6 @@
 #include <QtGui/QFontMetrics>
 #include <QtCore/QTime>
 #include <QTextStream>
-//#include "quazip/quazip.h"
-//#include "quazip/quazipfile.h"
 #include "osdab-zip/unzip.h"
 //
 book::book(  ) 

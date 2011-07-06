@@ -104,7 +104,6 @@ int ReaderUtils::getWordWidth(QString key, QString f)
 	int v = this->wordsWidths[key];
 	if( v )
 	{
-		//std::cout << qPrintable( QString::number(this->wordsWidths.size())) << std::endl;
 		return v;
 	}
 	return -1;
@@ -311,16 +310,5 @@ float ReaderUtils::getBottomPageIndent()
 {
     return this->bottomPageIndent;
 }
-
-//float ReaderUtils::getPageIndent(int i=-1)
-//{
-//    //i == - 1 ---- top or bottom page indent
-//    if( i == -1 )
-//        return this->pageIndent;
-//    else
-//        return this->pageIndent;
-
-////    if( i == 0 )
-//}
 
 //
