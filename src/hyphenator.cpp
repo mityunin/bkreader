@@ -40,7 +40,20 @@ void hyphenator::loadHyphPatterns(QString lang)
     hyphPath.remove("\\");
 
 //    QString filename = QDir::currentPath() + QString("/patterns/hyph-ru.pat.txt");
-    QString filename = QDir::currentPath() + QString("/patterns/hyph-")+hyphPath+QString(".pat.txt");
+//    bool shareDirExists = QDir::exists(QString("/usr/share/bkreader/patterns"));
+//    bool localPatternsDirExists = QDir::exists(QDir::homePath()+QString("/.config/bkreader/patterns"));
+//    QString localPatternsDir = QDir::exists(QDir::homePath()+QString("/.config/bkreader/patterns/");
+
+//    if( shareDirExists && !localPatternsDirExists )
+//    {
+//        foreach( QString patternFile, QDir::entryList() )
+//        {
+//            QFile::copy(patternFile, localPatternsDir+patternFile );
+//        }
+//    }
+//    QString filename = QDir::homePath()+QString("/.config/bkreader/patterns/hyph-")+hyphPath+QString(".pat.txt");
+    QString filename = QString("/usr/share/bkreader/patterns/hyph-")+hyphPath+QString(".pat.txt");
+//    QString filename = QDir::currentPath() + QString("/patterns/hyph-")+hyphPath+QString(".pat.txt");
 //    qDebug() << filename;
     QStringList pats;
     QFile f(filename);
