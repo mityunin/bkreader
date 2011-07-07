@@ -57,7 +57,7 @@ void Library::on_butRefreshLibrary_clicked()
     fileFilters.append(QString("*.txt"));
     fileFilters.append(QString("*.zip"));
 
-    QDirIterator dir_iterator(QString( "/home/sa/Downloads" ), fileFilters, QDir::Files | QDir::NoSymLinks, QDirIterator::Subdirectories );
+    QDirIterator dir_iterator(QString( "/home/sa/FBooks" ), fileFilters, QDir::Files | QDir::NoSymLinks, QDirIterator::Subdirectories );
     while( dir_iterator.hasNext() )
     {
         dir_iterator.next();
@@ -362,12 +362,15 @@ void Library::on_treeBookLibrary_itemClicked(QTreeWidgetItem *item, int column)
         }
         else
         {
-            this->ui->gvBookCoverpage->scene()->clear();
+            QGraphicsScene *scene = new QGraphicsScene();
+            this->ui->gvBookCoverpage->setScene(scene);
         }
     }
     else
     {
-        this->ui->gvBookCoverpage->scene()->clear();
+        QGraphicsScene *scene = new QGraphicsScene();
+        this->ui->gvBookCoverpage->setScene(scene);
+        int test=0;
     }
 }
 
