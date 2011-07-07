@@ -32,6 +32,11 @@
             <attribute name="headerVisible">
              <bool>false</bool>
             </attribute>
+            <column>
+             <property name="text">
+              <string notr="true">1</string>
+             </property>
+            </column>
            </widget>
           </item>
          </layout>
@@ -334,7 +339,7 @@
         <item row="0" column="1">
          <widget class="QPushButton" name="butRefreshLibrary">
           <property name="text">
-           <string>Library settings</string>
+           <string>Refresh library</string>
           </property>
          </widget>
         </item>
