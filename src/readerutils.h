@@ -24,6 +24,7 @@
 #include <QtGui/QFont>
 #include <QtGui/QFontMetrics>
 #include <QSettings>
+#include <QTextCodec>
 //
 
 //
@@ -92,6 +93,7 @@ public:
         QString bgColorFrom;
         QString bgColorTo;
         QString paracolor;
+        QStringList libraryDirs;
 //        QSettings settings;
 };
 #endif

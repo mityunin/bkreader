@@ -57,63 +57,65 @@ void Library::on_butRefreshLibrary_clicked()
     fileFilters.append(QString("*.txt"));
     fileFilters.append(QString("*.zip"));
 
-    QDirIterator dir_iterator(QString( "/home/sa/FBooks" ), fileFilters, QDir::Files | QDir::NoSymLinks, QDirIterator::Subdirectories );
-    while( dir_iterator.hasNext() )
+    foreach(QString libraryDir, this->libraryDirs )
     {
-        dir_iterator.next();
-//        this->bookFilenames[dir_iterator.fileInfo().absoluteFilePath()] = dir_iterator.fileName();
-
-        if( dir_iterator.fileInfo().suffix() == QLatin1String("fb2") )
+        QDirIterator dir_iterator(QString( libraryDir ), fileFilters, QDir::Files | QDir::NoSymLinks, QDirIterator::Subdirectories );
+        while( dir_iterator.hasNext() )
         {
-            QStringList fb2info = this->loadFB2FileInfo(dir_iterator.fileInfo().absoluteFilePath());
-            this->bookNames[dir_iterator.fileInfo().absoluteFilePath()] = fb2info[0];
-            this->bookAuthors[dir_iterator.fileInfo().absoluteFilePath()] = fb2info[1];
-            this->bookLangs[dir_iterator.fileInfo().absoluteFilePath()] = fb2info[2];
-            this->bookExtensions[dir_iterator.fileInfo().absoluteFilePath()] = QString("fb2");
-            this->bookFilenames[dir_iterator.fileInfo().absoluteFilePath()] = dir_iterator.fileInfo().absoluteFilePath();
-            this->bookCoverpages[dir_iterator.fileInfo().absoluteFilePath()] = fb2info[3];
-        }
-        else if( dir_iterator.fileInfo().suffix() == QLatin1String("txt") )
-        {
-            this->bookNames[dir_iterator.fileInfo().absoluteFilePath()] = dir_iterator.fileName();
-            this->bookAuthors[dir_iterator.fileInfo().absoluteFilePath()] = QString("");
-            this->bookLangs[dir_iterator.fileInfo().absoluteFilePath()] = QString("");
-            this->bookExtensions[dir_iterator.fileInfo().absoluteFilePath()] = QString("txt");
-            this->bookFilenames[dir_iterator.fileInfo().absoluteFilePath()] = dir_iterator.fileInfo().absoluteFilePath();
-            this->bookCoverpages[dir_iterator.fileInfo().absoluteFilePath()] = QString("");
-        }
-        else if( dir_iterator.fileInfo().suffix() == QLatin1String("zip") )
-        {
-            UnZip unzip;
-            UnZip::ErrorCode ec = unzip.openArchive(dir_iterator.fileInfo().absoluteFilePath());
+            dir_iterator.next();
 
-            if( ec != UnZip::Ok )
-                continue;
-
-            QStringList filesInArchive = unzip.fileList();
-
-            if( filesInArchive.count() > 0 )
+            if( dir_iterator.fileInfo().suffix() == QLatin1String("fb2") )
             {
-                if( filesInArchive.at(0).contains(QString(".fb2")) )
-                {
-                    QString filename = filesInArchive.at(0);
-                    ec = unzip.extractFile(filename, QDir::tempPath());
-                    if( ec == UnZip::Ok )
-                    {
-                        filename = QDir::tempPath()+QString("/")+filename;
-                        unzip.closeArchive();
-                        QStringList fb2info = this->loadFB2FileInfo(filename);
-                        this->bookNames[dir_iterator.fileInfo().absoluteFilePath()] = fb2info[0];
-                        this->bookAuthors[dir_iterator.fileInfo().absoluteFilePath()] = fb2info[1];
-                        this->bookLangs[dir_iterator.fileInfo().absoluteFilePath()] = fb2info[2];
-                        this->bookExtensions[dir_iterator.fileInfo().absoluteFilePath()] = QString("zip/fb2");
-                        this->bookFilenames[dir_iterator.fileInfo().absoluteFilePath()] = dir_iterator.fileInfo().absoluteFilePath();
-                        this->bookCoverpages[dir_iterator.fileInfo().absoluteFilePath()] = fb2info[3];
-                    }
-                }
-                else
-                {
+                QStringList fb2info = this->loadFB2FileInfo(dir_iterator.fileInfo().absoluteFilePath());
+                this->bookNames[dir_iterator.fileInfo().absoluteFilePath()] = fb2info[0];
+                this->bookAuthors[dir_iterator.fileInfo().absoluteFilePath()] = fb2info[1];
+                this->bookLangs[dir_iterator.fileInfo().absoluteFilePath()] = fb2info[2];
+                this->bookExtensions[dir_iterator.fileInfo().absoluteFilePath()] = QString("fb2");
+                this->bookFilenames[dir_iterator.fileInfo().absoluteFilePath()] = dir_iterator.fileInfo().absoluteFilePath();
+                this->bookCoverpages[dir_iterator.fileInfo().absoluteFilePath()] = fb2info[3];
+            }
+            else if( dir_iterator.fileInfo().suffix() == QLatin1String("txt") )
+            {
+                this->bookNames[dir_iterator.fileInfo().absoluteFilePath()] = dir_iterator.fileName();
+                this->bookAuthors[dir_iterator.fileInfo().absoluteFilePath()] = QString("");
+                this->bookLangs[dir_iterator.fileInfo().absoluteFilePath()] = QString("");
+                this->bookExtensions[dir_iterator.fileInfo().absoluteFilePath()] = QString("txt");
+                this->bookFilenames[dir_iterator.fileInfo().absoluteFilePath()] = dir_iterator.fileInfo().absoluteFilePath();
+                this->bookCoverpages[dir_iterator.fileInfo().absoluteFilePath()] = QString("");
+            }
+            else if( dir_iterator.fileInfo().suffix() == QLatin1String("zip") )
+            {
+                UnZip unzip;
+                UnZip::ErrorCode ec = unzip.openArchive(dir_iterator.fileInfo().absoluteFilePath());
+
+                if( ec != UnZip::Ok )
                     continue;
+
+                QStringList filesInArchive = unzip.fileList();
+
+                if( filesInArchive.count() > 0 )
+                {
+                    if( filesInArchive.at(0).contains(QString(".fb2")) )
+                    {
+                        QString filename = filesInArchive.at(0);
+                        ec = unzip.extractFile(filename, QDir::tempPath());
+                        if( ec == UnZip::Ok )
+                        {
+                            filename = QDir::tempPath()+QString("/")+filename;
+                            unzip.closeArchive();
+                            QStringList fb2info = this->loadFB2FileInfo(filename);
+                            this->bookNames[dir_iterator.fileInfo().absoluteFilePath()] = fb2info[0];
+                            this->bookAuthors[dir_iterator.fileInfo().absoluteFilePath()] = fb2info[1];
+                            this->bookLangs[dir_iterator.fileInfo().absoluteFilePath()] = fb2info[2];
+                            this->bookExtensions[dir_iterator.fileInfo().absoluteFilePath()] = QString("zip/fb2");
+                            this->bookFilenames[dir_iterator.fileInfo().absoluteFilePath()] = dir_iterator.fileInfo().absoluteFilePath();
+                            this->bookCoverpages[dir_iterator.fileInfo().absoluteFilePath()] = fb2info[3];
+                        }
+                    }
+                    else
+                    {
+                        continue;
+                    }
                 }
             }
         }
@@ -370,7 +372,6 @@ void Library::on_treeBookLibrary_itemClicked(QTreeWidgetItem *item, int column)
     {
         QGraphicsScene *scene = new QGraphicsScene();
         this->ui->gvBookCoverpage->setScene(scene);
-        int test=0;
     }
 }
 

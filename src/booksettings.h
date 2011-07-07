@@ -20,6 +20,7 @@
 
 #include <QDialog>
 #include "readerutils.h"
+#include <QListWidgetItem>
 
 namespace Ui {
     class BookSettings;
@@ -66,6 +67,9 @@ private slots:
     void on_sbIndentValue_editingFinished();
     void on_sbRotateValue_editingFinished();
     void on_sbParagraphLineSpacing_editingFinished();
+    void on_butAddLibraryDir_clicked();
+    void on_butRemoveLibraryDir_clicked();
+    void on_butClearLibraryDirs_clicked();
 };
 
 #endif // BOOKSETTINGS_H

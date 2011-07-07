@@ -469,7 +469,7 @@ void PageTemplate::openSettingsWindow()
         settingsWin->utils = &this->b->utils;
         settingsWin->loadSettings();
 
-        settingsWin->show();
+        settingsWin->exec();
 }
 
 void PageTemplate::openLibrarySlot()
@@ -479,6 +479,7 @@ void PageTemplate::openLibrarySlot()
 //        libraryWin->utils = &this->b->utils;
 //        libraryWin->loadSettings();
 
+        libraryWin->libraryDirs = this->b->utils.libraryDirs;
         libraryWin->exec();
         QString filename = libraryWin->currentBookFilename;
         if( !filename.isEmpty() )

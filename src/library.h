@@ -43,6 +43,7 @@ public:
     QHash<QString, QString> bookLangs;
     QHash<QString, QString> bookCoverpages;
     QString currentBookFilename;
+    QStringList libraryDirs;
 
 private slots:
     void on_butRefreshLibrary_clicked();

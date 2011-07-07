@@ -90,6 +90,8 @@ ReaderUtils::ReaderUtils(  )
     this->topPageIndent         = 8;
     this->bottomPageIndent      = 8;
 
+    this->libraryDirs.clear();
+
     QString configPath = QDir::homePath()+"/.config/bkreader/bkreader.conf";
     if(!QFile::exists(configPath))
         this->writeSettings();
@@ -118,6 +120,9 @@ void ReaderUtils::setWordWidth(QString key, int v, QString f)
 void ReaderUtils::writeSettings()
 {
     QSettings settings("bkreader", "bkreader");
+
+    QTextCodec *codec = QTextCodec::codecForName("UTF-8");
+    settings.setIniCodec( codec );
 
     settings.setValue( "fonts/paragraphFontFamily", this->paragraphFont.family() );
     settings.setValue( "fonts/paragraphPointSize", this->paragraphFont.pointSize() );
@@ -189,11 +194,23 @@ void ReaderUtils::writeSettings()
     settings.setValue( "read/paracolor", this->paracolor );
     settings.setValue( "read/bgColorFrom", this->bgColorFrom );
     settings.setValue( "read/bgColorTo", this->bgColorTo );
+
+    settings.remove( QString( "libraryDirs" ) );
+
+    int libraryKey = 0;
+    foreach(QString libraryDir, this->libraryDirs)
+    {
+        settings.setValue( QString("libraryDirs/")+QString::number(libraryKey), libraryDir );
+        libraryKey++;
+    }
 }
 
 void ReaderUtils::readSettings()
 {
     QSettings settings("bkreader", "bkreader");
+
+    QTextCodec *codec = QTextCodec::codecForName("UTF-8");
+    settings.setIniCodec( codec );
 
     this->paragraphFont.setFamily( settings.value( "fonts/paragraphFontFamily" ).toString() );
     this->paragraphFont.setPointSize( settings.value( "fonts/paragraphPointSize" ).toInt() );
@@ -266,6 +283,17 @@ void ReaderUtils::readSettings()
     this->bgColorTo = settings.value( "read/bgColorTo" ).toString();
 
     this->moveBigImages = settings.value( "read/moveBigImages" ).toBool();
+
+    this->libraryDirs.clear();
+    settings.beginGroup( "libraryDirs" );
+    QStringList libraryKeys = settings.allKeys();
+    settings.endGroup();
+    foreach( QString libraryKey, libraryKeys )
+    {
+        QString libraryDir = settings.value( QString("libraryDirs/")+libraryKey, QString("") ).toString();
+        if( !libraryDir.isEmpty() )
+            this->libraryDirs.append( libraryDir );
+    }
 }
 
 float ReaderUtils::getLeftMargin(int i)

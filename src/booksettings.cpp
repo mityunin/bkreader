@@ -20,6 +20,7 @@
 #include <QSettings>
 #include <QFontDialog>
 #include <QColorDialog>
+#include <QFileDialog>
 
 BookSettings::BookSettings(QWidget *parent) :
     QDialog(parent),
@@ -60,6 +61,15 @@ void BookSettings::loadSettings()
     this->ui->sbRotateValue->setValue( this->utils->rotateValue );
 
     this->ui->sbParagraphLineSpacing->setValue( this->utils->paragraphLineSpacing );
+
+    this->ui->listLibraryDirs->clear();
+    foreach( QString libraryDir, this->utils->libraryDirs )
+    {
+        QListWidgetItem *item = new QListWidgetItem();
+        item->setText(libraryDir);
+        this->ui->listLibraryDirs->addItem(item);
+    }
+
 //    QSettings settings("MyReader", "MyReader");
 
 //    this->ui->editParagraphFont->setText( settings.value( "fonts/paragraphFontFamily" ).toString() + " " + settings.value( "fonts/paragraphPointSize" ).toString() );
@@ -367,4 +377,48 @@ void BookSettings::on_sbParagraphLineSpacing_editingFinished()
     this->utils->paragraphLineSpacing = this->ui->sbParagraphLineSpacing->value();
     this->utils->writeSettings();
     this->loadSettings();
+}
+
+void BookSettings::on_butAddLibraryDir_clicked()
+{
+    QString libraryDirPath = QFileDialog::getExistingDirectory();
+    if( !libraryDirPath.isEmpty() )
+    {
+        QListWidgetItem *itemLibraryDir = new QListWidgetItem();
+        itemLibraryDir->setText(libraryDirPath);
+        this->ui->listLibraryDirs->addItem(itemLibraryDir);
+    }
+
+    this->utils->libraryDirs.clear();
+
+    for( int i=0; i<this->ui->listLibraryDirs->count(); i++ )
+    {
+        this->utils->libraryDirs.append( this->ui->listLibraryDirs->item(i)->text() );
+    }
+
+    this->utils->libraryDirs.removeDuplicates();
+    this->utils->writeSettings();
+}
+
+void BookSettings::on_butRemoveLibraryDir_clicked()
+{
+    qDeleteAll(this->ui->listLibraryDirs->selectedItems());
+
+    this->utils->libraryDirs.clear();
+
+    for( int i=0; i<this->ui->listLibraryDirs->count(); i++ )
+    {
+        this->utils->libraryDirs.append( this->ui->listLibraryDirs->item(i)->text() );
+    }
+
+    this->utils->libraryDirs.removeDuplicates();
+    this->utils->writeSettings();
+}
+
+void BookSettings::on_butClearLibraryDirs_clicked()
+{
+    this->ui->listLibraryDirs->clear();
+
+    this->utils->libraryDirs.clear();
+    this->utils->writeSettings();
 }
