@@ -263,7 +263,7 @@ void BookSettings::on_sbLeftMargin_editingFinished()
 
 void BookSettings::on_sbRightMargin_editingFinished()
 {
-    this->utils->leftMargin = this->ui->sbLeftMargin->value();
+    this->utils->rightMargin = this->ui->sbRightMargin->value();
     this->utils->writeSettings();
     this->loadSettings();
 }
