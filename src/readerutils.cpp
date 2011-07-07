@@ -254,6 +254,10 @@ void ReaderUtils::readSettings()
     this->indicatorFont.setItalic( settings.value( "fonts/indicatorItalic" ).toBool() );
     this->indicatorFont.setBold( settings.value( "fonts/indicatorBold" ).toBool() );
     this->indicatorFont.setUnderline( settings.value( "fonts/indicatorUnderline" ).toBool() );
+    QFontMetrics *indicatorFM = new QFontMetrics(this->indicatorFont);
+    this->indicatorFontHeight = indicatorFM->height()*this->paragraphLineSpacing + 5;
+    if( this->indicatorFontHeight > this->topMargin )
+        this->indicatorFontHeight = this->topMargin;
 
     this->epigraphFont.setFamily( settings.value( "fonts/epigraphFontFamily" ).toString() );
     this->epigraphFont.setPointSize( settings.value( "fonts/epigraphPointSize" ).toInt() );

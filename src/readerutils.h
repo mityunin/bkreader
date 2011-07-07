@@ -83,6 +83,7 @@ public:
         int     topPageIndent;
         int     bottomPageIndent;
         int     pageIndent;
+        float   indicatorFontHeight;
 
         int     columnsGap;
         int     columnsNum;

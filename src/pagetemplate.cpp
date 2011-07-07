@@ -122,7 +122,7 @@ void PageTemplate::paintEvent(QPaintEvent *event)
             //draw indicator line
             int indicatorXFrom = this->b->utils.getLeftMargin(i)*(i+1) + this->b->getColumnWidth()*i + this->b->utils.getRightMargin(i)*i;
             int indicatorXTo = this->b->utils.getLeftMargin(i)*(i+1) + this->b->getColumnWidth()*(i+1) + this->b->utils.getRightMargin(i)*i;
-            painter.drawLine(indicatorXFrom, this->b->utils.topMargin, indicatorXTo, this->b->utils.topMargin);
+            painter.drawLine(indicatorXFrom, this->b->utils.indicatorFontHeight, indicatorXTo, this->b->utils.indicatorFontHeight);
         }
 
 
@@ -222,7 +222,7 @@ void PageTemplate::paintEvent(QPaintEvent *event)
             bookInfo += QString(" ")+this->b->bookTitle;
 
 
-        painter.drawText( this->b->utils.getLeftMargin(0), 0, this->b->getColumnWidth(), this->b->utils.topMargin, Qt::AlignVCenter, bookInfo.trimmed() );
+        painter.drawText( this->b->utils.getLeftMargin(0), 0, this->b->getColumnWidth(), this->b->utils.indicatorFontHeight, Qt::AlignVCenter, bookInfo.trimmed() );
 
         painter.drawText(this->b->utils.getLeftMargin(0), this->b->utils.topMargin+this->b->getColumnHeight(), this->b->getColumnWidth(), this->b->utils.bottomMargin, Qt::AlignVCenter, QString::number(this->b->currentPage)+" / "+QString::number(this->b->pages.length()));
 
