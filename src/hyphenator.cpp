@@ -40,21 +40,29 @@ void hyphenator::loadHyphPatterns(QString lang)
     hyphPath.remove("\\");
 
 //    QString filename = QDir::currentPath() + QString("/patterns/hyph-ru.pat.txt");
-//    bool shareDirExists = QDir::exists(QString("/usr/share/bkreader/patterns"));
-//    bool localPatternsDirExists = QDir::exists(QDir::homePath()+QString("/.config/bkreader/patterns"));
-//    QString localPatternsDir = QDir::exists(QDir::homePath()+QString("/.config/bkreader/patterns/");
+    QString localPatterns = QDir::homePath()+QString("/.config/bkreader/patterns/");
+    QString sharePatterns = QString("/usr/share/bkreader/patterns");
+    QDir shareDir;
+    QDir localPatternsDir;
+    shareDir.setCurrent(sharePatterns);
+    localPatternsDir.setCurrent(localPatterns);
 
-//    if( shareDirExists && !localPatternsDirExists )
-//    {
-//        foreach( QString patternFile, QDir::entryList() )
-//        {
-//            QFile::copy(patternFile, localPatternsDir+patternFile );
-//        }
-//    }
-//    QString filename = QDir::homePath()+QString("/.config/bkreader/patterns/hyph-")+hyphPath+QString(".pat.txt");
-    QString filename = QString("/usr/share/bkreader/patterns/hyph-")+hyphPath+QString(".pat.txt");
+    bool shareDirExitsts = shareDir.exists(sharePatterns);
+    bool localPatternsDirExists = localPatternsDir.exists(localPatterns);
+
+    if( shareDirExitsts && !localPatternsDirExists )
+    {
+        localPatternsDir.mkpath(localPatterns);
+        foreach( QString patternFile, shareDir.entryList() )
+        {
+            QFile::copy(patternFile, localPatterns+patternFile );
+        }
+    }
+
+    QString filename = QDir::homePath()+QString("/.config/bkreader/patterns/hyph-")+hyphPath+QString(".pat.txt");
+//    QString filename = QString("/usr/share/bkreader/patterns/hyph-")+hyphPath+QString(".pat.txt");
 //    QString filename = QDir::currentPath() + QString("/patterns/hyph-")+hyphPath+QString(".pat.txt");
-//    qDebug() << filename;
+
     QStringList pats;
     QFile f(filename);
     f.open(QIODevice::ReadOnly);
