@@ -42,8 +42,10 @@ void hyphenator::loadHyphPatterns(QString lang)
 //    QString filename = QDir::currentPath() + QString("/patterns/hyph-ru.pat.txt");
     QString localPatterns = QDir::homePath()+QString("/.config/bkreader/patterns/");
     QString sharePatterns = QString("/usr/share/bkreader/patterns");
+
     QDir shareDir;
     QDir localPatternsDir;
+
     shareDir.setCurrent(sharePatterns);
     localPatternsDir.setCurrent(localPatterns);
 

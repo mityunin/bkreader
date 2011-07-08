@@ -50,4 +50,5 @@ OTHER_FILES += \
     bin/CMakeCache.txt \
     src/osdab-zip/README \
     src/osdab-zip/osdabzip.shared.pro \
-    src/osdab-zip/LICENSE.GPL
+    src/osdab-zip/LICENSE.GPL \
+    Makefile
