@@ -483,11 +483,12 @@ void fb2::loadPoem(const QDomElement &element)
 
         this->loadStanza(child);
 
-        this->bookParagraphs.append( QStringList( "" ) );
-        this->bookFormats.append( QStringList( "poem" ) );
+
 
         child = child.nextSiblingElement();
     }
+    this->bookParagraphs.append( QStringList( "" ) );
+    this->bookFormats.append( QStringList( "poem" ) );
 }
 
 void fb2::loadStanza(const QDomElement &element)
