@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=bkreader
+GenericName=bkreader
+Comment=EBook reader for txt and fb2 files
+Exec="/usr/bin/bkreader"
+Terminal=false
+Type=Application
+StartupNotify=true
+Icon=bkreader.png
+Categories=Office;

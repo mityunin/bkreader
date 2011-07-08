@@ -52,4 +52,6 @@ OTHER_FILES += \
     src/osdab-zip/osdabzip.shared.pro \
     src/osdab-zip/LICENSE.GPL \
     Makefile \
-    install.sh
+    install.sh \
+    bkreader.desktop \
+    bkreader.png
