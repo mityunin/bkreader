@@ -1,0 +1,12 @@
+bkreader - ebook reader for GNU/Linux supporting fb2, txt, zipped fb2 files
+
+HOW TO INSTALL:
+
+To start bkreader without installing it
+# qmake-qt4
+# make
+# bin/bkreader
+
+To install bkreader
+# ./install.sh
+# ./bkreader

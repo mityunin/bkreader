@@ -54,4 +54,5 @@ OTHER_FILES += \
     Makefile \
     install.sh \
     bkreader.desktop \
-    bkreader.png
+    bkreader.png \
+    README
