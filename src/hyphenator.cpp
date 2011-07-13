@@ -62,11 +62,15 @@ void hyphenator::loadHyphPatterns(QString lang)
     }
 
     QString filename = QDir::homePath()+QString("/.config/bkreader/patterns/hyph-")+hyphPath+QString(".pat.txt");
+
 //    QString filename = QString("/usr/share/bkreader/patterns/hyph-")+hyphPath+QString(".pat.txt");
 //    QString filename = QDir::currentPath() + QString("/patterns/hyph-")+hyphPath+QString(".pat.txt");
 
     QStringList pats;
     QFile f(filename);
+    if( !f.exists() )
+        f.setFileName( QString("patterns/hyph-")+hyphPath+QString(".pat.txt") );
+
     f.open(QIODevice::ReadOnly);
     QTextStream in(&f);
     in.setCodec("UTF-8");
