@@ -515,6 +515,10 @@ long book::setCurrentWord()
 {
     this->currentWord = 0;
     if( this->currentPage <= 0 ) return 0;
+    if( this->currentPage >= this->pages.length() )
+    {
+        this->currentPage = this->pages.length()-1;
+    }
 
     for( int i=0; i<=this->currentPage; i++ )
     {
