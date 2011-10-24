@@ -56,6 +56,7 @@ public:
         QFont poemFont;
         QFont indicatorFont;
         QFont epigraphFont;
+        QString pixmapPatternFile;
 //        QFontMetrics paragraphFM;
 //        QFontMetrics titleFM;
 //        QFontMetrics subtitleFM;
@@ -90,6 +91,7 @@ public:
         int     indentValue;
         int     rotateValue; //0 - normal, 1 - -90, 2 - 90
         bool    moveBigImages;
+        QString bgType;
         QString bgcolor;
         QString bgColorFrom;
         QString bgColorTo;

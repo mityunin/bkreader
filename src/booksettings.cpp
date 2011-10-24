@@ -70,6 +70,20 @@ void BookSettings::loadSettings()
         this->ui->listLibraryDirs->addItem(item);
     }
 
+    //if( this->utils->bgType == "grad" )
+//    {
+//        this->ui->chkSetColor->setEnabled(true);
+//        this->ui->chkSetColor->setChecked(true);
+//    }
+//    else
+//    {
+//        this->ui->chkSetPattern->setEnabled(true);
+//        this->ui->chkSetPattern->setChecked(true);
+//    }
+
+
+
+
 //    QSettings settings("MyReader", "MyReader");
 
 //    this->ui->editParagraphFont->setText( settings.value( "fonts/paragraphFontFamily" ).toString() + " " + settings.value( "fonts/paragraphPointSize" ).toString() );
@@ -420,5 +434,56 @@ void BookSettings::on_butClearLibraryDirs_clicked()
     this->ui->listLibraryDirs->clear();
 
     this->utils->libraryDirs.clear();
+    this->utils->writeSettings();
+}
+
+void BookSettings::on_chkSetColor_toggled(bool checked)
+{
+    this->ui->chkSetPattern->setChecked(!checked);
+    this->ui->editBgColorFrom->setEnabled(checked);
+    this->ui->editBgColorTo->setEnabled(checked);
+    this->ui->cbPattern->setEnabled(!checked);
+    this->ui->butBgColorFrom->setEnabled(checked);
+    this->ui->butBgColorTo->setEnabled(checked);
+    this->utils->bgType = "grad";
+    this->utils->writeSettings();
+    this->loadSettings();
+}
+
+void BookSettings::on_chkSetPattern_toggled(bool checked)
+{
+    this->ui->chkSetColor->setChecked(!checked);
+    this->ui->editBgColorFrom->setEnabled(!checked);
+    this->ui->editBgColorTo->setEnabled(!checked);
+    this->ui->cbPattern->setEnabled(checked);
+    this->ui->butBgColorFrom->setEnabled(!checked);
+    this->ui->butBgColorTo->setEnabled(!checked);
+    this->utils->bgType = "pixmap";
+
+    QString patternPath = QDir::homePath()+"/.config/bkreader/pixmaps";
+    QDir patternDir(patternPath);
+    if(patternDir.exists())
+    {
+        this->ui->cbPattern->clear();
+        QStringList fileFilter;
+        fileFilter<<"*.png"<<"*.jpg"<<"*.bmp";
+        foreach(QString patternFile, patternDir.entryList(fileFilter))
+        {
+            this->ui->cbPattern->addItem(patternFile);
+        }
+    }
+
+    this->utils->writeSettings();
+    this->loadSettings();
+}
+
+void BookSettings::on_BookSettings_finished(int result)
+{
+
+}
+
+void BookSettings::on_buttonBox_accepted()
+{
+    this->utils->pixmapPatternFile = this->ui->cbPattern->currentText();
     this->utils->writeSettings();
 }

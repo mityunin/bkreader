@@ -81,12 +81,13 @@ void PageTemplate::paintEvent(QPaintEvent *event)
         QPixmap pageBg(this->b->getColumnWidth()-6, this->b->getColumnHeight()-6);
 //        pageBg.fill(QColor(QColor(this->b->utils.bgcolor)).rgb());
 
+//        QPixmap pagePattern("/home/sa/Downloads/brushed_alu.png");
+//        pagePattern.
+
+        QPixmap pagePattern(QDir::homePath()+"/.config/bkreader/pixmaps/"+this->b->utils.pixmapPatternFile);
 
         QLinearGradient gradBg(this->b->getColumnWidth()*0.5, 0, this->b->getColumnWidth()*0.5, this->b->getColumnHeight());
-//        gradBg.setColorAt(0, QColor(QColor("#ffffff")).rgb());
         gradBg.setColorAt(0, QColor(QColor( this->b->utils.bgColorFrom )).rgb());
-//        gradBg.setColorAt(0.7, QColor(QColor("#efefef")).rgb());
-//        gradBg.setColorAt(1, QColor(QColor("#eeeeee")).rgb());
         gradBg.setColorAt(1, QColor(QColor( this->b->utils.bgColorTo )).rgb());
         QPainter bgPixmapPainter(&pageBg);
 
@@ -103,21 +104,29 @@ void PageTemplate::paintEvent(QPaintEvent *event)
 
         int pageBgIndent = 6;
 
+        if(this->b->utils.bgType == "grad")
+        {
+
+            bgPixmapPainter.fillRect(0, 0, this->b->getPageWidth(), this->b->getPageHeight(),gradBg);
+            painter.drawPixmap(0, 0, this->b->getPageWidth(), this->b->getPageHeight(),pageBg);
+        }
+        else
+            painter.drawTiledPixmap(0,0,this->b->getPageWidth(),this->b->getPageHeight(), pagePattern);
+
         for(int i=0;i<this->b->utils.columnsNum;i++)
         {
             //fill book background
-            painter.fillRect(this->b->getColumnLeftCoord(i), 0, this->b->getColumnRightCoord(i),this->b->utils.topMargin+this->b->getColumnHeight()+this->b->utils.bottomMargin, QBrush(QColor(QColor("#C6C6C6")).rgb()));
+//            painter.fillRect(this->b->getColumnLeftCoord(i), 0, this->b->getColumnRightCoord(i),this->b->utils.topMargin+this->b->getColumnHeight()+this->b->utils.bottomMargin, QBrush(QColor(QColor("#C6C6C6")).rgb()));
 
             //fill page background
-            int pageBgXFrom = this->b->getColumnLeftCoord(i) + pageBgIndent;
-            int pageBgXTo = this->b->utils.getLeftMargin(i) + this->b->utils.getRightMargin(i) + this->b->getColumnWidth() - pageBgIndent*2;
+//            int pageBgXFrom = this->b->getColumnLeftCoord(i) + pageBgIndent;
+//            int pageBgXTo = this->b->utils.getLeftMargin(i) + this->b->utils.getRightMargin(i) + this->b->getColumnWidth() - pageBgIndent*2;
 
-            bgPixmapPainter.fillRect(0, 0, this->b->getColumnWidth(), this->b->getColumnHeight(),gradBg);
-            painter.drawPixmap(pageBgXFrom, pageBgIndent, pageBgXTo, this->b->getColumnHeight()+this->b->utils.topMargin+this->b->utils.bottomMargin-pageBgIndent*2,pageBg);
-
+//            bgPixmapPainter.fillRect(0, 0, this->b->getColumnWidth(), this->b->getColumnHeight(),gradBg);
+//            painter.drawPixmap(pageBgXFrom, pageBgIndent, pageBgXTo, this->b->getColumnHeight()+this->b->utils.topMargin+this->b->utils.bottomMargin-pageBgIndent*2,pageBg);
 
             //draw page border rectangle
-            painter.drawRect(pageBgXFrom, pageBgIndent, pageBgXTo, this->b->getColumnHeight()+this->b->utils.topMargin+this->b->utils.bottomMargin-pageBgIndent*2);
+//            painter.drawRect(pageBgXFrom, pageBgIndent, pageBgXTo, this->b->getColumnHeight()+this->b->utils.topMargin+this->b->utils.bottomMargin-pageBgIndent*2);
 
             //draw indicator line
             int indicatorXFrom = this->b->utils.getLeftMargin(i)*(i+1) + this->b->getColumnWidth()*i + this->b->utils.getRightMargin(i)*i;

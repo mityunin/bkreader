@@ -19,7 +19,7 @@
 #include "pageline.h"
 #include "readerutils.h"
 #include "hyphenator.h"
-#include <iostream>
+//#include <iostream>
 #include <QtXml/QDomDocument>
 #include <QtXml/QDomElement>
 #include <QtXml/QDomNode>

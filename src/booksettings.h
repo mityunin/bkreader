@@ -70,6 +70,10 @@ private slots:
     void on_butAddLibraryDir_clicked();
     void on_butRemoveLibraryDir_clicked();
     void on_butClearLibraryDirs_clicked();
+    void on_chkSetColor_toggled(bool checked);
+    void on_chkSetPattern_toggled(bool checked);
+    void on_BookSettings_finished(int result);
+    void on_buttonBox_accepted();
 };
 
 #endif // BOOKSETTINGS_H

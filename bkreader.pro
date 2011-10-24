@@ -1,6 +1,6 @@
 TEMPLATE = app
 QT = gui core xml
-CONFIG += qt warn_on console debug
+CONFIG += qt warn_on console release
 DESTDIR = bin
 OBJECTS_DIR = build
 MOC_DIR = build

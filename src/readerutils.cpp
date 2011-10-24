@@ -80,10 +80,12 @@ ReaderUtils::ReaderUtils(  )
 
     this->moveBigImages         = true;
 
+    this->bgType                = "grad";
     this->bgcolor               = "#ffffff";
     this->paracolor             = "#333333";
     this->bgColorFrom           = "#ffffff";
     this->bgColorTo             = "#eeeeee";
+    this->pixmapPatternFile     = "";
 
     this->leftPageIndent        = 8;
     this->rightPageIndent       = 8;
@@ -190,10 +192,12 @@ void ReaderUtils::writeSettings()
     settings.setValue( "margins/titleTopMargin", this->titleTopMargin );
     settings.setValue( "margins/titleBottomMargin", this->titleBottomMargin );
 
+    settings.setValue( "read/bgtype", this->bgType );
     settings.setValue( "read/bgcolor", this->bgcolor );
     settings.setValue( "read/paracolor", this->paracolor );
     settings.setValue( "read/bgColorFrom", this->bgColorFrom );
     settings.setValue( "read/bgColorTo", this->bgColorTo );
+    settings.setValue( "read/pixmapPatternFile", this->pixmapPatternFile );
 
     settings.remove( QString( "libraryDirs" ) );
 
@@ -256,8 +260,6 @@ void ReaderUtils::readSettings()
     this->indicatorFont.setUnderline( settings.value( "fonts/indicatorUnderline" ).toBool() );
     QFontMetrics *indicatorFM = new QFontMetrics(this->indicatorFont);
     this->indicatorFontHeight = indicatorFM->height()*this->paragraphLineSpacing + 5;
-    if( this->indicatorFontHeight > this->topMargin )
-        this->indicatorFontHeight = this->topMargin;
 
     this->epigraphFont.setFamily( settings.value( "fonts/epigraphFontFamily" ).toString() );
     this->epigraphFont.setPointSize( settings.value( "fonts/epigraphPointSize" ).toInt() );
@@ -281,6 +283,11 @@ void ReaderUtils::readSettings()
     this->titleTopMargin = settings.value( "margins/titleTopMargin" ).toInt();
     this->titleBottomMargin = settings.value( "margins/titleBottomMargin" ).toInt();
 
+	if( this->indicatorFontHeight > this->topMargin )
+        this->indicatorFontHeight = this->topMargin;
+
+        this->bgType = settings.value( "read/bgtype").toString();
+        this->pixmapPatternFile = settings.value( "read/pixmapPatternFile" ).toString();
     this->bgcolor = settings.value( "read/bgcolor" ).toString();
     this->paracolor = settings.value( "read/paracolor" ).toString();
     this->bgColorFrom = settings.value( "read/bgColorFrom" ).toString();
