@@ -108,10 +108,10 @@ void PageTemplate::paintEvent(QPaintEvent *event)
         {
 
             bgPixmapPainter.fillRect(0, 0, this->b->getPageWidth(), this->b->getPageHeight(),gradBg);
-            painter.drawPixmap(0, 0, this->b->getPageWidth(), this->b->getPageHeight(),pageBg);
+            painter.drawPixmap(0, 0, this->b->getPageWidth(true), this->b->getPageHeight(true),pageBg);
         }
         else
-            painter.drawTiledPixmap(0,0,this->b->getPageWidth(),this->b->getPageHeight(), pagePattern);
+            painter.drawTiledPixmap(0,0,this->b->getPageWidth(true),this->b->getPageHeight(true), pagePattern);
 
         for(int i=0;i<this->b->utils.columnsNum;i++)
         {
@@ -233,10 +233,12 @@ void PageTemplate::paintEvent(QPaintEvent *event)
 
         painter.drawText( this->b->utils.getLeftMargin(0), 0, this->b->getColumnWidth(), this->b->utils.indicatorFontHeight, Qt::AlignVCenter, bookInfo.trimmed() );
 
-        painter.drawText(this->b->utils.getLeftMargin(0), this->b->utils.topMargin+this->b->getColumnHeight(), this->b->getColumnWidth(), this->b->utils.bottomMargin, Qt::AlignVCenter, QString::number(this->b->currentPage)+" / "+QString::number(this->b->pages.length()));
+        painter.drawText( this->b->utils.getLeftMargin(0), 0, this->b->getPageWidth(true)-this->b->utils.getLeftMargin(0)-this->b->utils.getRightMargin(this->b->utils.columnsNum-1), this->b->utils.indicatorFontHeight, Qt::AlignRight+Qt::AlignVCenter, QString::number(this->b->currentPage)+" / "+QString::number(this->b->pages.length()));
 
-        QTime *time = new QTime();
-        painter.drawText(this->b->utils.getLeftMargin(0),this->b->utils.topMargin+this->b->getColumnHeight(),this->b->getColumnWidth()*this->b->utils.columnsNum+this->b->utils.getLeftMargin(0)*(this->b->utils.columnsNum-1)+this->b->utils.getRightMargin(0)*(this->b->utils.columnsNum-1),this->b->utils.bottomMargin,Qt::AlignVCenter | Qt::AlignRight,time->currentTime().toString("hh:mm"));
+//        painter.drawText(this->b->utils.getLeftMargin(0), this->b->utils.topMargin+this->b->getColumnHeight(), this->b->getColumnWidth(), this->b->utils.bottomMargin, Qt::AlignVCenter, QString::number(this->b->currentPage)+" / "+QString::number(this->b->pages.length()));
+
+//        QTime *time = new QTime();
+//        painter.drawText(this->b->utils.getLeftMargin(0),this->b->utils.topMargin+this->b->getColumnHeight(),this->b->getColumnWidth()*this->b->utils.columnsNum+this->b->utils.getLeftMargin(0)*(this->b->utils.columnsNum-1)+this->b->utils.getRightMargin(0)*(this->b->utils.columnsNum-1),this->b->utils.bottomMargin,Qt::AlignVCenter | Qt::AlignRight,time->currentTime().toString("hh:mm"));
 
         painter.restore();
         this->b->setCurrentWord();

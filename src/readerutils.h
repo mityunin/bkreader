@@ -39,8 +39,8 @@ public:
         QStringList hyphenateWord(QString word);
         void writeSettings();
         void readSettings();
-        float getLeftMargin(int i);
-        float getRightMargin(int i);
+        float getLeftMargin(int i, bool getRotated=true);
+        float getRightMargin(int i, bool getRotated=true);
         float getLeftPageIndent(int i);
         float getRightPageIndent(int i);
         float getTopPageIndent();

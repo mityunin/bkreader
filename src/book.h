@@ -36,14 +36,14 @@ public:
 	void breakLines();
 	//QStringList setPageLine(QStringList words);
 	void makePages();
-	int getPageHeight();
+        int getPageHeight(bool getRotated=false);
 	void setPageHeight(int h);
         float getColumnWidth();
         float getColumnHeight();
         float getColumnLeftCoord(int i);
         float getColumnRightCoord(int i);
 	void setPageWidth(int w);
-	int getPageWidth();
+        int getPageWidth(bool getRotated=false);
         int getFootnotesHeight(QStringList footnotesId);
 	void processBook();
 	void setFontBigger(int s=1);

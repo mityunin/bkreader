@@ -307,21 +307,41 @@ void ReaderUtils::readSettings()
     }
 }
 
-float ReaderUtils::getLeftMargin(int i)
+float ReaderUtils::getLeftMargin(int i, bool getRotated)
 {
     if(i == 1)
-        return this->rightMargin;
+    {
+//        if( getRotated && this->rotateValue != 0 )
+//            return this->topMargin;
+//        else
+            return this->rightMargin;
+    }
     else
-        return this->leftMargin;
+    {
+//        if( getRotated && this->rotateValue != 0 )
+//            return this->bottomMargin;
+//        else
+            return this->leftMargin;
+    }
 }
 
 
-float ReaderUtils::getRightMargin(int i)
+float ReaderUtils::getRightMargin(int i, bool getRotated)
 {
     if(i == 1)
-        return this->leftMargin;
+    {
+//        if( getRotated && this->rotateValue != 0 )
+//            return this->bottomMargin;
+//        else
+            return this->leftMargin;
+    }
     else
-        return this->rightMargin;
+    {
+//        if( getRotated && this->rotateValue != 0 )
+//            return this->topMargin;
+//        else
+            return this->rightMargin;
+    }
 }
 
 float ReaderUtils::getLeftPageIndent(int i)

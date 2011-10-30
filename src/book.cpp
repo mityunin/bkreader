@@ -290,9 +290,14 @@ void book::breakLines()
     }
 }
 
-int book::getPageHeight()
+int book::getPageHeight(bool getRotated)
 {
-    return this->pageHeight;
+    if( getRotated == false ) return this->pageHeight;
+
+    if( this->utils.rotateValue == 0 )
+        return this->pageHeight;
+    else
+        return this->pageWidth;
 }
 
 void book::setPageHeight(int h)
@@ -426,9 +431,14 @@ void book::setPageWidth(int w)
     this->pageWidth = w;
 }
 
-int book::getPageWidth()
+int book::getPageWidth(bool getRotated)
 {
-    return this->pageWidth;
+    if( getRotated==false ) return this->pageWidth;
+
+    if( this->utils.rotateValue == 0 )
+        return this->pageWidth;
+    else
+        return this->pageHeight;
 }
 
 float book::getColumnWidth()
