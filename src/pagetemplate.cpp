@@ -85,6 +85,8 @@ void PageTemplate::paintEvent(QPaintEvent *event)
 //        pagePattern.
 
         QPixmap pagePattern(QDir::homePath()+"/.config/bkreader/pixmaps/"+this->b->utils.pixmapPatternFile);
+        QPixmap pageThinLine(this->b->getColumnWidth(), 1);
+        pageThinLine.fill(this->b->utils.paracolor);
 
         QLinearGradient gradBg(this->b->getColumnWidth()*0.5, 0, this->b->getColumnWidth()*0.5, this->b->getColumnHeight());
         gradBg.setColorAt(0, QColor(QColor( this->b->utils.bgColorFrom )).rgb());
@@ -131,7 +133,8 @@ void PageTemplate::paintEvent(QPaintEvent *event)
             //draw indicator line
             int indicatorXFrom = this->b->utils.getLeftMargin(i)*(i+1) + this->b->getColumnWidth()*i + this->b->utils.getRightMargin(i)*i;
             int indicatorXTo = this->b->utils.getLeftMargin(i)*(i+1) + this->b->getColumnWidth()*(i+1) + this->b->utils.getRightMargin(i)*i;
-            painter.drawLine(indicatorXFrom, this->b->utils.indicatorFontHeight, indicatorXTo, this->b->utils.indicatorFontHeight);
+//            painter.drawLine(indicatorXFrom, this->b->utils.indicatorFontHeight, indicatorXTo, this->b->utils.indicatorFontHeight);
+            painter.drawPixmap(indicatorXFrom, this->b->utils.indicatorFontHeight, pageThinLine);
         }
 
 
