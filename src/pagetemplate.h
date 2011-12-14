@@ -63,6 +63,7 @@ public slots:
 	void setFontSmaller();
 	void setLinesBigger();
 	void setLinesSmaller();
+        void setHideMenu();
         void showTime();
         void openBookSlot();
         void openSettingsWindow();

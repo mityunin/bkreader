@@ -39,12 +39,14 @@ PageTemplate::PageTemplate( QWidget *parent ):QWidget(parent)
 	QShortcut *shortFontSmaller = new QShortcut(QKeySequence(tr("Alt+Left", "View|Font Smaller")), this);
 	QShortcut *shortLinesBigger = new QShortcut(QKeySequence(tr("Alt+Down", "View|Line Space Bigger")), this);
 	QShortcut *shortLinesSmaller = new QShortcut(QKeySequence(tr("Alt+Up", "View|Line Space Smaller")), this);
-	
+        QShortcut *shortHideMenu = new QShortcut(QKeySequence(tr("Ctrl+M", "View|Hide Menu")), this);
+
 	connect(shortOpenBook, SIGNAL( activated() ), this, SLOT( openFile() ) );
 	connect(shortFontBigger, SIGNAL( activated() ), this, SLOT( setFontBigger() ) );
 	connect(shortFontSmaller, SIGNAL( activated() ), this, SLOT( setFontSmaller() ) );
 	connect(shortLinesBigger, SIGNAL( activated() ), this, SLOT( setLinesBigger() ) );
 	connect(shortLinesSmaller, SIGNAL( activated() ), this, SLOT( setLinesSmaller() ) );
+        connect(shortHideMenu, SIGNAL( activated() ), this, SLOT( setHideMenu() ) );
 
         QTimer *timer = new QTimer();
         connect(timer, SIGNAL( timeout() ), this, SLOT( showTime() ));
@@ -462,6 +464,11 @@ void PageTemplate::setLinesSmaller()
 	this->b->setLinesSmaller();
 	this->repaint();
         this->b->saveBookPosition();
+}
+
+void PageTemplate::setHideMenu()
+{
+    this->menuBar->setVisible( !this->menuBar->isVisible() );
 }
 
 void PageTemplate::showTime()
