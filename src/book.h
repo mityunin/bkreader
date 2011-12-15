@@ -34,6 +34,7 @@ public:
 	book();
 	void loadBook(QString filename);
 	void breakLines();
+        void breakFootnotes();
 	//QStringList setPageLine(QStringList words);
 	void makePages();
         int getPageHeight(bool getRotated=false);
@@ -55,6 +56,9 @@ public:
         void saveBookPosition();
         bool loadBookPosition();
         int getBookPositionInHistory(QString filename);
+        int getParagraphWidth(int paragraphNum);
+        QString getParagraphIndent(int paragraphNum);
+        QStringList splitParagraph(QStringList p, QString delimiter=" ");
         QList<PageLine> getFootnotesLines(QStringList footnotesId);
         float getPageLinesHeight(QList<PageLine> pllist);
         QTextLayout::FormatRange getFormatRange(QString f, int start, int length);

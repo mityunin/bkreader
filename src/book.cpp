@@ -154,43 +154,16 @@ void book::breakLines()
                 i++;
                 continue;
             }
-            else if( this->fictionbook.bookFormats[i][0] == "cite" )
+            else
             {
-                width = width - this->utils.citeMargin*2;
+                width = this->getParagraphWidth(i);
             }
-            else if( this->fictionbook.bookFormats[i][0] == "poem" )
-            {
-                width = width - this->utils.poemMargin*2;
-            }
-            else if( this->fictionbook.bookFormats[i][0] == "epigraph" )
-            {
-                width = width - this->utils.epigraphMargin;
-            }
-            //                    else if( this->fictionbook.bookFormats[i][0] == "empty-line" )
-            //                    {
-            //                        if( paragraphPosition > 0 && paragraphPosition < this->bookParagraphs.count()-1 )
-            //                        {
-            //                            if( this->fictionbook.bookFormats[paragraphPosition-1][0] == "image" || this->fictionbook.bookFormats[paragraphPosition+1][0] == "image" )
-            //                            {
-            //                                int tttt = 0;
-            //                                continue;
-            //                            }
-            //                        }
-            //                    }
         }
 
-        QString indent = this->indent;
-        //no indent for titles and subtitles
-        //!!!add indent option to settings
-        if( this->fictionbook.bookFormats[i][0] == "title" )
-            indent = "";
-        if( this->fictionbook.bookFormats[i][0] == "subtitle" )
-            indent = "";
+        QString indent = this->getParagraphIndent(i);
 
         //split paragraph to single words
-        QStringList words;
-        for(int j=0; j<p.length(); j++)
-            words += p[j].split(" ");
+        QStringList words = this->splitParagraph(p);
 
         int startLineWord = 0;
         int endLineWord = 0;
@@ -249,7 +222,6 @@ void book::breakLines()
                 }
             }
 
-
             //add line to lines list
             this->lines.append(line);
             indent = "";
@@ -258,9 +230,19 @@ void book::breakLines()
         i++;
     }
 
+    this->breakFootnotes();
+}
+
+void book::breakFootnotes()
+{
     //break footnotes
-    i=0;
+    int i=0;
     int width = this->getColumnWidth();
+
+    //create hyphenator object
+    hyphenator hyph;
+//    hyph.loadHyphPatterns(QString("ru"));
+    hyph.loadHyphPatterns(this->bookLang);
 
     QHash<QString, QHash<QString, QStringList> >::iterator end = this->fictionbook.footnotes.end();
     for(QHash<QString, QHash<QString, QStringList> >::iterator iter=this->fictionbook.footnotes.begin(); iter!=end;++iter)
@@ -701,6 +683,49 @@ float book::getColumnRightCoord(int i)
 {
     float x = this->utils.leftMargin*(i+1) + this->getColumnWidth()*(i+1) + this->utils.rightMargin*(i+1);
     return x;
+}
+
+QStringList book::splitParagraph(QStringList p, QString delimiter)
+{
+    //split paragraph to single words
+    QStringList words;
+    for(int j=0; j<p.length(); j++)
+        words += p[j].split(delimiter);
+
+    return words;
+}
+
+int book::getParagraphWidth(int paragraphNum)
+{
+    int width = this->getColumnWidth();
+
+    if( this->fictionbook.bookFormats[paragraphNum][0] == "cite" )
+    {
+        width = width - this->utils.citeMargin*2;
+    }
+    else if( this->fictionbook.bookFormats[paragraphNum][0] == "poem" )
+    {
+        width = width - this->utils.poemMargin*2;
+    }
+    else if( this->fictionbook.bookFormats[paragraphNum][0] == "epigraph" )
+    {
+        width = width - this->utils.epigraphMargin;
+    }
+
+    return width;
+}
+
+QString book::getParagraphIndent(int paragraphNum)
+{
+    QString indent = this->indent;
+    //no indent for titles and subtitles
+    //!!!add indent option to settings
+    if( this->fictionbook.bookFormats[paragraphNum][0] == "title" )
+        indent = "";
+    if( this->fictionbook.bookFormats[paragraphNum][0] == "subtitle" )
+        indent = "";
+
+    return indent;
 }
 
 //
