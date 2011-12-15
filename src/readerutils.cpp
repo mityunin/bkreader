@@ -199,6 +199,9 @@ void ReaderUtils::writeSettings()
     settings.setValue( "read/bgColorTo", this->bgColorTo );
     settings.setValue( "read/pixmapPatternFile", this->pixmapPatternFile );
 
+    settings.setValue( "lastState/windowWidth", this->windowWidth );
+    settings.setValue( "lastState/windowHeight", this->windowHeight );
+
     settings.remove( QString( "libraryDirs" ) );
 
     int libraryKey = 0;

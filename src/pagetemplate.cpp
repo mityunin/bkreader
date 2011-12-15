@@ -235,6 +235,7 @@ void PageTemplate::paintEvent(QPaintEvent *event)
         if( !this->b->bookTitle.isEmpty() )
             bookInfo += QString(" ")+this->b->bookTitle;
 
+        bookInfo += ". "+this->b->getCurrentChapter();
 
         painter.drawText( this->b->utils.getLeftMargin(0), 0, this->b->getColumnWidth(), this->b->utils.indicatorFontHeight, Qt::AlignVCenter, bookInfo.trimmed() );
 

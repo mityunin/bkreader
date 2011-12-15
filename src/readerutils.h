@@ -91,6 +91,8 @@ public:
         int     indentValue;
         int     rotateValue; //0 - normal, 1 - -90, 2 - 90
         bool    moveBigImages;
+        int     windowWidth;
+        int     windowHeight;
         QString bgType;
         QString bgcolor;
         QString bgColorFrom;

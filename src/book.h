@@ -63,7 +63,8 @@ public:
         float getPageLinesHeight(QList<PageLine> pllist);
         QTextLayout::FormatRange getFormatRange(QString f, int start, int length);
         int getPageNum(int lineNum);
-	
+        QString getCurrentChapter();
+
 	fb2 fictionbook;
         QList<QStringList> bookParagraphs;
 	QList<PageLine> lines;

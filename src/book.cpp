@@ -775,4 +775,22 @@ int book::getPageNum(int lineNum)
     return 0;
 }
 
+QString book::getCurrentChapter()
+{
+    int currentChapterPage=0;
+    int prevChapterPage=0;
+
+    QMap<int, QString>::iterator end = this->bookContents.end();
+    for(QMap<int, QString>::iterator iter=this->bookContents.begin();iter!=end;++iter)
+    {
+        currentChapterPage = this->getPageNum(iter.key());
+        if( this->currentPage >= prevChapterPage && this->currentPage <= currentChapterPage )
+        {
+            return iter.value();
+        }
+        prevChapterPage = currentChapterPage;
+    }
+
+    return "";
+}
 //
