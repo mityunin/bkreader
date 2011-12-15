@@ -178,7 +178,6 @@ void fb2::loadSection(const QDomElement &element)
                 {
                     this->loadPoem(child);
                 }
-		//qDebug() << "Next";
 		child = child.nextSiblingElement();
 	}
 }
@@ -214,17 +213,11 @@ void fb2::loadParagraph(const QDomElement &element)
 					QDomText childText = childNode.toText();
 					if( !childText.isNull() )
 					{
-//                                            QStringList txt = QStringList(childText.data().replace(QRegExp(QString::fromUtf8("-")), QString::fromUtf8("---")));
-                //                            QBool cont = txt.contains(QString("е"));
-                //                            paragraph.append( QStringList(text.data().trimmed()) );
-//                                            paragraph.append(txt);
                                                 paragraph.append( QStringList(childText.data().trimmed()) );
                                                 formats.append( QStringList("footnote:"+footnoteId) );
                                                 endFootnote = startFootnote + childText.data().trimmed().split(" ").size();
                                                 this->footnotesRange[footnoteId].append(startFootnote);
                                                 this->footnotesRange[footnoteId].append(endFootnote);
-                                                int test = 0;
-//                                                this->currentWord += childText.data().trimmed().split(" ").count();
 					}
 				}
 			}
@@ -236,14 +229,9 @@ void fb2::loadParagraph(const QDomElement &element)
 					QDomText childText = childNode.toText();
 					if( !childText.isNull() )
 					{
-//                                            QStringList txt = QStringList(childText.data().replace(QRegExp(QString::fromUtf8("-")), QString::fromUtf8("---")));
-                //                            QBool cont = txt.contains(QString("е"));
-                //                            paragraph.append( QStringList(text.data().trimmed()) );
-//                                            paragraph.append(txt);
                                                 paragraph.append( QStringList(childText.data().trimmed()) );
 						formats.append( QStringList("p") );
                                                 startFootnote += childText.data().trimmed().split(" ").size();
-//                                                this->currentWord += childText.data().trimmed().split(" ").count();
 					}
 				}
 			}
@@ -267,7 +255,6 @@ void fb2::loadBody(const QDomElement &element)
 			this->loadSection(child);
 		}
 		child = child.nextSiblingElement();
-		
 	}
 }
 
@@ -287,16 +274,9 @@ void fb2::loadTitle(const QDomElement &element)
 					QDomText text = node.toText();
 					if( !text.isNull() )
 					{
-//						this->bookParagraphs.append( QStringList("") );
-//						this->bookFormats.append( QStringList("title") );
-						
                                                 this->bookParagraphs.append( QStringList(text.data().trimmed()) );
 						this->bookFormats.append( QStringList("title") );
-//                                                this->currentWord += text.data().trimmed().split(" ").count();
-//                                                titleForContents.append( QStringList(text.data().trimmed()) );
                                                 this->contents.append( QStringList(text.data().trimmed()) );
-//						this->bookParagraphs.append( QStringList("") );
-//						this->bookFormats.append( QStringList("title") );
 					}
 				}
 				node = node.nextSibling();
@@ -304,9 +284,6 @@ void fb2::loadTitle(const QDomElement &element)
 		}
 		child = child.nextSiblingElement();
 	}
-
-//        this->contents[this->currentWord] = QStringList(titleForContents.at(0));
-//        this->contents.insert(titleForContents, this->currentWord);
 }
 
 void fb2::loadSubtitle(const QDomElement &element)
@@ -318,16 +295,9 @@ void fb2::loadSubtitle(const QDomElement &element)
 		{
 			QDomText text = child.toText();
 			if( !text.isNull() )
-			{
-//				this->bookParagraphs.append( QStringList("") );
-//				this->bookFormats.append( QStringList("subtitle") );
-				
+			{			
                                 this->bookParagraphs.append( QStringList(text.data().trimmed()) );
 				this->bookFormats.append( QStringList("subtitle") );
-//                                this->currentWord += text.data().trimmed().split(" ").count();
-				
-//				this->bookParagraphs.append( QStringList("") );
-//				this->bookFormats.append( QStringList("subtitle") );
 			}
 		}
 		child = child.nextSibling();
@@ -350,8 +320,7 @@ void fb2::loadEpigraph(const QDomElement &element)
 					if( !text.isNull() )
 					{
                                                 this->bookParagraphs.append( QStringList(text.data().trimmed()) );
-						this->bookFormats.append( QStringList("epigraph") );
-//                                                this->currentWord += text.data().trimmed().split(" ").count();
+                                                this->bookFormats.append( QStringList("epigraph") );
 					}
 				}
 				node = node.nextSibling();
@@ -377,8 +346,7 @@ void fb2::loadCite(const QDomElement &element)
 					if( !text.isNull() )
 					{
                                                 this->bookParagraphs.append( QStringList(text.data().trimmed()) );
-						this->bookFormats.append( QStringList("cite") );
-//                                                this->currentWord += text.data().trimmed().split(" ").count();
+                                                this->bookFormats.append( QStringList("cite") );
 					}
 				}
 				node = node.nextSibling();
@@ -395,8 +363,6 @@ QList<QStringList> fb2::getRawParagraphs()
 
 void fb2::loadBinary(const QDomElement &element)
 {
-//    QDomNode child = element.firstChild();
-//    qDebug() << element.nodeType();
     const QDomText text = element.firstChild().toText();
     QByteArray data = text.data().toLatin1();
     data = QByteArray::fromBase64( data );
@@ -453,13 +419,11 @@ void fb2::loadTitleInfo(const QDomElement &element)
         {
             QDomNode childNode = child.firstChild();
             this->bookTitle.append( childNode.toText().data().trimmed() );
-//            int test = 0;
         }
         else if( child.tagName() == QLatin1String( "lang" ) )
         {
             QDomNode childNode = child.firstChild();
             this->bookLang.append( childNode.toText().data().trimmed() );
-            int test = 0;
         }
         child = child.nextSiblingElement();
     }
@@ -518,7 +482,6 @@ void fb2::loadStanzaV(const QDomElement &element)
                     {
                             paragraph.append( QStringList(text.data().trimmed()) );
                             formats.append( QStringList("poem") );
-//                            this->currentWord += text.data().trimmed().split(" ").count();
                     }
             }
             else if( child.isElement() )
@@ -534,7 +497,6 @@ void fb2::loadStanzaV(const QDomElement &element)
                                     {
                                             paragraph.append( QStringList(childText.data().trimmed()) );
                                             formats.append( QStringList("footnote") );
-//                                            this->currentWord += childText.data().trimmed().split(" ").count();
                                     }
                             }
                     }
@@ -548,7 +510,6 @@ void fb2::loadStanzaV(const QDomElement &element)
                                     {
                                             paragraph.append( QStringList(childText.data().trimmed()) );
                                             formats.append( QStringList("poem") );
-//                                            this->currentWord += childText.data().trimmed().split(" ").count();
                                     }
                             }
                     }
@@ -566,10 +527,8 @@ QStringList fb2::loadFootnoteTitle(const QDomElement &element)
 {
         QStringList footnoteTitle;
         QDomElement child = element.firstChildElement();
-//        qDebug()<<child.tagName();
         while( !child.isNull() )
         {
-//            qDebug()<<child.tagName();
                 if( child.tagName() == QLatin1String( "p" ))
                 {
                         QDomNode node = child.firstChild();
@@ -581,7 +540,6 @@ QStringList fb2::loadFootnoteTitle(const QDomElement &element)
                                         if( !text.isNull() )
                                         {
                                                 footnoteTitle.append( QStringList(text.data().trimmed()) );
-//                                                this->currentWord += text.data().trimmed().split(" ").count();
                                         }
                                 }
                                 node = node.nextSibling();
@@ -605,7 +563,6 @@ QStringList fb2::loadFootnoteParagraph(const QDomElement &element)
                         if ( !text.isNull() )
                         {
                             paragraph.append( QStringList(text.data().trimmed()) );
-//                            this->currentWord += text.data().trimmed().split(" ").count();
                         }
                 }
                 else if( child.isElement() )
@@ -618,7 +575,6 @@ QStringList fb2::loadFootnoteParagraph(const QDomElement &element)
                                 if( !childText.isNull() )
                                 {
                                         paragraph.append( QStringList(childText.data().trimmed()) );
-//                                        this->currentWord += childText.data().trimmed().split(" ").count();
                                 }
                         }
                 }

@@ -44,6 +44,7 @@ public:
 	book *b;
         QTextLayout layout;
         QMenuBar *menuBar;
+        QMenu *contentsMenu;
 //        QTimer      bookTimer;
 //        QTime       bookTime;
 
@@ -56,6 +57,7 @@ private:
         QString currentTitle;
         QPixmap widgetPixmap;
         void preparePaintEvent();
+        void makeContentsMenu();
 	
 public slots:
 	void openFile();
@@ -68,6 +70,7 @@ public slots:
         void openBookSlot();
         void openSettingsWindow();
         void openLibrarySlot();
+        void openChapterSlot();
 //        void setAntialias();
 };
 #endif

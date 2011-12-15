@@ -62,6 +62,7 @@ public:
         QList<PageLine> getFootnotesLines(QStringList footnotesId);
         float getPageLinesHeight(QList<PageLine> pllist);
         QTextLayout::FormatRange getFormatRange(QString f, int start, int length);
+        int getPageNum(int lineNum);
 	
 	fb2 fictionbook;
         QList<QStringList> bookParagraphs;
@@ -103,6 +104,7 @@ public:
         QString authorLastName;
         QString bookTitle;
         QString bookLang;
+        QMap<int, QString> bookContents; //0-Name, 1-LineNum
 	//QStringList paras
 };
 #endif

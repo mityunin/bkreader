@@ -55,13 +55,18 @@ int main(int argc, char ** argv)
 
         win->connect(openSettingsAction, SIGNAL(triggered()), &tmplt, SLOT(openSettingsWindow()));
 
+        QMenu contentsMenu("Contents");
+
+
 
         win->menuBar()->addMenu(&fileMenu);
         win->menuBar()->addMenu(&prefMenu);
+        win->menuBar()->addMenu(&contentsMenu);
 //        win->menuBar()-> addMenu("File")->addSeparator();
 //        win->menuBar()->addMenu("Settings")->addAction("Preferences");
 	win->setCentralWidget(&tmplt);
         tmplt.menuBar = win->menuBar();
+        tmplt.contentsMenu = &contentsMenu;
 	win->resize(640, 480);
 	//b->loadFB2();
 	win->show(); 

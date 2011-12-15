@@ -128,6 +128,7 @@ void book::breakLines()
     this->lines.clear();
     this->footnotes.clear();
     this->utils.wordsWidths.clear();
+    this->bookContents.clear();
 
     //create hyphenator object
     hyphenator hyph;
@@ -136,6 +137,10 @@ void book::breakLines()
 
     //i - iterator for bookFormats list
     int i=0;
+
+    //contents temp variables
+    QString currentChapterName;
+    int currentChapterLineNum;
 
     //iterate paragraphs
     foreach(QStringList p, this->bookParagraphs)
@@ -189,6 +194,7 @@ void book::breakLines()
             //create line from words, exclude used words from words list
             words = line.create(words, indent, this->fictionbook.bookFormats[i][0], width, this->utils, hyph);
             endLineWord += line.words.size();
+
             if( i < this->fictionbook.bookFormats.count()-1 )
             {
                 //for titles make big line height
@@ -225,12 +231,32 @@ void book::breakLines()
             //add line to lines list
             this->lines.append(line);
             indent = "";
+
+            //make book contents
+            if( this->fictionbook.bookFormats[i][0] == "title" )
+            {
+                QString currentChapterPartName = line.words.join(" ");
+                currentChapterLineNum = this->lines.count();
+                if( this->fictionbook.bookFormats[i+1][0] == "title" )
+                {
+                    currentChapterName += " ";
+                    currentChapterName += currentChapterPartName;
+                }
+                else
+                {
+                    this->bookContents.insert( currentChapterLineNum, QString(currentChapterName+" "+currentChapterPartName).trimmed() );
+                    currentChapterName.clear();
+                    currentChapterPartName.clear();
+                }
+            }
         }
 
         i++;
     }
 
     this->breakFootnotes();
+    //qDebug()<<this->bookContents;
+
 }
 
 void book::breakFootnotes()
@@ -726,6 +752,27 @@ QString book::getParagraphIndent(int paragraphNum)
         indent = "";
 
     return indent;
+}
+
+int book::getPageNum(int lineNum)
+{
+    int firstLineNum = 0;
+    int lastLineNum = 0;
+    int pageNum = 0;
+
+    foreach( QList<PageLine> page, this->pages )
+    {
+        if( lineNum >= firstLineNum && lineNum <= lastLineNum )
+            return pageNum;
+        else
+        {
+            firstLineNum = lastLineNum;
+            lastLineNum += page.count();
+            pageNum++;
+        }
+    }
+
+    return 0;
 }
 
 //

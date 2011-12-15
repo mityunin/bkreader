@@ -328,6 +328,7 @@ void PageTemplate::resizeEvent(QResizeEvent *event)
 	this->b->setPageHeight( this->geometry().height() );
 	this->b->processBook();
 	this->repaint();
+        this->makeContentsMenu();
 }
 
 void PageTemplate::keyPressEvent(QKeyEvent *event)
@@ -509,6 +510,28 @@ void PageTemplate::openLibrarySlot()
             this->b->loadBook(filename);
             this->b->saveBookPosition();
         }
+}
+
+void PageTemplate::makeContentsMenu()
+{
+    this->contentsMenu->clear();
+    QMap<int, QString>::iterator end = this->b->bookContents.end();
+    for( QMap<int, QString>::iterator iter=this->b->bookContents.begin();iter != end; ++iter )
+    {
+        QAction *contentsMenuAction = new QAction(iter.value(), this);
+        contentsMenuAction->setObjectName( QString::number(iter.key()) );
+        this->contentsMenu->addAction(contentsMenuAction);
+
+        this->connect(contentsMenuAction, SIGNAL(triggered()), this, SLOT(openChapterSlot()));
+    }
+}
+
+void PageTemplate::openChapterSlot()
+{
+    QObject *obj = this->sender();
+    QString objname = obj->objectName();
+    this->b->currentPage = this->b->getPageNum(objname.toInt());
+    qDebug()<<this->b->currentPage;
 }
 
 //
