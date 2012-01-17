@@ -43,6 +43,7 @@ QStringList PageLine::create( QStringList words, QString indent, QString f, floa
         int wordsSize       = 0;
         float lineSpacing;
         QFontMetrics *fm;
+        this->data.clear();
 
         if( f == "title")
         {
@@ -109,6 +110,9 @@ QStringList PageLine::create( QStringList words, QString indent, QString f, floa
                 {
 			wordsSize += wordWidth;
 			this->words.append(word);
+      TheWord w;
+      w.data = word;
+      this->data.append(w);
                         this->lastWord++;
 			words.removeFirst();
 			continue;
@@ -130,6 +134,9 @@ QStringList PageLine::create( QStringList words, QString indent, QString f, floa
                             {
                                 wordsSize += wordWidth;
                                 this->words.append(hyphedWord[i]+"-");
+                                TheWord w;
+                                w.data = hyphedWord[i]+"-";
+                                this->data.append(w);
                                 this->lastWord++;
                                 QString wordPart = word.right(word.size()-hyphedWord[i].size());
                                 words.removeFirst();

@@ -111,7 +111,7 @@ void PageTemplate::paintEvent(QPaintEvent *event)
         if(this->b->utils.bgType == "grad")
         {
 
-            bgPixmapPainter.fillRect(0, 0, this->b->getPageWidth(), this->b->getPageHeight(),gradBg);
+            bgPixmapPainter.fillRect(0, 0, this->b->getPageWidth(true), this->b->getPageHeight(true),gradBg);
             painter.drawPixmap(0, 0, this->b->getPageWidth(true), this->b->getPageHeight(true),pageBg);
         }
         else
