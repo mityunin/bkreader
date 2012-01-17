@@ -476,10 +476,10 @@ float book::getColumnHeight()
         this->columnHeight = float(this->getPageHeight()) - this->utils.topMargin - this->utils.bottomMargin;
         break;
     case 1:
-        this->columnHeight = float(this->getPageWidth()) - this->utils.leftMargin - this->utils.rightMargin;
+        this->columnHeight = float(this->getPageWidth()) - this->utils.topMargin - this->utils.bottomMargin;
         break;
     case 2:
-        this->columnHeight = float(this->getPageWidth()) - this->utils.leftMargin - this->utils.rightMargin;
+        this->columnHeight = float(this->getPageWidth()) - this->utils.topMargin - this->utils.bottomMargin;
         break;
     }
     return this->columnHeight;
