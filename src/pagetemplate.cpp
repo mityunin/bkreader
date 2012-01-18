@@ -29,6 +29,7 @@
 #include <QtGui/QShortcut>
 //#include <QtGui/QBrush>
 #include <QTimer>
+#include <qmath.h>
 //
 PageTemplate::PageTemplate( QWidget *parent ):QWidget(parent)
 {
@@ -236,10 +237,17 @@ void PageTemplate::paintEvent(QPaintEvent *event)
             bookInfo += QString(" ")+this->b->bookTitle;
 
         bookInfo += ". "+this->b->getCurrentChapter();
+        int currentPageNum = this->b->currentPage;
+        int pagesLenNum = this->b->pages.length();
 
+        currentPageNum = qRound(currentPageNum/this->b->utils.columnsNum);
+        pagesLenNum = qRound(pagesLenNum/this->b->utils.columnsNum);
+
+//        painter.drawText( this->b->utils.getLeftMargin(0), 0, this->b->getColumnWidth(), this->b->utils.indicatorFontHeight, Qt::AlignVCenter, bookInfo.trimmed() );
         painter.drawText( this->b->utils.getLeftMargin(0), 0, this->b->getColumnWidth(), this->b->utils.indicatorFontHeight, Qt::AlignVCenter, bookInfo.trimmed() );
 
-        painter.drawText( this->b->utils.getLeftMargin(0), 0, this->b->getPageWidth(true)-this->b->utils.getLeftMargin(0)-this->b->utils.getRightMargin(this->b->utils.columnsNum-1), this->b->utils.indicatorFontHeight, Qt::AlignRight+Qt::AlignVCenter, QString::number(this->b->currentPage)+" / "+QString::number(this->b->pages.length()));
+//        painter.drawText( this->b->utils.getLeftMargin(0), 0, this->b->getPageWidth(true)-this->b->utils.getLeftMargin(0)-this->b->utils.getRightMargin(this->b->utils.columnsNum-1), this->b->utils.indicatorFontHeight, Qt::AlignRight+Qt::AlignVCenter, QString::number(this->b->currentPage)+" / "+QString::number(this->b->pages.length()));
+        painter.drawText( this->b->utils.getLeftMargin(0), 0, this->b->getPageWidth(true)-this->b->utils.getLeftMargin(0)-this->b->utils.getRightMargin(this->b->utils.columnsNum-1), this->b->utils.indicatorFontHeight, Qt::AlignRight+Qt::AlignVCenter, QString::number(currentPageNum)+" / "+QString::number(pagesLenNum));
 
 //        painter.drawText(this->b->utils.getLeftMargin(0), this->b->utils.topMargin+this->b->getColumnHeight(), this->b->getColumnWidth(), this->b->utils.bottomMargin, Qt::AlignVCenter, QString::number(this->b->currentPage)+" / "+QString::number(this->b->pages.length()));
 
