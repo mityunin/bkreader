@@ -31,7 +31,9 @@ class TheWord
 {
 public:
   int x;
+  float w;
   QString data;
+  TheWord();
 };
 
 
@@ -40,7 +42,7 @@ class PageLine
 
 public:
 	QStringList words;
-  QList<TheWord> data;
+        QList<TheWord> data;
 //QStringList	text;
 	QString		f;
 	float		width;

@@ -120,19 +120,6 @@ void PageTemplate::paintEvent(QPaintEvent *event)
 
         for(int i=0;i<this->b->utils.columnsNum;i++)
         {
-            //fill book background
-//            painter.fillRect(this->b->getColumnLeftCoord(i), 0, this->b->getColumnRightCoord(i),this->b->utils.topMargin+this->b->getColumnHeight()+this->b->utils.bottomMargin, QBrush(QColor(QColor("#C6C6C6")).rgb()));
-
-            //fill page background
-//            int pageBgXFrom = this->b->getColumnLeftCoord(i) + pageBgIndent;
-//            int pageBgXTo = this->b->utils.getLeftMargin(i) + this->b->utils.getRightMargin(i) + this->b->getColumnWidth() - pageBgIndent*2;
-
-//            bgPixmapPainter.fillRect(0, 0, this->b->getColumnWidth(), this->b->getColumnHeight(),gradBg);
-//            painter.drawPixmap(pageBgXFrom, pageBgIndent, pageBgXTo, this->b->getColumnHeight()+this->b->utils.topMargin+this->b->utils.bottomMargin-pageBgIndent*2,pageBg);
-
-            //draw page border rectangle
-//            painter.drawRect(pageBgXFrom, pageBgIndent, pageBgXTo, this->b->getColumnHeight()+this->b->utils.topMargin+this->b->utils.bottomMargin-pageBgIndent*2);
-
             //draw indicator line
             int indicatorXFrom = this->b->utils.getLeftMargin(i)*(i+1) + this->b->getColumnWidth()*i + this->b->utils.getRightMargin(i)*i;
             int indicatorXTo = this->b->utils.getLeftMargin(i)*(i+1) + this->b->getColumnWidth()*(i+1) + this->b->utils.getRightMargin(i)*i;
@@ -155,17 +142,22 @@ void PageTemplate::paintEvent(QPaintEvent *event)
                 }
 //                this->b->setCurrentWord();
 	
-		this->drawLayout(page, i);
-		this->layout.draw(&painter, QPointF(0,0));
+//		this->drawLayout(page, i);
+//		this->layout.draw(&painter, QPointF(0,0));
 
                 int y = this->b->utils.topMargin;
                 int w = 0;
                 int h = 0;
                 QString previousFormat = "";
 //                int lineNum = 1;
+                int lineY = this->b->utils.topMargin;
+//                int lineX = this->b->
                 foreach(PageLine l, page)
                 {
                     int x = this->b->utils.getLeftMargin(i) + this->b->getColumnWidth()*i+this->b->utils.getRightMargin(i)*i;
+                    float lineX = this->b->utils.getLeftMargin(i) + this->b->getColumnWidth()*i+this->b->utils.getRightMargin(i)*i;
+                    lineY += l.lineHeight;
+
                     if( l.isPixmap )
                     {
 //                        int dx = l.width - this->b->getColumnWidth();
@@ -220,6 +212,29 @@ void PageTemplate::paintEvent(QPaintEvent *event)
                         previousFormat = "footnote";
                         painter.drawLine(footnoteSeparatorX, footnoteSeparatorY, footnoteSeparatorX+(this->b->getColumnWidth()/3), footnoteSeparatorY);
                     }
+
+
+                    l.justify(this->b->getColumnWidth(), this->b->utils);
+                    foreach(TheWord word, l.data)
+                    {
+//                        qDebug()<<word.x;
+                        lineX = word.x + this->b->utils.getLeftMargin(i)*(i+1) + this->b->getColumnWidth()*i + this->b->utils.getRightMargin(i)*i;;//this->b->utils.getLeftMargin(i) + this->b->getColumnWidth()*i+this->b->utils.getRightMargin(i)*i;
+
+                        if( l.f == "p" )
+                            painter.setFont(this->b->utils.paragraphFont);
+                        else if( l.f == "title" || l.f == "subtitle" )
+                            painter.setFont(this->b->utils.titleFont);
+                        else if( l.f == "footnote" )
+                            painter.setFont(this->b->utils.footnoteFont);
+                        else if( l.f == "cite" )
+                            painter.setFont(this->b->utils.citeFont);
+                        else if( l.f == "epigraph" )
+                            painter.setFont(this->b->utils.epigraphFont);
+                        else if( l.f == "poem" )
+                            painter.setFont(this->b->utils.poemFont);
+
+                        painter.drawText(lineX, lineY, word.data);
+                    }
                 }
 	}
 
@@ -242,6 +257,8 @@ void PageTemplate::paintEvent(QPaintEvent *event)
 
         currentPageNum = qRound(currentPageNum/this->b->utils.columnsNum);
         pagesLenNum = qRound(pagesLenNum/this->b->utils.columnsNum);
+
+        painter.setFont(this->b->utils.indicatorFont);
 
 //        painter.drawText( this->b->utils.getLeftMargin(0), 0, this->b->getColumnWidth(), this->b->utils.indicatorFontHeight, Qt::AlignVCenter, bookInfo.trimmed() );
         painter.drawText( this->b->utils.getLeftMargin(0), 0, this->b->getColumnWidth(), this->b->utils.indicatorFontHeight, Qt::AlignVCenter, bookInfo.trimmed() );
