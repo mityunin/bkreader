@@ -104,10 +104,22 @@ QStringList hyphenator::hyphenateWord(QString word)
 {
     if(word.size() < 4) return QStringList();
 
-    word.remove(QLatin1String("."), Qt::CaseInsensitive);
-    word.remove(QLatin1String(","), Qt::CaseInsensitive);
-    word.remove(QLatin1String(":"), Qt::CaseInsensitive);
+//    word.remove(QLatin1String("."), Qt::CaseInsensitive);
+//    word.remove(QLatin1String(","), Qt::CaseInsensitive);
+//    word.remove(QLatin1String(":"), Qt::CaseInsensitive);
 
+//    remove special characters
+    word.replace(QChar(0x002e), "");
+    word.replace(QChar(0x0021), "");
+    word.replace(QChar(0x003a), "");
+    word.replace(QChar(0x003b), "");
+//    remove "hyphen" and "minus" to the end of line
+    word.remove( word.indexOf(QChar(0x002d)), word.length() );
+    word.remove( word.indexOf(QChar(0x207b)), word.length() );
+    word.remove( word.indexOf(QChar(0x208b)), word.length() );
+    word.remove( word.indexOf(QChar(0xfe63)), word.length() );
+    word.remove( word.indexOf(QChar(0xff0d)), word.length() );
+    word.remove( word.indexOf(QChar(0xe002d)), word.length() );
 
     QString w;
 //    w.remove(QChar(""), Qt::CaseInsensitive);

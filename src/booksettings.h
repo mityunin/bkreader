@@ -74,6 +74,14 @@ private slots:
     void on_chkSetPattern_toggled(bool checked);
     void on_BookSettings_finished(int result);
     void on_buttonBox_accepted();
+    void on_comboParagraphAlign_activated(const QString &arg1);
+    void on_comboTitleAlign_activated(const QString &arg1);
+    void on_comboSubtitleAlign_activated(const QString &arg1);
+    void on_comboPoemAlign_activated(const QString &arg1);
+    void on_comboCiteAlign_activated(const QString &arg1);
+    void on_comboFootnoteAlign_activated(const QString &arg1);
+    void on_comboIndicatorAlign_activated(const QString &arg1);
+    void on_comboEpigraphAlign_activated(const QString &arg1);
 };
 
 #endif // BOOKSETTINGS_H

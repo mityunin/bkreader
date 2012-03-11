@@ -56,6 +56,16 @@ public:
         QFont poemFont;
         QFont indicatorFont;
         QFont epigraphFont;
+
+        QString textAlign;
+        QString titleAlign;
+        QString subtitleAlign;
+        QString citeAlign;
+        QString footnoteAlign;
+        QString poemAlign;
+        QString indicatorAlign;
+        QString epigraphAlign;
+
         QString pixmapPatternFile;
 //        QFontMetrics paragraphFM;
 //        QFontMetrics titleFM;

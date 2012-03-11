@@ -70,6 +70,22 @@ void BookSettings::loadSettings()
         this->ui->listLibraryDirs->addItem(item);
     }
 
+    QHash<QString, int> alignIndex;
+    alignIndex["justify"]       = 0;
+    alignIndex["left"]          = 1;
+    alignIndex["center"]        = 2;
+    alignIndex["right"]         = 3;
+    alignIndex["justify-right"] = 4;
+
+    this->ui->comboParagraphAlign->setCurrentIndex( alignIndex[this->utils->textAlign.toLower()] );
+    this->ui->comboTitleAlign->setCurrentIndex( alignIndex[this->utils->titleAlign.toLower()] );
+    this->ui->comboSubtitleAlign->setCurrentIndex( alignIndex[this->utils->subtitleAlign.toLower()] );
+    this->ui->comboCiteAlign->setCurrentIndex( alignIndex[this->utils->citeAlign.toLower()] );
+    this->ui->comboEpigraphAlign->setCurrentIndex( alignIndex[this->utils->epigraphAlign.toLower()] );
+    this->ui->comboFootnoteAlign->setCurrentIndex( alignIndex[this->utils->footnoteAlign.toLower()] );
+    this->ui->comboIndicatorAlign->setCurrentIndex( alignIndex[this->utils->indicatorAlign.toLower()] );
+    this->ui->comboPoemAlign->setCurrentIndex( alignIndex[this->utils->poemAlign.toLower()] );
+
     //if( this->utils->bgType == "grad" )
 //    {
 //        this->ui->chkSetColor->setEnabled(true);
@@ -486,4 +502,60 @@ void BookSettings::on_buttonBox_accepted()
 {
     this->utils->pixmapPatternFile = this->ui->cbPattern->currentText();
     this->utils->writeSettings();
+}
+
+void BookSettings::on_comboParagraphAlign_activated(const QString &arg1)
+{
+    this->utils->textAlign = arg1.toLower();
+    this->utils->writeSettings();
+    this->loadSettings();
+}
+
+void BookSettings::on_comboTitleAlign_activated(const QString &arg1)
+{
+    this->utils->titleAlign = arg1.toLower();
+    this->utils->writeSettings();
+    this->loadSettings();
+}
+
+void BookSettings::on_comboSubtitleAlign_activated(const QString &arg1)
+{
+    this->utils->subtitleAlign = arg1.toLower();
+    this->utils->writeSettings();
+    this->loadSettings();
+}
+
+void BookSettings::on_comboPoemAlign_activated(const QString &arg1)
+{
+    this->utils->poemAlign = arg1.toLower();
+    this->utils->writeSettings();
+    this->loadSettings();
+}
+
+void BookSettings::on_comboCiteAlign_activated(const QString &arg1)
+{
+    this->utils->citeAlign = arg1.toLower();
+    this->utils->writeSettings();
+    this->loadSettings();
+}
+
+void BookSettings::on_comboFootnoteAlign_activated(const QString &arg1)
+{
+    this->utils->footnoteAlign = arg1.toLower();
+    this->utils->writeSettings();
+    this->loadSettings();
+}
+
+void BookSettings::on_comboIndicatorAlign_activated(const QString &arg1)
+{
+    this->utils->indicatorAlign = arg1.toLower();
+    this->utils->writeSettings();
+    this->loadSettings();
+}
+
+void BookSettings::on_comboEpigraphAlign_activated(const QString &arg1)
+{
+    this->utils->epigraphAlign = arg1.toLower();
+    this->utils->writeSettings();
+    this->loadSettings();
 }

@@ -30,34 +30,42 @@ ReaderUtils::ReaderUtils(  )
     this->paragraphFont.setPointSize(12);
     this->paragraphFont.setFamily("Arial");
     this->paragraphLineSpacing = 1.3;
+    this->textAlign = "justify";
 
     this->titleFont.setPointSize(12);
     this->titleFont.setFamily("Arial");
 //    this->titleFont.setBold(true);
+    this->titleAlign = "center";
 
     this->subtitleFont.setPointSize(12);
     this->subtitleFont.setFamily("Arial");
+    this->subtitleAlign = "center";
 
     this->citeFont.setPointSize(12);
     this->citeFont.setFamily("Arial");
     this->citeFont.setItalic(true);
+    this->citeAlign = "justify";
 
     this->poemFont.setPointSize(12);
     this->poemFont.setFamily("Arial");
     this->poemFont.setItalic(true);
+    this->poemAlign = "left";
 
     this->footnoteFont.setPointSize(10);
     this->footnoteFont.setFamily("Arial");
     this->footnoteFont.setItalic(true);
     this->footnoteLineSpacing = this->paragraphLineSpacing - 0.2;
+    this->footnoteAlign = "justify";
 
     this->indicatorFont.setPointSize(12);
     this->indicatorFont.setFamily("Arial");
     this->indicatorFont.setItalic(false);
+    this->indicatorAlign = "justify";
 
     this->epigraphFont.setPointSize(12);
     this->epigraphFont.setFamily("Arial");
     this->epigraphFont.setItalic(true);
+    this->epigraphAlign = "justify-right";
 
     this->isTitleInUpperCase    = true;
     this->hyphsIsOn             = true;
@@ -132,48 +140,56 @@ void ReaderUtils::writeSettings()
     settings.setValue( "fonts/paragraphBold", this->paragraphFont.bold() );
     settings.setValue( "fonts/paragraphUnderline", this->paragraphFont.underline() );
     settings.setValue( "fonts/paragraphLineSpacing", this->paragraphLineSpacing );
+    settings.setValue( "fonts/textAlign", this->textAlign );
 
     settings.setValue( "fonts/titleFontFamily", this->titleFont.family() );
     settings.setValue( "fonts/titlePointSize", this->titleFont.pointSize() );
     settings.setValue( "fonts/titleItalic", this->titleFont.italic() );
     settings.setValue( "fonts/titleBold", this->titleFont.bold() );
     settings.setValue( "fonts/titleUnderline", this->titleFont.underline() );
+    settings.setValue( "fonts/titleAlign", this->titleAlign );
 
     settings.setValue( "fonts/subtitleFontFamily", this->subtitleFont.family() );
     settings.setValue( "fonts/subtitlePointSize", this->subtitleFont.pointSize() );
     settings.setValue( "fonts/subtitleItalic", this->subtitleFont.italic() );
     settings.setValue( "fonts/subtitleBold", this->subtitleFont.bold() );
     settings.setValue( "fonts/subtitleUnderline", this->subtitleFont.underline() );
+    settings.setValue( "fonts/subtitleAlign", this->subtitleAlign );
 
     settings.setValue( "fonts/citeFontFamily", this->citeFont.family() );
     settings.setValue( "fonts/citePointSize", this->citeFont.pointSize() );
     settings.setValue( "fonts/citeItalic", this->citeFont.italic() );
     settings.setValue( "fonts/citeBold", this->citeFont.bold() );
     settings.setValue( "fonts/citeUnderline", this->citeFont.underline() );
+    settings.setValue( "fonts/citeAlign", this->citeAlign );
 
     settings.setValue( "fonts/footnoteFontFamily", this->footnoteFont.family() );
     settings.setValue( "fonts/footnotePointSize", this->footnoteFont.pointSize() );
     settings.setValue( "fonts/footnoteItalic", this->footnoteFont.italic() );
     settings.setValue( "fonts/footnoteBold", this->footnoteFont.bold() );
     settings.setValue( "fonts/footnoteUnderline", this->footnoteFont.underline() );
+    settings.setValue( "fonts/footnoteAlign", this->footnoteAlign );
 
     settings.setValue( "fonts/poemFontFamily", this->poemFont.family() );
     settings.setValue( "fonts/poemPointSize", this->poemFont.pointSize() );
     settings.setValue( "fonts/poemItalic", this->poemFont.italic() );
     settings.setValue( "fonts/poemBold", this->poemFont.bold() );
     settings.setValue( "fonts/poemUnderline", this->poemFont.underline() );
+    settings.setValue( "fonts/poemAlign", this->poemAlign );
 
     settings.setValue( "fonts/indicatorFontFamily", this->indicatorFont.family() );
     settings.setValue( "fonts/indicatorPointSize", this->indicatorFont.pointSize() );
     settings.setValue( "fonts/indicatorItalic", this->indicatorFont.italic() );
     settings.setValue( "fonts/indicatorBold", this->indicatorFont.bold() );
     settings.setValue( "fonts/indicatorUnderline", this->indicatorFont.underline() );
+    settings.setValue( "fonts/indicatorAlign", this->indicatorAlign );
 
     settings.setValue( "fonts/epigraphFontFamily", this->epigraphFont.family() );
     settings.setValue( "fonts/epigraphPointSize", this->epigraphFont.pointSize() );
     settings.setValue( "fonts/epigraphItalic", this->epigraphFont.italic() );
     settings.setValue( "fonts/epigraphBold", this->epigraphFont.bold() );
     settings.setValue( "fonts/epigraphUnderline", this->epigraphFont.underline() );
+    settings.setValue( "fonts/epigraphAlign", this->epigraphAlign );
 
     settings.setValue( "read/titleIsUppercase", this->isTitleInUpperCase );
     settings.setValue( "read/hyphsIsOn", this->hyphsIsOn );
@@ -225,36 +241,42 @@ void ReaderUtils::readSettings()
     this->paragraphFont.setBold( settings.value( "fonts/paragraphBold" ).toBool() );
     this->paragraphFont.setUnderline( settings.value( "fonts/paragraphUnderline" ).toBool() );
     this->paragraphLineSpacing = settings.value( "fonts/paragraphLineSpacing" ).toFloat();
+    this->textAlign = settings.value( "fonts/textAlign" ).toString();
 
     this->titleFont.setFamily( settings.value( "fonts/titleFontFamily").toString() );
     this->titleFont.setPointSize( settings.value( "fonts/titlePointSize" ).toInt() );
     this->titleFont.setItalic( settings.value( "fonts/titleItalic" ).toBool() );
     this->titleFont.setBold( settings.value( "fonts/titleBold" ).toBool() );
     this->titleFont.setUnderline( settings.value( "fonts/titleUnderline").toBool() );
+    this->titleAlign = settings.value( "fonts/titleAlign" ).toString();
 
     this->subtitleFont.setFamily( settings.value( "fonts/subtitleFontFamily" ).toString() );
     this->subtitleFont.setPointSize( settings.value( "fonts/subtitlePointSize" ).toInt() );
     this->subtitleFont.setItalic( settings.value( "fonts/subtitleItalic" ).toBool() );
     this->subtitleFont.setBold( settings.value( "fonts/subtitleBold" ).toBool() );
     this->subtitleFont.setUnderline( settings.value( "fonts/subtitleUnderline" ).toBool() );
+    this->subtitleAlign = settings.value( "fonts/subtitleAlign" ).toString();
 
     this->citeFont.setFamily( settings.value( "fonts/citeFontFamily" ).toString() );
     this->citeFont.setPointSize( settings.value( "fonts/citePointSize" ).toInt() );
     this->citeFont.setItalic( settings.value( "fonts/citeItalic" ).toBool() );
     this->citeFont.setBold( settings.value( "fonts/citeBold" ).toBool() );
     this->citeFont.setUnderline( settings.value( "fonts/citeUnderline" ).toBool() );
+    this->citeAlign = settings.value( "fonts/citeAlign" ).toString();
 
     this->footnoteFont.setFamily( settings.value( "fonts/footnoteFontFamily" ).toString() );
     this->footnoteFont.setPointSize( settings.value( "fonts/footnotePointSize" ).toInt() );
     this->footnoteFont.setItalic( settings.value( "fonts/footnoteItalic" ).toBool() );
     this->footnoteFont.setBold( settings.value( "fonts/footnoteBold" ).toBool() );
     this->footnoteFont.setUnderline( settings.value( "fonts/footnoteUnderline" ).toBool() );
+    this->footnoteAlign = settings.value( "fonts/footnoteAlign" ).toString();
 
     this->poemFont.setFamily( settings.value( "fonts/poemFontFamily" ).toString() );
     this->poemFont.setPointSize( settings.value( "fonts/poemPointSize" ).toInt() );
     this->poemFont.setItalic( settings.value( "fonts/poemItalic" ).toBool() );
     this->poemFont.setBold( settings.value( "fonts/poemBold" ).toBool() );
     this->poemFont.setUnderline( settings.value( "fonts/poemUnderline" ).toBool() );
+    this->poemAlign = settings.value( "fonts/poemAlign" ).toString();
 
     this->indicatorFont.setFamily( settings.value( "fonts/indicatorFontFamily" ).toString() );
     this->indicatorFont.setPointSize( settings.value( "fonts/indicatorPointSize" ).toInt() );
@@ -263,12 +285,14 @@ void ReaderUtils::readSettings()
     this->indicatorFont.setUnderline( settings.value( "fonts/indicatorUnderline" ).toBool() );
     QFontMetrics *indicatorFM = new QFontMetrics(this->indicatorFont);
     this->indicatorFontHeight = indicatorFM->height()*this->paragraphLineSpacing + 5;
+    this->indicatorAlign = settings.value( "fonts/indicatorAlign" ).toString();
 
     this->epigraphFont.setFamily( settings.value( "fonts/epigraphFontFamily" ).toString() );
     this->epigraphFont.setPointSize( settings.value( "fonts/epigraphPointSize" ).toInt() );
     this->epigraphFont.setItalic( settings.value( "fonts/epigraphItalic" ).toBool() );
     this->epigraphFont.setBold( settings.value( "fonts/epigraphBold" ).toBool() );
     this->epigraphFont.setUnderline( settings.value( "fonts/epigraphUnderline" ).toBool() );
+    this->epigraphAlign = settings.value( "fonts/epigraphAlign" ).toString();
 
     this->isTitleInUpperCase = settings.value( "read/titleIsUppercase").toBool();
     this->hyphsIsOn = settings.value( "read/hyphsIsOn" ).toBool();

@@ -198,38 +198,45 @@ QString PageLine::justify(int w, ReaderUtils utils)
         if( this->f == "title")
         {
             fm = new QFontMetrics( utils.titleFont );
-            alignTo = "center";
+//            alignTo = "center";
+            alignTo = utils.titleAlign.toLower();
         }
         else if( this->f == "subtitle" )
         {
             fm = new QFontMetrics( utils.subtitleFont );
-            alignTo = "center";
+//            alignTo = "center";
+            alignTo = utils.subtitleAlign.toLower();
         }
         else if( this->f == "cite" )
         {
             fm = new QFontMetrics( utils.citeFont );
-            alignTo = "justify";
+//            alignTo = "justify";
+            alignTo = utils.citeAlign.toLower();
         }
         else if( this->f == "poem" )
         {
             fm = new QFontMetrics( utils.poemFont );
-            alignTo = "left";
+//            alignTo = "left";
+            alignTo = utils.poemAlign.toLower();
         }
         else if( this->f.contains("footnote") )
         {
             fm = new QFontMetrics( utils.footnoteFont );
-            alignTo = "justify";
+//            alignTo = "justify";
+            alignTo = utils.footnoteAlign.toLower();
         }
         else if( this->f == "indicator" )
         {
             fm = new QFontMetrics( utils.indicatorFont );
-            alignTo = "justify";
+//            alignTo = "justify";
+            alignTo = utils.indicatorAlign.toLower();
         }
         else if( this->f == "epigraph" )
         {
             fm = new QFontMetrics( utils.epigraphFont );
 //            alignTo = "right";
-            alignTo = "justify-right";
+//            alignTo = "justify-right";
+            alignTo = utils.epigraphAlign.toLower();
         }
         else if( this->isPixmap )
         {
@@ -238,7 +245,8 @@ QString PageLine::justify(int w, ReaderUtils utils)
         else
         {
             fm = new QFontMetrics( utils.paragraphFont );
-            alignTo = "justify";
+//            alignTo = "justify";
+            alignTo = utils.textAlign.toLower();
         }
 
 //        if( this->isEndParagraph && alignTo != "right" )
