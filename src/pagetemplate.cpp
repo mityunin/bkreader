@@ -95,6 +95,7 @@ void PageTemplate::paintEvent(QPaintEvent *event)
         gradBg.setColorAt(1, QColor(QColor( this->b->utils.bgColorTo )).rgb());
         QPainter bgPixmapPainter(&pageBg);
 
+
 //        QPixmap pageBgShadow(this->b->getColumnWidth()-6, this->b->getColumnHeight()-6);
 //        pageBgShadow.fill(QColor(QColor("#C6C6C6")).rgb());
 
@@ -139,18 +140,12 @@ void PageTemplate::paintEvent(QPaintEvent *event)
                     emptyLine.words.append(" ");
                     page.append(emptyLine);
                 }
-//                this->b->setCurrentWord();
-
-//		this->drawLayout(page, i);
-//		this->layout.draw(&painter, QPointF(0,0));
 
                 int y = this->b->utils.topMargin;
                 int w = 0;
                 int h = 0;
                 QString previousFormat = "";
-//                int lineNum = 1;
                 int lineY = this->b->utils.topMargin;
-//                int lineX = this->b->
                 foreach(PageLine l, page)
                 {
                     int x = this->b->utils.getLeftMargin(i) + this->b->getColumnWidth()*i+this->b->utils.getRightMargin(i)*i;
@@ -159,16 +154,10 @@ void PageTemplate::paintEvent(QPaintEvent *event)
 
                     if( l.isPixmap )
                     {
-//                        int dx = l.width - this->b->getColumnWidth();
-//                        int dx = l.pixmap.width() - this->b->getColumnWidth();
                         int dx = l.width - this->b->getColumnWidth();
-//                        int dy = l.lineHeight - this->b->getColumnHeight() - y;
-//                        int dy = l.pixmap.height() - this->b->getColumnHeight() - y;
                         int dy = l.height - this->b->getColumnHeight() - y;
                         if( dx > 0 || dy > 0)
                         {
-//                            float aspect = l.width / l.lineHeight;
-//                            float aspect = float(l.pixmap.width()) / l.pixmap.height();
                             float aspect = float(l.width) / l.height;
                             if( dx >= dy )
                             {
@@ -184,9 +173,7 @@ void PageTemplate::paintEvent(QPaintEvent *event)
                         else
                         {
                             w = l.width;
-//                            w = l.pixmap.width();
                             h = l.lineHeight;
-//                            h = l.pixmap.height();
                         }
                         if( page.size() == 1 )
                             y = this->b->utils.topMargin + ( this->b->getColumnHeight() - h ) / 2;
@@ -201,25 +188,22 @@ void PageTemplate::paintEvent(QPaintEvent *event)
                     if( l.f == "footnote" && previousFormat != "footnote" )
                     {
                         float footnotesOnPageHeight = 0;
-//                        float lastFootnoteLineHeight = 0;
                         foreach( PageLine pl, page )
                         {
-                            if( pl.f == "footnote" ) footnotesOnPageHeight += pl.lineHeight*this->b->utils.footnoteLineSpacing;
-//                            lastFootnoteLineHeight = pl.lineHeight;
+                            if( pl.f == "footnote" ) footnotesOnPageHeight += pl.lineHeight;
                         }
 
                         float footnoteSeparatorY = this->b->getColumnHeight()+this->b->utils.topMargin-footnotesOnPageHeight;
                         float footnoteSeparatorX = this->b->utils.getLeftMargin(i)*(i+1)+this->b->utils.getRightMargin(i)*i+this->b->getColumnWidth()*i;
                         previousFormat = "footnote";
-                        painter.drawPixmap(footnoteSeparatorX, footnoteSeparatorY, this->b->getColumnWidth()/3, 1, pageThinLine );
-//                        painter.drawLine(footnoteSeparatorX, footnoteSeparatorY, footnoteSeparatorX+(this->b->getColumnWidth()/3), footnoteSeparatorY);
+                        painter.drawPixmap(footnoteSeparatorX, footnoteSeparatorY-l.lineHeight, this->b->getColumnWidth()/3, 1, pageThinLine );
+			lineY = footnoteSeparatorY;
                     }
 
 
                     l.justify(this->b->getColumnWidth(), this->b->utils);
                     foreach(TheWord word, l.data)
                     {
-//                        qDebug()<<word.x;
                         lineX = word.x + this->b->utils.getLeftMargin(i)*(i+1) + this->b->getColumnWidth()*i + this->b->utils.getRightMargin(i)*i;;//this->b->utils.getLeftMargin(i) + this->b->getColumnWidth()*i+this->b->utils.getRightMargin(i)*i;
 
                         if( l.f == "p" )
@@ -262,16 +246,9 @@ void PageTemplate::paintEvent(QPaintEvent *event)
 
         painter.setFont(this->b->utils.indicatorFont);
 
-//        painter.drawText( this->b->utils.getLeftMargin(0), 0, this->b->getColumnWidth(), this->b->utils.indicatorFontHeight, Qt::AlignVCenter, bookInfo.trimmed() );
         painter.drawText( this->b->utils.getLeftMargin(0), 0, this->b->getColumnWidth(), this->b->utils.indicatorFontHeight, Qt::AlignVCenter, bookInfo.trimmed() );
 
-//        painter.drawText( this->b->utils.getLeftMargin(0), 0, this->b->getPageWidth(true)-this->b->utils.getLeftMargin(0)-this->b->utils.getRightMargin(this->b->utils.columnsNum-1), this->b->utils.indicatorFontHeight, Qt::AlignRight+Qt::AlignVCenter, QString::number(this->b->currentPage)+" / "+QString::number(this->b->pages.length()));
         painter.drawText( this->b->utils.getLeftMargin(0), 0, this->b->getPageWidth(true)-this->b->utils.getLeftMargin(0)-this->b->utils.getRightMargin(this->b->utils.columnsNum-1), this->b->utils.indicatorFontHeight, Qt::AlignRight+Qt::AlignVCenter, QString::number(currentPageNum)+" / "+QString::number(pagesLenNum));
-
-//        painter.drawText(this->b->utils.getLeftMargin(0), this->b->utils.topMargin+this->b->getColumnHeight(), this->b->getColumnWidth(), this->b->utils.bottomMargin, Qt::AlignVCenter, QString::number(this->b->currentPage)+" / "+QString::number(this->b->pages.length()));
-
-//        QTime *time = new QTime();
-//        painter.drawText(this->b->utils.getLeftMargin(0),this->b->utils.topMargin+this->b->getColumnHeight(),this->b->getColumnWidth()*this->b->utils.columnsNum+this->b->utils.getLeftMargin(0)*(this->b->utils.columnsNum-1)+this->b->utils.getRightMargin(0)*(this->b->utils.columnsNum-1),this->b->utils.bottomMargin,Qt::AlignVCenter | Qt::AlignRight,time->currentTime().toString("hh:mm"));
 
         painter.restore();
         this->b->setCurrentWord();
