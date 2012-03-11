@@ -464,22 +464,20 @@ void PageLine::setPixmap(QString id, QByteArray data, int paragraphFontHeight, i
     this->pixmap.loadFromData(data);
     int pixmapHeight = this->pixmap.height();
     int pixmapWidth = this->pixmap.width();
-    float aspect = float(this->pixmap.width()) / this->pixmap.height();
-    int dx = this->pixmap.width() - w;
-    if( this->pixmap.height() > h )
+    float aspect = float(pixmapWidth) / this->pixmap.height();
+    if( pixmapHeight > h )
     {
         pixmapHeight = h;
         pixmapWidth = h * aspect;
-        dx = pixmapWidth - w;
-        w = pixmapWidth;
     }
 
-    if( dx > 0 )
+    if( pixmapWidth > w )
     {
         pixmapHeight = w / aspect;
         pixmapWidth = w;
     }
-    lineHeight = paragraphFontHeight * ceil(float(pixmapHeight) / paragraphFontHeight);
+
+    lineHeight = paragraphFontHeight * floor(float(pixmapHeight) / paragraphFontHeight);
     this->pixmapId      = id;
 //    this->lineHeight    = this->pixmap.height();
     this->lineHeight    = lineHeight;
@@ -487,7 +485,6 @@ void PageLine::setPixmap(QString id, QByteArray data, int paragraphFontHeight, i
     this->width         = pixmapWidth;
     this->height        = pixmapHeight;
     this->isPixmap      = true;
-//    qDebug() << QString::number(pixmap.height());
 }
 
 bool PageLine::haveFootnotes()
