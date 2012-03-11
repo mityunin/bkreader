@@ -33,6 +33,7 @@ public:
   int x;
   float w;
   QString data;
+  QString f;
   TheWord();
 };
 

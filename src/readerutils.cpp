@@ -57,6 +57,10 @@ ReaderUtils::ReaderUtils(  )
     this->footnoteLineSpacing = this->paragraphLineSpacing - 0.2;
     this->footnoteAlign = "justify";
 
+    this->smallFont.setPointSize(10);
+    this->smallFont.setFamily("Arial");
+    this->smallFont.setItalic(false);
+
     this->indicatorFont.setPointSize(12);
     this->indicatorFont.setFamily("Arial");
     this->indicatorFont.setItalic(false);
@@ -170,6 +174,12 @@ void ReaderUtils::writeSettings()
     settings.setValue( "fonts/footnoteUnderline", this->footnoteFont.underline() );
     settings.setValue( "fonts/footnoteAlign", this->footnoteAlign );
 
+    settings.setValue( "fonts/smallFontFamily", this->smallFont.family() );
+    settings.setValue( "fonts/smallFontPointSize", this->smallFont.pointSize() );
+    settings.setValue( "fonts/smallFontItalic", this->smallFont.italic() );
+    settings.setValue( "fonts/smallFontBold", this->smallFont.bold() );
+    settings.setValue( "fonts/smallFontUnderline", this->smallFont.underline() );
+
     settings.setValue( "fonts/poemFontFamily", this->poemFont.family() );
     settings.setValue( "fonts/poemPointSize", this->poemFont.pointSize() );
     settings.setValue( "fonts/poemItalic", this->poemFont.italic() );
@@ -270,6 +280,12 @@ void ReaderUtils::readSettings()
     this->footnoteFont.setBold( settings.value( "fonts/footnoteBold" ).toBool() );
     this->footnoteFont.setUnderline( settings.value( "fonts/footnoteUnderline" ).toBool() );
     this->footnoteAlign = settings.value( "fonts/footnoteAlign" ).toString();
+
+    this->smallFont.setFamily( settings.value( "fonts/smallFontFamily" ).toString() );
+    this->smallFont.setPointSize( settings.value( "fonts/smallFontPointSize" ).toInt() );
+    this->smallFont.setItalic( settings.value( "fonts/smallFontItalic" ).toBool() );
+    this->smallFont.setBold( settings.value( "fonts/smallFontBold" ).toBool() );
+    this->smallFont.setUnderline( settings.value( "fonts/smallFontUnderline" ).toBool() );
 
     this->poemFont.setFamily( settings.value( "fonts/poemFontFamily" ).toString() );
     this->poemFont.setPointSize( settings.value( "fonts/poemPointSize" ).toInt() );

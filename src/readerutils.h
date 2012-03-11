@@ -56,6 +56,7 @@ public:
         QFont poemFont;
         QFont indicatorFont;
         QFont epigraphFont;
+	QFont smallFont;
 
         QString textAlign;
         QString titleAlign;

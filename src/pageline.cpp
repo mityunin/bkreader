@@ -39,6 +39,7 @@ TheWord::TheWord()
 {
         this->x=0;
         this->w=0;
+        this->f="";
         this->data.clear();
 }
 
@@ -89,7 +90,7 @@ QStringList PageLine::create( QStringList words, QString indent, QString f, floa
         }
         else
         {
-            fm = new QFontMetrics( utils.paragraphFont );
+	    fm = new QFontMetrics( utils.paragraphFont );
             lineSpacing = utils.paragraphLineSpacing;
         }
 
@@ -121,6 +122,7 @@ QStringList PageLine::create( QStringList words, QString indent, QString f, floa
                         TheWord w;
                         w.data = word;
                         w.w = wordWidth;
+                        if( QString(word.at(0)) == QLatin1String("[") && QString(word.at(word.length()-1)) == QLatin1String("]") ) w.f = "footnote";
                         this->data.append(w);
 
                         this->lastWord++;

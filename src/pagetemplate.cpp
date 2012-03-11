@@ -219,7 +219,13 @@ void PageTemplate::paintEvent(QPaintEvent *event)
                         else if( l.f == "poem" )
                             painter.setFont(this->b->utils.poemFont);
 
-                        painter.drawText(lineX, lineY, word.data);
+                        if( word.f == "footnote" ) 
+			{
+				painter.setFont( this->b->utils.smallFont );
+				painter.drawText(lineX, lineY-l.lineHeight/3, word.data);
+				continue;
+			}	
+			painter.drawText(lineX, lineY, word.data);
                     }
                 }
         }
