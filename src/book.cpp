@@ -457,10 +457,12 @@ float book::getColumnWidth()
         this->columnWidth = int(this->getPageWidth()/this->utils.columnsNum) - this->utils.leftMargin - this->utils.rightMargin;
         break;
     case 1:
-        this->columnWidth = int(this->getPageHeight()/this->utils.columnsNum) - this->utils.topMargin - this->utils.bottomMargin;
+//        this->columnWidth = int(this->getPageHeight()/this->utils.columnsNum) - this->utils.topMargin - this->utils.bottomMargin;
+        this->columnWidth = int(this->getPageHeight()/this->utils.columnsNum) - this->utils.leftMargin - this->utils.rightMargin;
         break;
     case 2:
-        this->columnWidth = int(this->getPageHeight()/this->utils.columnsNum) - this->utils.topMargin - this->utils.bottomMargin;
+//        this->columnWidth = int(this->getPageHeight()/this->utils.columnsNum) - this->utils.topMargin - this->utils.bottomMargin;
+        this->columnWidth = int(this->getPageHeight()/this->utils.columnsNum) - this->utils.leftMargin - this->utils.rightMargin;
         break;
     }
     return this->columnWidth;
@@ -474,10 +476,10 @@ float book::getColumnHeight()
         this->columnHeight = float(this->getPageHeight()) - this->utils.topMargin - this->utils.bottomMargin;
         break;
     case 1:
-        this->columnHeight = float(this->getPageWidth()) - this->utils.leftMargin - this->utils.rightMargin;
+        this->columnHeight = float(this->getPageWidth()) - this->utils.topMargin - this->utils.bottomMargin;
         break;
     case 2:
-        this->columnHeight = float(this->getPageWidth()) - this->utils.leftMargin - this->utils.rightMargin;
+        this->columnHeight = float(this->getPageWidth()) - this->utils.topMargin - this->utils.bottomMargin;
         break;
     }
     return this->columnHeight;

@@ -26,12 +26,24 @@
 //
 
 //
+
+class TheWord 
+{
+public:
+  int x;
+  float w;
+  QString data;
+  TheWord();
+};
+
+
 class PageLine  
 {
 
 public:
 	QStringList words;
-	//QStringList	text;
+        QList<TheWord> data;
+//QStringList	text;
 	QString		f;
 	float		width;
         float           height;
@@ -61,4 +73,5 @@ public:
 	PageLine();
         QStringList create(QStringList words, QString indent, QString f, float w, ReaderUtils &utils, hyphenator &hyph);
 };
+
 #endif

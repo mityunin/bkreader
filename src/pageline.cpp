@@ -35,6 +35,13 @@ PageLine::PageLine()
         this->isPixmap = false;
 }
 
+TheWord::TheWord()
+{
+        this->x=0;
+        this->w=0;
+        this->data.clear();
+}
+
 QStringList PageLine::create( QStringList words, QString indent, QString f, float w, ReaderUtils &utils, hyphenator &hyph)
 {
         int remainWords     = 0;
@@ -43,6 +50,7 @@ QStringList PageLine::create( QStringList words, QString indent, QString f, floa
         int wordsSize       = 0;
         float lineSpacing;
         QFontMetrics *fm;
+        this->data.clear();
 
         if( f == "title")
         {
@@ -109,6 +117,12 @@ QStringList PageLine::create( QStringList words, QString indent, QString f, floa
                 {
 			wordsSize += wordWidth;
 			this->words.append(word);
+
+                        TheWord w;
+                        w.data = word;
+                        w.w = wordWidth;
+                        this->data.append(w);
+
                         this->lastWord++;
 			words.removeFirst();
 			continue;
@@ -130,6 +144,12 @@ QStringList PageLine::create( QStringList words, QString indent, QString f, floa
                             {
                                 wordsSize += wordWidth;
                                 this->words.append(hyphedWord[i]+"-");
+
+                                TheWord w;
+                                w.data = hyphedWord[i]+"-";
+                                w.w = wordWidth;
+                                this->data.append(w);
+
                                 this->lastWord++;
                                 QString wordPart = word.right(word.size()-hyphedWord[i].size());
                                 words.removeFirst();
@@ -231,6 +251,7 @@ QString PageLine::justify(int w, ReaderUtils utils)
         int sepSize = fm->width( QChar( 0x200a ) );
 	int sepCount = 0;
 	int sepInWords = 0;
+        float spaceCharSize = fm->width( " " );
 	QString sep = QChar( 0x200a );
         int wordsNum = this->words.length() - 1;
         if( this->words.at(0).at(0) == QString(" ").at(0) )
@@ -284,6 +305,20 @@ QString PageLine::justify(int w, ReaderUtils utils)
                     i++;
                     prevWord = word;
             }
+
+            float wordsWidth = this->data[0].w;
+            if( this->isStartParagraph )
+            {
+                wordsWidth += spaceCharSize*utils.indentValue;
+                this->data[0].x = spaceCharSize*utils.indentValue;
+            }
+            float wordsSeparatorWidth = (float(w)-this->width)/(this->data.length()-1);
+//            qDebug()<<wordsSeparatorWidth;
+            for(int wordsIt = 1; wordsIt < this->data.length(); wordsIt++)
+            {
+                this->data[wordsIt].x = wordsWidth+wordsSeparatorWidth;
+                wordsWidth += wordsSeparatorWidth+this->data[wordsIt].w;
+            }
         }
         else if( alignTo == "right" )
         {
@@ -293,6 +328,18 @@ QString PageLine::justify(int w, ReaderUtils utils)
                 sepString += (QChar( 0x200a ));
             }
             line = sepString + this->words.join(" ");
+
+
+            float wordsWidth = this->data[0].w;
+            float wordsSeparatorWidth = float(w)-this->width;
+//            qDebug()<<wordsSeparatorWidth;
+            this->data[0].x = wordsSeparatorWidth;
+            wordsWidth += this->data[0].x;
+            for(int wordsIt = 1; wordsIt < this->data.length(); wordsIt++)
+            {
+                this->data[wordsIt].x = wordsWidth;//+wordsSeparatorWidth;
+                wordsWidth += this->data[wordsIt].w;
+            }
         }
         else if( alignTo == "center" )
         {
@@ -320,6 +367,16 @@ QString PageLine::justify(int w, ReaderUtils utils)
             //                                }
             //                            }
             //                        }
+            float wordsWidth = this->data[0].w;
+            float wordsSeparatorWidth = (float(w)-this->width)/2;
+//            qDebug()<<wordsSeparatorWidth;
+            this->data[0].x = wordsSeparatorWidth;
+            wordsWidth += this->data[0].x;
+            for(int wordsIt = 1; wordsIt < this->data.length(); wordsIt++)
+            {
+                this->data[wordsIt].x = wordsWidth;//+wordsSeparatorWidth;
+                wordsWidth += this->data[wordsIt].w;
+            }
         }
         else if( alignTo == "left" )
         {
@@ -340,6 +397,16 @@ QString PageLine::justify(int w, ReaderUtils utils)
                 i++;
                 prevWord = word;
             }
+
+            float wordsWidth = this->data[0].w;
+//            float wordsSeparatorWidth = (float(w)-this->width)/(this->data.length()-1);
+//            qDebug()<<wordsSeparatorWidth;
+            for(int wordsIt = 1; wordsIt < this->data.length(); wordsIt++)
+            {
+                this->data[wordsIt].x = wordsWidth;//+wordsSeparatorWidth;
+                wordsWidth += this->data[wordsIt].w;
+            }
+
             return line;
 //            return this->words.join(" ");
         }
