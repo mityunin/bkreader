@@ -34,19 +34,19 @@
 PageTemplate::PageTemplate( QWidget *parent ):QWidget(parent)
 {
         this->setFocusPolicy( Qt::StrongFocus );
-	
-	QShortcut *shortOpenBook = new QShortcut(QKeySequence(tr("Ctrl+O", "File|Open")), this);
-	QShortcut *shortFontBigger = new QShortcut(QKeySequence(tr("Alt+Right", "View|Font Bigger")), this);
-	QShortcut *shortFontSmaller = new QShortcut(QKeySequence(tr("Alt+Left", "View|Font Smaller")), this);
-	QShortcut *shortLinesBigger = new QShortcut(QKeySequence(tr("Alt+Down", "View|Line Space Bigger")), this);
-	QShortcut *shortLinesSmaller = new QShortcut(QKeySequence(tr("Alt+Up", "View|Line Space Smaller")), this);
+
+        QShortcut *shortOpenBook = new QShortcut(QKeySequence(tr("Ctrl+O", "File|Open")), this);
+        QShortcut *shortFontBigger = new QShortcut(QKeySequence(tr("Alt+Right", "View|Font Bigger")), this);
+        QShortcut *shortFontSmaller = new QShortcut(QKeySequence(tr("Alt+Left", "View|Font Smaller")), this);
+        QShortcut *shortLinesBigger = new QShortcut(QKeySequence(tr("Alt+Down", "View|Line Space Bigger")), this);
+        QShortcut *shortLinesSmaller = new QShortcut(QKeySequence(tr("Alt+Up", "View|Line Space Smaller")), this);
         QShortcut *shortHideMenu = new QShortcut(QKeySequence(tr("Ctrl+M", "View|Hide Menu")), this);
 
-	connect(shortOpenBook, SIGNAL( activated() ), this, SLOT( openFile() ) );
-	connect(shortFontBigger, SIGNAL( activated() ), this, SLOT( setFontBigger() ) );
-	connect(shortFontSmaller, SIGNAL( activated() ), this, SLOT( setFontSmaller() ) );
-	connect(shortLinesBigger, SIGNAL( activated() ), this, SLOT( setLinesBigger() ) );
-	connect(shortLinesSmaller, SIGNAL( activated() ), this, SLOT( setLinesSmaller() ) );
+        connect(shortOpenBook, SIGNAL( activated() ), this, SLOT( openFile() ) );
+        connect(shortFontBigger, SIGNAL( activated() ), this, SLOT( setFontBigger() ) );
+        connect(shortFontSmaller, SIGNAL( activated() ), this, SLOT( setFontSmaller() ) );
+        connect(shortLinesBigger, SIGNAL( activated() ), this, SLOT( setLinesBigger() ) );
+        connect(shortLinesSmaller, SIGNAL( activated() ), this, SLOT( setLinesSmaller() ) );
         connect(shortHideMenu, SIGNAL( activated() ), this, SLOT( setHideMenu() ) );
 
         QTimer *timer = new QTimer();
@@ -85,7 +85,6 @@ void PageTemplate::paintEvent(QPaintEvent *event)
 //        pageBg.fill(QColor(QColor(this->b->utils.bgcolor)).rgb());
 
 //        QPixmap pagePattern("/home/sa/Downloads/brushed_alu.png");
-//        pagePattern.
 
         QPixmap pagePattern(QDir::homePath()+"/.config/bkreader/pixmaps/"+this->b->utils.pixmapPatternFile);
         QPixmap pageThinLine(this->b->getColumnWidth(), 1);
@@ -130,7 +129,7 @@ void PageTemplate::paintEvent(QPaintEvent *event)
 
         for(int i=0; i<this->b->utils.columnsNum;  i++)
         {
-		if( this->b->pages.length() <= 0 ) break;
+                if( this->b->pages.length() <= 0 ) break;
                 if( this->b->pages.length() <= this->b->currentPage+i ) break;
                 QList<PageLine> page = this->b->pages[ this->b->currentPage+i ];
 
@@ -141,7 +140,7 @@ void PageTemplate::paintEvent(QPaintEvent *event)
                     page.append(emptyLine);
                 }
 //                this->b->setCurrentWord();
-	
+
 //		this->drawLayout(page, i);
 //		this->layout.draw(&painter, QPointF(0,0));
 
@@ -202,15 +201,18 @@ void PageTemplate::paintEvent(QPaintEvent *event)
                     if( l.f == "footnote" && previousFormat != "footnote" )
                     {
                         float footnotesOnPageHeight = 0;
+//                        float lastFootnoteLineHeight = 0;
                         foreach( PageLine pl, page )
                         {
-                            if( pl.f == "footnote" ) footnotesOnPageHeight += pl.lineHeight;
+                            if( pl.f == "footnote" ) footnotesOnPageHeight += pl.lineHeight*this->b->utils.footnoteLineSpacing;
+//                            lastFootnoteLineHeight = pl.lineHeight;
                         }
 
                         float footnoteSeparatorY = this->b->getColumnHeight()+this->b->utils.topMargin-footnotesOnPageHeight;
                         float footnoteSeparatorX = this->b->utils.getLeftMargin(i)*(i+1)+this->b->utils.getRightMargin(i)*i+this->b->getColumnWidth()*i;
                         previousFormat = "footnote";
-                        painter.drawLine(footnoteSeparatorX, footnoteSeparatorY, footnoteSeparatorX+(this->b->getColumnWidth()/3), footnoteSeparatorY);
+                        painter.drawPixmap(footnoteSeparatorX, footnoteSeparatorY, this->b->getColumnWidth()/3, 1, pageThinLine );
+//                        painter.drawLine(footnoteSeparatorX, footnoteSeparatorY, footnoteSeparatorX+(this->b->getColumnWidth()/3), footnoteSeparatorY);
                     }
 
 
@@ -236,7 +238,7 @@ void PageTemplate::paintEvent(QPaintEvent *event)
                         painter.drawText(lineX, lineY, word.data);
                     }
                 }
-	}
+        }
 
 //        painter.drawText( this->b->utils.getLeftMargin(0), 0, this->b->getColumnWidth(), this->b->utils.topMargin, Qt::AlignVCenter, this->currentTitle );
         QString bookInfo;
@@ -277,14 +279,14 @@ void PageTemplate::paintEvent(QPaintEvent *event)
 
 void PageTemplate::drawLayout(QList<PageLine> page, int columnNum)
 {
-	QString text;
+        QString text;
         QString endLine( QChar( 0x2028 ) );
         int lineStart = 0;
         int lineLength = 0;
         QList<QTextLayout::FormatRange> formatRangeList;
 
-	foreach(PageLine line, page)
-	{
+        foreach(PageLine line, page)
+        {
                 int width = this->b->getColumnWidth();
                 if( line.f == "cite" )
                     width = width - this->b->utils.citeMargin*2;
@@ -300,21 +302,21 @@ void PageTemplate::drawLayout(QList<PageLine> page, int columnNum)
 
                 formatRangeList.append(this->b->getFormatRange(line.f, lineStart, lineLength));
                 text.append(lineText);
-		text.append(endLine);
-	}
-	
+                text.append(endLine);
+        }
+
         this->layout.setFont(this->b->utils.paragraphFont);
-	this->layout.setText(text);
-	
+        this->layout.setText(text);
+
         int y = this->b->utils.topMargin;
 
         this->layout.setAdditionalFormats(formatRangeList);
-	this->layout.beginLayout();
-	QTextLine l = this->layout.createLine();
-	int i = 0;
+        this->layout.beginLayout();
+        QTextLine l = this->layout.createLine();
+        int i = 0;
         QString previosFormat = "";
-	while( l.isValid() )
-	{
+        while( l.isValid() )
+        {
                 PageLine pageLine = page[i];
                 int x = this->b->utils.getLeftMargin(columnNum)*(columnNum+1) + columnNum * this->b->getColumnWidth() + columnNum * this->b->utils.getRightMargin(columnNum);
                 if( pageLine.f == "cite" )
@@ -335,48 +337,48 @@ void PageTemplate::drawLayout(QList<PageLine> page, int columnNum)
                     previosFormat = "footnote";
                 }
 
-		l.setPosition(QPointF(x,y));
+                l.setPosition(QPointF(x,y));
                 y += pageLine.lineHeight;
                 if( i < page.length()-1 ) i++;
-		l = this->layout.createLine();
-	}
+                l = this->layout.createLine();
+        }
         this->layout.endLayout();
 }
 
 void PageTemplate::setBook(book *b)
 {
-	this->b = b;
+        this->b = b;
 }
 
 void PageTemplate::resizeEvent(QResizeEvent *event)
 {
-	this->b->setPageWidth( this->geometry().width() );
-	this->b->setPageHeight( this->geometry().height() );
-	this->b->processBook();
-	this->repaint();
+        this->b->setPageWidth( this->geometry().width() );
+        this->b->setPageHeight( this->geometry().height() );
+        this->b->processBook();
+        this->repaint();
         this->makeContentsMenu();
 }
 
 void PageTemplate::keyPressEvent(QKeyEvent *event)
 {
-	if( event->key() == Qt::Key_Up )
-	{
+        if( event->key() == Qt::Key_Up )
+        {
                 if( this->b->currentPage <= this->b->utils.columnsNum-1 )
                         this->b->currentPage = this->b->pages.length()-this->b->utils.columnsNum+1;
-		else
+                else
                         this->b->currentPage -= this->b->utils.columnsNum;
-		this->repaint();
+                this->repaint();
                 this->b->saveBookPosition();
-	}
-	else if( event->key() == Qt::Key_Down || event->key() == Qt::Key_Space )
-	{
+        }
+        else if( event->key() == Qt::Key_Down || event->key() == Qt::Key_Space )
+        {
                 if( this->b->currentPage+this->b->utils.columnsNum >= this->b->pages.length() )
-			this->b->currentPage = 0;
-		else
+                        this->b->currentPage = 0;
+                else
                         this->b->currentPage += this->b->utils.columnsNum;
-		this->repaint();
+                this->repaint();
                 this->b->saveBookPosition();
-	}
+        }
         else if( event->key() == Qt::Key_F )
         {
             if( this->parentWidget()->isFullScreen() )
@@ -459,7 +461,7 @@ void PageTemplate::keyPressEvent(QKeyEvent *event)
 
 void PageTemplate::openFile()
 {
-	QString filename = QFileDialog::getOpenFileName();
+        QString filename = QFileDialog::getOpenFileName();
         this->b->bookFileName = filename;
         this->b->loadBook(filename);
         this->b->saveBookPosition();
@@ -467,29 +469,29 @@ void PageTemplate::openFile()
 
 void PageTemplate::setFontBigger()
 {
-	this->b->setFontBigger();
-	this->repaint();
+        this->b->setFontBigger();
+        this->repaint();
         this->b->saveBookPosition();
 }
 
 void PageTemplate::setFontSmaller()
 {
-	this->b->setFontSmaller();
-	this->repaint();
+        this->b->setFontSmaller();
+        this->repaint();
         this->b->saveBookPosition();
 }
 
 void PageTemplate::setLinesBigger()
 {
-	this->b->setLinesBigger();
-	this->repaint();
+        this->b->setLinesBigger();
+        this->repaint();
         this->b->saveBookPosition();
 }
 
 void PageTemplate::setLinesSmaller()
 {
-	this->b->setLinesSmaller();
-	this->repaint();
+        this->b->setLinesSmaller();
+        this->repaint();
         this->b->saveBookPosition();
 }
 
