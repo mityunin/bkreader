@@ -122,7 +122,12 @@ QStringList PageLine::create( QStringList words, QString indent, QString f, floa
                         TheWord w;
                         w.data = word;
                         w.w = wordWidth;
-                        if( QString(word.at(0)) == QLatin1String("[") && QString(word.at(word.length()-1)) == QLatin1String("]") ) w.f = "footnote";
+                        if( QString(word.at(0)) == QLatin1String("[") && QString(word.at(word.length()-1)) == QLatin1String("]") )
+                        {
+                            w.f = "footnote";
+                            w.data = w.data.remove(0, 1);
+                            w.data = w.data.remove(w.data.length()-1, 1);
+                        }
                         this->data.append(w);
 
                         this->lastWord++;

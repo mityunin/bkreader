@@ -280,7 +280,9 @@ void book::breakFootnotes()
         QHash<QString, QStringList> fn = iter.value();
         QStringList words;
         QStringList p;
-        p.append(QStringList(fn["title"])+QStringList(")"));
+//        p.append(QStringList(fn["title"])+QStringList(")"));
+        QString footnoteTitle = fn["title"].at(0) + QString(")");
+        p.append(QStringList( footnoteTitle ));
         p.append(fn["p"]);
 
         for(int j=0; j<p.length(); j++)
