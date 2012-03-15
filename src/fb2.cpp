@@ -213,7 +213,7 @@ void fb2::loadParagraph(const QDomElement &element)
 					QDomText childText = childNode.toText();
 					if( !childText.isNull() )
 					{
-                                                paragraph.append( QStringList(childText.data().trimmed()) );
+                                            paragraph.append( QStringList(QString("[")+childText.data().trimmed()+QString("]")) );
                                                 formats.append( QStringList("footnote:"+footnoteId) );
                                                 endFootnote = startFootnote + childText.data().trimmed().split(" ").size();
                                                 this->footnotesRange[footnoteId].append(startFootnote);
