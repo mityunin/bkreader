@@ -201,7 +201,7 @@ void book::breakLines()
                 //!!!add line height option to settings
                 if( this->fictionbook.bookFormats[i][0] == "title" && this->fictionbook.bookFormats[i+1][0] != "title" )
                 {
-                    line.lineHeight = line.lineHeight*this->utils.titleBottomMargin;
+                    line.lineHeight = line.lineHeight*this->utils.titleTopMargin;
                 }
             }
             //???
@@ -230,6 +230,15 @@ void book::breakLines()
 
             //add line to lines list
             this->lines.append(line);
+
+	    if( this->fictionbook.bookFormats[i][0] == "title" && this->fictionbook.bookFormats[i+1][0] != "title" )
+	    {
+		PageLine emptyLine;
+		emptyLine.create(QStringList(" "), QString(""), QString("p"), width, this->utils, hyph);
+		emptyLine.lineHeight *= this->utils.titleBottomMargin;
+		this->lines.append(emptyLine);
+	    }
+
             indent = "";
 
             //make book contents
