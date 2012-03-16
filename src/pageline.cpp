@@ -414,6 +414,13 @@ QString PageLine::justify(int w, ReaderUtils utils)
             }
 
             float wordsWidth = this->data[0].w;
+
+            if( this->isStartParagraph )
+            {
+                wordsWidth += spaceCharSize*utils.indentValue;
+                this->data[0].x = spaceCharSize*utils.indentValue;
+            }
+
 //            float wordsSeparatorWidth = (float(w)-this->width)/(this->data.length()-1);
 //            qDebug()<<wordsSeparatorWidth;
             for(int wordsIt = 1; wordsIt < this->data.length(); wordsIt++)

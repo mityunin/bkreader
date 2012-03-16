@@ -148,6 +148,7 @@ void book::breakLines()
         //width - book page width
         int width = this->getColumnWidth();
 
+        //this is a picture
         if( this->fictionbook.bookFormats.count() > 0 )
         {
             if( this->fictionbook.bookFormats[i][0] == "image" )
