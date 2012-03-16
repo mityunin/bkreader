@@ -46,6 +46,7 @@ public:
 	void setPageWidth(int w);
         int getPageWidth(bool getRotated=false);
         int getFootnotesHeight(QStringList footnotesId);
+        PageLine getCoverpage();
 	void processBook();
 	void setFontBigger(int s=1);
 	void setFontSmaller(int s=1);

@@ -339,10 +339,7 @@ void book::makePages()
 
     if( !this->fictionbook.coverPageId.isNull() )
     {
-        PageLine coverline;
-        QFontMetrics *fm = new QFontMetrics(this->utils.paragraphFont);
-        coverline.setPixmap(this->fictionbook.coverPageId, this->fictionbook.binarys[ this->fictionbook.coverPageId ], fm->height()*this->utils.paragraphLineSpacing, this->getColumnWidth(), this->getColumnHeight());
-        page.append(coverline);
+        page.append(this->getCoverpage());
         rowsHeightLeft = 0;
     }
 
@@ -806,4 +803,14 @@ QString book::getCurrentChapter()
 
     return "";
 }
+
+PageLine book::getCoverpage()
+{
+    PageLine coverline;
+    QFontMetrics *fm = new QFontMetrics(this->utils.paragraphFont);
+    coverline.setPixmap(this->fictionbook.coverPageId, this->fictionbook.binarys[ this->fictionbook.coverPageId ], fm->height()*this->utils.paragraphLineSpacing, this->getColumnWidth(), this->getColumnHeight());
+
+    return coverline;
+}
+
 //
