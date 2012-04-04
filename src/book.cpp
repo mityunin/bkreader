@@ -59,6 +59,9 @@ void book::loadBook(QString filename)
 
     this->currentWord = this->getBookPositionInHistory(filename);
 
+    QTime timer;
+    timer.start();
+
     if( filename.right(3) == "zip" )
     {
         UnZip unzip;
@@ -82,14 +85,19 @@ void book::loadBook(QString filename)
                 }
             }
         }
+
+
+        qDebug()<<QString("Opening zip: ")<<timer.elapsed();
     }
 
     if( filename.right(3) == "txt" )
         this->loadTextBook(filename);
     else
     {
+        timer.restart();
         this->fictionbook.loadFB2(filename);
         this->bookParagraphs = this->fictionbook.bookParagraphs;
+        qDebug()<<QString("Reading file strings: ")<<timer.elapsed();
     }
 
     if( !this->fictionbook.authorFirstName.isEmpty() )
@@ -109,7 +117,7 @@ void book::loadBook(QString filename)
     else
         this->bookLang = "ru";
 
-    this->processBook();
+    //this->processBook();
     if( filename.startsWith(QDir::tempPath()) )
         QFile::remove(filename);
 }
@@ -117,8 +125,13 @@ void book::loadBook(QString filename)
 void book::processBook()
 {
     if( this->bookParagraphs.length() <= 0 ) return;
+    QTime timer;
+    timer.start();
     this->breakLines();
+    qDebug()<<QString("Breaking lines: ")<<timer.elapsed();
+    timer.restart();
     this->makePages();
+    qDebug()<<QString("Making pages: ")<<timer.elapsed();
 }
 
 void book::breakLines()

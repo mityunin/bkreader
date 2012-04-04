@@ -337,8 +337,9 @@ void PageTemplate::resizeEvent(QResizeEvent *event)
 {
         this->b->setPageWidth( this->geometry().width() );
         this->b->setPageHeight( this->geometry().height() );
+
         this->b->processBook();
-        this->repaint();
+        //this->repaint();
         this->makeContentsMenu();
 }
 
