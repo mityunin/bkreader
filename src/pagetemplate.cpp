@@ -129,7 +129,7 @@ void PageTemplate::paintEvent(QPaintEvent *event)
             int indicatorXFrom = this->b->utils.getLeftMargin(i)*(i+1) + this->b->getColumnWidth()*i + this->b->utils.getRightMargin(i)*i;
             int indicatorXTo = this->b->utils.getLeftMargin(i)*(i+1) + this->b->getColumnWidth()*(i+1) + this->b->utils.getRightMargin(i)*i;
 //            painter.drawLine(indicatorXFrom, this->b->utils.indicatorFontHeight, indicatorXTo, this->b->utils.indicatorFontHeight);
-            painter.drawPixmap(indicatorXFrom, this->b->utils.indicatorFontHeight, pageThinLine);
+            painter.drawPixmap(indicatorXFrom, this->b->utils.topMargin, pageThinLine);
         }
 
 
@@ -257,9 +257,9 @@ void PageTemplate::paintEvent(QPaintEvent *event)
 
         painter.setFont(this->b->utils.indicatorFont);
 
-        painter.drawText( this->b->utils.getLeftMargin(0), 0, this->b->getColumnWidth(), this->b->utils.indicatorFontHeight, Qt::AlignVCenter, bookInfo.trimmed() );
+        painter.drawText( this->b->utils.getLeftMargin(0), 0, this->b->getColumnWidth(), this->b->utils.indicatorFontHeight+this->b->utils.topMargin, Qt::AlignVCenter, bookInfo.trimmed() );
 
-        painter.drawText( this->b->utils.getLeftMargin(0), 0, this->b->getPageWidth(true)-this->b->utils.getLeftMargin(0)-this->b->utils.getRightMargin(this->b->utils.columnsNum-1), this->b->utils.indicatorFontHeight, Qt::AlignRight+Qt::AlignVCenter, QString::number(currentPageNum)+" / "+QString::number(pagesLenNum));
+        painter.drawText( this->b->utils.getLeftMargin(0), 0, this->b->getPageWidth(true)-this->b->utils.getLeftMargin(0)-this->b->utils.getRightMargin(this->b->utils.columnsNum-1), this->b->utils.indicatorFontHeight+this->b->utils.topMargin, Qt::AlignRight+Qt::AlignVCenter, QString::number(currentPageNum)+" / "+QString::number(pagesLenNum));
 
         painter.restore();
         this->b->setCurrentWord();
