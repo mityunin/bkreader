@@ -257,9 +257,9 @@ void PageTemplate::paintEvent(QPaintEvent *event)
 
         painter.setFont(this->b->utils.indicatorFont);
 
-        painter.drawText( this->b->utils.getLeftMargin(0), 0, this->b->getColumnWidth(), this->b->utils.indicatorFontHeight+this->b->utils.topMargin, Qt::AlignVCenter, bookInfo.trimmed() );
+        painter.drawText( this->b->utils.getLeftMargin(0), 0, this->b->getColumnWidth(), this->b->utils.topMargin, Qt::AlignBottom, bookInfo.trimmed() );
 
-        painter.drawText( this->b->utils.getLeftMargin(0), 0, this->b->getPageWidth(true)-this->b->utils.getLeftMargin(0)-this->b->utils.getRightMargin(this->b->utils.columnsNum-1), this->b->utils.indicatorFontHeight+this->b->utils.topMargin, Qt::AlignRight+Qt::AlignVCenter, QString::number(currentPageNum)+" / "+QString::number(pagesLenNum));
+        painter.drawText( this->b->utils.getLeftMargin(0), 0, this->b->getPageWidth(true)-this->b->utils.getLeftMargin(0)-this->b->utils.getRightMargin(this->b->utils.columnsNum-1), this->b->utils.topMargin, Qt::AlignRight+Qt::AlignBottom, QString::number(currentPageNum)+" / "+QString::number(pagesLenNum));
 
         painter.restore();
         this->b->setCurrentWord();

@@ -24,6 +24,7 @@
 #include <QtCore/QDir>
 #include <QtCore/QTextStream>
 #include <QtCore/QVector>
+#include <QDesktopServices>
 //
 ReaderUtils::ReaderUtils(  ) 
 {
@@ -106,7 +107,10 @@ ReaderUtils::ReaderUtils(  )
 
     this->libraryDirs.clear();
 
-    QString configPath = QDir::homePath()+"/.config/bkreader/bkreader.conf";
+    //QString configPath = QDir::homePath()+"/.config/bkreader/bkreader.conf";
+    QSettings settings(QSettings::IniFormat, QSettings::UserScope, "bkreader", "bkreader");
+    QString configPath = settings.fileName();
+
     if(!QFile::exists(configPath))
         this->writeSettings();
 
@@ -133,10 +137,11 @@ void ReaderUtils::setWordWidth(QString key, int v, QString f)
 
 void ReaderUtils::writeSettings()
 {
-    QSettings settings("bkreader", "bkreader");
+    QSettings settings(QSettings::IniFormat, QSettings::UserScope, "bkreader", "bkreader");
 
     QTextCodec *codec = QTextCodec::codecForName("UTF-8");
     settings.setIniCodec( codec );
+
 
     settings.setValue( "fonts/paragraphFontFamily", this->paragraphFont.family() );
     settings.setValue( "fonts/paragraphPointSize", this->paragraphFont.pointSize() );
@@ -236,11 +241,13 @@ void ReaderUtils::writeSettings()
         settings.setValue( QString("libraryDirs/")+QString::number(libraryKey), libraryDir );
         libraryKey++;
     }
+
+    settings.sync();
 }
 
 void ReaderUtils::readSettings()
 {
-    QSettings settings("bkreader", "bkreader");
+    QSettings settings(QSettings::IniFormat, QSettings::UserScope, "bkreader", "bkreader");
 
     QTextCodec *codec = QTextCodec::codecForName("UTF-8");
     settings.setIniCodec( codec );
