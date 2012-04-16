@@ -102,6 +102,12 @@ QStringList PageLine::create( QStringList words, QString indent, QString f, floa
 	}
 	
 	int wordWidth = 0;
+        int bsWidth = utils.getWordWidth(QString(" "), f);
+        if( bsWidth == -1 )
+        {
+            bsWidth = fm->width(" ");
+            utils.setWordWidth(" ", bsWidth, f);
+        }
 
 	foreach( QString word, words )
         {
@@ -110,18 +116,18 @@ QStringList PageLine::create( QStringList words, QString indent, QString f, floa
                int wordWidth = utils.getWordWidth(word, f);
                if( wordWidth == -1 )
                {
-                    wordWidth = fm->width(word+" ");
+                    wordWidth = fm->width(word);
                     utils.setWordWidth(word, wordWidth, f);
                 }
 
 		if( wordsSize + wordWidth <= w || wordWidth > w)
                 {
-			wordsSize += wordWidth;
+                        wordsSize += wordWidth + bsWidth;
 			this->words.append(word);
 
                         TheWord w;
                         w.data = word;
-                        w.w = wordWidth;
+                        w.w = wordWidth+bsWidth;
                         if( QString(word.at(0)) == QLatin1String("[") && QString(word.at(word.length()-1)) == QLatin1String("]") )
                         {
                             w.f = "footnote";
@@ -167,6 +173,10 @@ QStringList PageLine::create( QStringList words, QString indent, QString f, floa
                             }
                         }
 //                        continue;
+                    }
+                    else
+                    {
+                        wordsSize -= bsWidth;
                     }
                 }
 
