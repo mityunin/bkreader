@@ -453,7 +453,8 @@ void PageTemplate::openFile()
         QString filename = QFileDialog::getOpenFileName();
         this->b->bookFileName = filename;
         this->b->loadBook(filename);
-        this->b->saveBookPosition();
+        this->b->processBook();
+	this->b->saveBookPosition();
 }
 
 void PageTemplate::setFontBigger()
@@ -525,6 +526,7 @@ void PageTemplate::openLibrarySlot()
         {
             this->b->bookFileName = filename;
             this->b->loadBook(filename);
+	    this->b->processBook();
             this->b->saveBookPosition();
         }
 }

@@ -246,7 +246,7 @@ QStringList Library::loadFB2FileInfo(QString filename)
 
 void Library::writeLibrary()
 {
-    QSettings settings( "bkreader", "library" );
+    QSettings settings(QSettings::IniFormat, QSettings::UserScope, "bkreader", "library");
     settings.clear();
     QTextCodec *codec = QTextCodec::codecForName("UTF-8");
     settings.setIniCodec( codec );
@@ -264,7 +264,7 @@ void Library::writeLibrary()
 
 void Library::readLibrary()
 {
-    QSettings settings( "bkreader", "library" );
+    QSettings settings(QSettings::IniFormat, QSettings::UserScope, "bkreader", "library");
     this->bookAuthors.clear();
     this->bookExtensions.clear();
     this->bookFilenames.clear();

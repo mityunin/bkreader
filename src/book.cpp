@@ -596,8 +596,7 @@ void book::saveBookPosition()
 {
     if( !this->bookFileName.isEmpty() && this->currentWord )
     {
-        QSettings settings("bkreader", "recent");
-
+	QSettings settings(QSettings::IniFormat, QSettings::UserScope, "bkreader", "recent");
         QString recentBook;
         recentBook.append("recent/");
         recentBook.append(this->bookFileName);
@@ -610,8 +609,7 @@ void book::saveBookPosition()
 bool book::loadBookPosition()
 {
     bool result;
-
-    QSettings settings("bkreader", "recent");
+    QSettings settings(QSettings::IniFormat, QSettings::UserScope, "bkreader", "recent");
 
     QString fileName;
     int position = 0;
@@ -633,7 +631,7 @@ bool book::loadBookPosition()
 
 int book::getBookPositionInHistory(QString filename)
 {
-    QSettings settings("bkreader", "recent");
+    QSettings settings(QSettings::IniFormat, QSettings::UserScope, "bkreader", "recent");
 
     int position = 0;
     position = settings.value( QString("recent/")+filename, 0 ).toInt();

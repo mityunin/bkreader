@@ -110,7 +110,7 @@ ReaderUtils::ReaderUtils(  )
     //QString configPath = QDir::homePath()+"/.config/bkreader/bkreader.conf";
     QSettings settings(QSettings::IniFormat, QSettings::UserScope, "bkreader", "bkreader");
     QString configPath = settings.fileName();
-
+qDebug()<<configPath;
     if(!QFile::exists(configPath))
         this->writeSettings();
 
