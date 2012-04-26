@@ -28,6 +28,9 @@
 //
 ReaderUtils::ReaderUtils(  ) 
 {
+    debugMetricsTime = 0;
+    debugHyphTime = 0;
+    debugSplitTime = 0;
     this->paragraphFont.setPointSize(12);
     this->paragraphFont.setFamily("Arial");
     this->paragraphLineSpacing = 1.3;

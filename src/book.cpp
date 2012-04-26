@@ -181,8 +181,11 @@ void book::breakLines()
 
         QString indent = this->getParagraphIndent(i);
 
+        QTime splitTime;
+        splitTime.start();
         //split paragraph to single words
         QStringList words = this->splitParagraph(p);
+        utils.debugSplitTime += splitTime.elapsed();
 
         int startLineWord = 0;
         int endLineWord = 0;
@@ -279,6 +282,10 @@ void book::breakLines()
 
     this->breakFootnotes();
     //qDebug()<<this->bookContents;
+    qDebug()<<QString("Font metrics width:")<<utils.debugMetricsTime;
+    qDebug()<<QString("Hyph time:")<<utils.debugHyphTime;
+    qDebug()<<QString("Split time:")<<utils.debugSplitTime;
+    utils.debugMetricsTime = 0;
 
 }
 

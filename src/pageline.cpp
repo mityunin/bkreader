@@ -116,8 +116,11 @@ QStringList PageLine::create( QStringList words, QString indent, QString f, floa
                int wordWidth = utils.getWordWidth(word, f);
                if( wordWidth == -1 )
                {
+                   QTime timer;
+                   timer.start();
                     wordWidth = fm->width(word);
                     utils.setWordWidth(word, wordWidth, f);
+                    utils.debugMetricsTime += timer.elapsed();
                 }
 
 		if( wordsSize + wordWidth <= w || wordWidth > w)
@@ -143,10 +146,13 @@ QStringList PageLine::create( QStringList words, QString indent, QString f, floa
                 else
                 {
                     QStringList hyphedWord;
+                    QTime timer;
+                    timer.start();
                     if( utils.hyphsIsOn )
                         hyphedWord = hyph.hyphenateWord(word);
                     else
                         hyphedWord = QStringList(word);
+                    utils.debugHyphTime += timer.elapsed();
 
                     if(!hyphedWord.isEmpty())
                     {

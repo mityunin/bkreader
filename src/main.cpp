@@ -27,6 +27,7 @@ int main(int argc, char ** argv)
 	//MainWindowImpl win;
 	QMainWindow *win = new QMainWindow(0, Qt::Window);
         PageTemplate tmplt;// = new PageTemplate;
+        tmplt.app = &app;
         book b;// = new book();
         tmplt.setBook(&b);
 

@@ -107,6 +107,6 @@ public:
         QString bookTitle;
         QString bookLang;
         QMap<int, QString> bookContents; //0-Name, 1-LineNum
-	//QStringList paras
+        //QStringList paras
 };
 #endif

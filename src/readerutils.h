@@ -111,5 +111,8 @@ public:
         QString paracolor;
         QStringList libraryDirs;
 //        QSettings settings;
+        int debugMetricsTime;
+        int debugHyphTime;
+        int debugSplitTime;
 };
 #endif
