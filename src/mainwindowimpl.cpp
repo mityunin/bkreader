@@ -20,6 +20,30 @@
 MainWindowImpl::MainWindowImpl( QWidget * parent, Qt::WFlags f) 
 	: QMainWindow(parent, f)
 {
-	setupUi(this);
+        //setupUi(this);
+//        app->installEventFilter(this);
+//        qDebug()<<QString("constr");
+    this->mouseTimer = new QTimer();
+    connect(mouseTimer, SIGNAL(timeout()), this, SLOT(hideMousePointer()) );
+    mouseTimer->start(5000);
 }
+
+bool MainWindowImpl::eventFilter(QObject *obj, QEvent *event)
+{
+    if( event->type() == QEvent::MouseMove )
+    {
+        app->setOverrideCursor( QCursor(Qt::ArrowCursor) );
+        mouseTimer->start(5000);
+        return true;
+    }
+    //qDebug()<<event;
+    return QMainWindow::eventFilter(obj, event);
+}
+
+void MainWindowImpl::hideMousePointer()
+{
+    app->setOverrideCursor( QCursor(Qt::BlankCursor) );
+    mouseTimer->stop();
+}
+
 //

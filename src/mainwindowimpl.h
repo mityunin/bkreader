@@ -21,13 +21,18 @@
 #include <QMainWindow>
 #include "ui_mainwindow.h"
 #include "book.h"
+#include <QTimer>
 //
 class MainWindowImpl : public QMainWindow, public Ui::MainWindow
 {
 Q_OBJECT
 public:
 	MainWindowImpl( QWidget * parent = 0, Qt::WFlags f = 0 );
+        bool eventFilter(QObject *obj, QEvent *event);
+        QApplication *app;
+        QTimer *mouseTimer;
 private slots:
+        void hideMousePointer();
 };
 #endif
 

@@ -24,10 +24,11 @@
 int main(int argc, char ** argv)
 {
 	QApplication app( argc, argv );
-	//MainWindowImpl win;
-	QMainWindow *win = new QMainWindow(0, Qt::Window);
+        MainWindowImpl *win = new MainWindowImpl(0, Qt::Window);
+        win->app = &app;
+        app.installEventFilter(win);
+        //QMainWindow *win = new QMainWindow(0, Qt::Window);
         PageTemplate tmplt;// = new PageTemplate;
-        tmplt.app = &app;
         book b;// = new book();
         tmplt.setBook(&b);
 
@@ -74,3 +75,4 @@ int main(int argc, char ** argv)
 	app.connect( &app, SIGNAL( lastWindowClosed() ), &app, SLOT( quit() ) );
 	return app.exec();
 }
+

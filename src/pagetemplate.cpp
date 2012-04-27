@@ -48,16 +48,6 @@ PageTemplate::PageTemplate( QWidget *parent ):QWidget(parent)
         connect(shortLinesBigger, SIGNAL( activated() ), this, SLOT( setLinesBigger() ) );
         connect(shortLinesSmaller, SIGNAL( activated() ), this, SLOT( setLinesSmaller() ) );
         connect(shortHideMenu, SIGNAL( activated() ), this, SLOT( setHideMenu() ) );
-
-        //QTimer *timer = new QTimer();
-        //connect(timer, SIGNAL( timeout() ), this, SLOT( showTime() ));
-        //timer->start(1000);
-
-        this->setMouseTracking( true );
-
-        mouseTimer = new QTimer();
-        connect(mouseTimer, SIGNAL( timeout() ), this, SLOT( hideMousePointer() ));
-        mouseTimer->start(10000);
 }
 
 void PageTemplate::paintEvent(QPaintEvent *event)
@@ -557,17 +547,6 @@ void PageTemplate::openChapterSlot()
     QString objname = obj->objectName();
     this->b->currentPage = this->b->getPageNum(objname.toInt());
     qDebug()<<this->b->currentPage;
-}
-
-void PageTemplate::hideMousePointer()
-{
-    app->setOverrideCursor( QCursor(Qt::BlankCursor) );
-}
-
-void PageTemplate::mouseMoveEvent(QMouseEvent *e)
-{
-    app->setOverrideCursor( QCursor(Qt::ArrowCursor) );
-    mouseTimer->start(10000);
 }
 
 //

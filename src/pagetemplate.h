@@ -45,8 +45,6 @@ public:
         QTextLayout layout;
         QMenuBar *menuBar;
         QMenu *contentsMenu;
-        QTimer *mouseTimer;
-        QApplication *app;
 //        QTimer      bookTimer;
 //        QTime       bookTime;
 
@@ -60,7 +58,6 @@ private:
         QPixmap widgetPixmap;
         void preparePaintEvent();
         void makeContentsMenu();
-        void mouseMoveEvent(QMouseEvent *e);
 	
 public slots:
 	void openFile();
@@ -75,6 +72,5 @@ public slots:
         void openLibrarySlot();
         void openChapterSlot();
 //        void setAntialias();
-        void hideMousePointer();
 };
 #endif
